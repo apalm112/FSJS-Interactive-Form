@@ -27,13 +27,18 @@ function createOtherJobTextarea() {
 }
 
 const tShirtInfo = () => {
-  // TODO: For the T-Shirt color menu, only display the color options that match the design selected in the "Design" menu.
-        // If the user selects "Theme - JS Puns" then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
-        // If the user selects "Theme - I ♥ JS" then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
+  // TODO: For the T-Shirt color menu:  only display the color options that match the design selected in the "Design" menu.
+            // If the user selects "Theme - JS Puns" then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
+  const getfieldsetShirt = document.getElementsByClassName('shirt');
+  const getDesignSelect = document.getElementById('design');
+  const getColorSelect = document.getElementById('color');
 
-
-
+            // If the user selects "Theme - I ♥ JS" then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
+            
 }
+
+
+
 
 const registerForActivities = () => {
   // TODO: Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox and visually indicate that the workshop in the competing time slot isn't available.
