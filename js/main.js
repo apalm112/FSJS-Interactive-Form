@@ -16,33 +16,34 @@ function setInitialFocus() {
 function createOtherJobTextarea() {
   // TODO: Job Role Section-  when 'other' option is selected from 'Job Role'
   // reveal a text field w/ id="other-title" placeholder="Your Job Role"
-  var $formFirstChild = $('form:first-child');
-  var $newTextArea = $('input');
+  // var $newTextArea = $('input');
+  var $jobRole = $('#title');
+  // var otherJobRoleInput = '<input type="text" id="other-title" placeholder="Your Job Role">';
 
 // something like
-  $('').on('click', function() {
-    $newTextArea.attr(type='text', id='other-title', name='user_other_role', placeholder='Your Job Role');
-    if (select.title.value === 'other') {
-      $formFirstChild.append($newTextArea);
-    }
+  $('#title').on('click', function() {
+    // $newTextArea.attr(type='text', id='other-title', name='user_other_role', placeholder='Your Job Role');
+    window.$jobRole[0][5].onselect;
+      // THIS WORKS:
+    var newTextArea = document.createElement('input');
+    $('fieldset')[0].append(newTextArea);
   });
-  // #title.on('click', )
+
 
   // NOT working:
   // var $getForm = $('form');
-  // var getField = $getForm.children();
-  // var setOtherInput = getField[0];
-  // var otherInput = '<input type="text" id="other-title" placeholder="Your Job Role">';
-  // setOtherInput.append(otherInput)
+  // $getForm[0][0].append(otherInput);
   //
+  // // DOES NOT Work: but WAS?????
+  // var $getField = $getForm.children();
+  // $getField[0].append(otherInput);
   //
-  // DOES NOT Work: but WAS?????
-  // var $getForm = $('form');
-  // var getField = $getForm.children();
-  // var otherInput = '<input type="text" id="other-title" placeholder="Your Job Role">';
-  // getField[0].append(otherInput)
+  // var $setOtherInput = $getField[0];
+  // $setOtherInput.append(otherInput);
 }
+
 
 $(document).ready(function() {
   setInitialFocus();
+  createOtherJobTextarea();
 });
