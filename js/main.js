@@ -16,17 +16,15 @@ function setInitialFocus() {
 function createOtherJobTextarea() {
   // TODO: Job Role Section-  when 'other' option is selected from 'Job Role'
   // reveal a text field w/ id="other-title" placeholder="Your Job Role"
-  // something like
-  $('#title').on('click', function() {
-    if (true) {
-      // THIS WORKS:
-      // var newTextArea = document.createElement('input');
-      // $('fieldset')[0].append(newTextArea);
-      let getSelectJobRole = document.getElementById('title');
-      let newTextArea = document.createElement('input');
-      newTextArea.setAttribute('id', 'other-title');
-      newTextArea.setAttribute('placeholder', 'Your Job Role');
-      getSelectJobRole.after(newTextArea);
+  let getSelectJobRole = document.getElementById('title');
+  let newTextArea = document.createElement('input');
+  newTextArea.setAttribute('id', 'other-title');
+  newTextArea.setAttribute('placeholder', 'Your Job Role');
+  $('#title').change(function(){
+    if (getSelectJobRole.value === 'other') {
+        getSelectJobRole.after(newTextArea);
+    } else {
+        getSelectJobRole.nextElementSibling.remove();
     }
   });
 }
