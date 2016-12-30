@@ -116,16 +116,16 @@ const registerForActivities = () => {
 });
 
   // Dynamically append a <span class="strikethrough">
-    getActivitiesFieldset[0].childNodes[5].children[0].after(span);
+        // let span = document.createElement('span');
+        // getActivitiesFieldset[0].childNodes[5].children[0].after(span);
   // Target the .innerText of label.strikethrough:
-      const getThatText = getActivitiesFieldset[0].childNodes[5].innerText;
-      // Get text from label into a variable
-    const getThatText = getActivitiesFieldset[0].childNodes[5].innerText;
-    // Put that variable into the span
-    getActivitiesFieldset[0].childNodes[5].children[1].innerText = getThatText;
-    // Remove original text from label
-    getActivitiesFieldset[0].childNodes[5].innerText = '';
-    // TODO: Problem--this line above ^ ends up deleting the <input> from the DOM, & conditional statements throw TypeError!
+        // let getThatText = getActivitiesFieldset[0].childNodes[5].innerText;
+  // Put that variable into the span
+        // getActivitiesFieldset[0].childNodes[5].children[1].innerText = getThatText;  //duplicates the text in this current order!
+  // Remove original text from label, then this line removes the duplicate text
+        // getActivitiesFieldset[0].childNodes[5].innerText = '';
+  // ^ above line also makes a new label, so end up w/ one label w/ a class only & second label w/ input & span.  Then throws TypeError.
+    // TODO: Problem--this line above ^ ends up deleting the <input> from the DOM, & conditional statements throw TypeError!  Solution: Switch const to let.
 
 
   // Then add CSS rule:
