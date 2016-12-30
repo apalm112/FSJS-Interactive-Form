@@ -129,16 +129,23 @@ function runningTotal() {
   // For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
   // Append a label to this fieldtest & update its innerText w/ total.
   var label = document.createElement('label');
-  getActivitiesFieldset[0].append(label);
-  label.innerText = 'Total: ' + total;
   var total = 0;
-  $('.activities').change(function() {
+  label.innerText = 'Total: ' + total;
+  $('input[type="checkbox"]').change(function() {
     console.log(this);
-    // if (checked) {
-    //   var dollar = getActivitiesFieldset[0].childNodes[this].innerText;
-    //   var num = dollar.replace(/[^0-9]/g,'');
-    //   total += num;
-    // }
+    for (var idx=3; idx<17; idx += 2) {
+      // Truthy/Falsey if checkbox is checked or not.
+      if (getActivitiesFieldset[0].childNodes[idx].children[0].checked) {
+        var dollar = getActivitiesFieldset[0].childNodes[idx].innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        // TODO: Problem: regex is Not working, fix it.
+        console.log('num: ' + num);
+        total += parseInt(num);
+        console.log('parseInt num: ' + num);
+        console.log('total: ' + total);
+      }
+   }
+    getActivitiesFieldset[0].append(label);
   });
 }
 
