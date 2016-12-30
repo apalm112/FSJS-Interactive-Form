@@ -130,21 +130,19 @@ const registerForActivities = () => {
 
 function addStrikeThrough(num) {
   // Function adds class='strike-through' to inputs to implement CSS rule change.
-  // Sets variable to traverse & manipulate labels & inputs.
-  // var getActivitiesFieldset = document.getElementsByClassName('activities');
   // Create new span to hold innerText to implent a CSS rule.
   var newSpan = document.createElement('span');
   newSpan.innerText = getActivitiesFieldset[0].childNodes[num].innerText;
   // Variable is a copy of the input, to replace it
   // add class='strike-through' to it.
-  var jsLibs = getActivitiesFieldset[0].childNodes[num].firstChild;
-  jsLibs.setAttribute('class', 'strike-through');
+  var input = getActivitiesFieldset[0].childNodes[num].firstChild;
+  input.setAttribute('class', 'strike-through');
   // Remove the innerText now that a copy is in the span.
   getActivitiesFieldset[0].childNodes[num].innerText = '';
   // Append the span.
   getActivitiesFieldset[0].childNodes[num].append(newSpan);
   // Prepend the input.
-  getActivitiesFieldset[0].childNodes[num].prepend(jsLibs);
+  getActivitiesFieldset[0].childNodes[num].prepend(input);
 }
 
 
