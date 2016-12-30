@@ -85,7 +85,23 @@ const registerForActivities = () => {
       // If D checked, disable B:
       getActivitiesFieldset[0].childNodes[7].children[0].disabled = true;
     }
-
+    // Reverse disabled = true;
+    if (!getActivitiesFieldset[0].childNodes[5].children[0].checked) {
+      // If A checked, disable C:
+      getActivitiesFieldset[0].childNodes[9].children[0].disabled = false;
+    }
+    if (!getActivitiesFieldset[0].childNodes[9].children[0].checked) {
+      // If C checked, disable A:
+      getActivitiesFieldset[0].childNodes[5].children[0].disabled = false;
+    }
+    if (!getActivitiesFieldset[0].childNodes[7].children[0].checked) {
+      // If B checked, disable D:
+      getActivitiesFieldset[0].childNodes[11].children[0].disabled = false;
+    }
+    if (!getActivitiesFieldset[0].childNodes[11].children[0].checked) {
+      // If D checked, disable B:
+      getActivitiesFieldset[0].childNodes[7].children[0].disabled = false;
+    }
 
 
 
