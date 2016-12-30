@@ -66,16 +66,18 @@ const registerForActivities = () => {
   // DONE: And visually indicate that the workshop in the competing time slot isn't available.  When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
   // getActivitiesFieldset[0].childNodes[5].before('TIME CONFLICT!');
 
-  const getActivitiesFieldset = document.getElementsByClassName('activities');
+  var getActivitiesFieldset = document.getElementsByClassName('activities');
 
   $('.activities').change(function() {
     if (getActivitiesFieldset[0].childNodes[5].children[0].checked) {
       // If A checked, disable C:
       getActivitiesFieldset[0].childNodes[9].children[0].disabled = true;
       getActivitiesFieldset[0].childNodes[9].style.backgroundColor = 'rgba(255,30,30, .8)';
+      addStrikeThrough(9);
     }
     if (getActivitiesFieldset[0].childNodes[9].children[0].checked) {
       // If C checked, disable A:
+      addStrikeThrough(9);
       getActivitiesFieldset[0].childNodes[5].children[0].disabled = true;
       getActivitiesFieldset[0].childNodes[5].style.backgroundColor = 'rgba(255,30,30, .8)';
     }
@@ -83,11 +85,13 @@ const registerForActivities = () => {
       // If B checked, disable D:
       getActivitiesFieldset[0].childNodes[11].children[0].disabled = true;
       getActivitiesFieldset[0].childNodes[11].style.backgroundColor = 'rgba(255,30,30, .8)';
+      addStrikeThrough(11);
     }
     if (getActivitiesFieldset[0].childNodes[11].children[0].checked) {
       // If D checked, disable B:
       getActivitiesFieldset[0].childNodes[7].children[0].disabled = true;
       getActivitiesFieldset[0].childNodes[7].style.backgroundColor = 'rgba(255,30,30, .8)';
+      addStrikeThrough(7);
     }
     // Reverse disabled = true;
     if (!getActivitiesFieldset[0].childNodes[5].children[0].checked) {
@@ -114,34 +118,35 @@ const registerForActivities = () => {
       getActivitiesFieldset[0].childNodes[7].style.backgroundColor = '#85b5ca';
     }
 });
-
-// The Below Worked In the Console!
-// 1) var newSpan = document.createElement('span');
-// 2) newSpan.innerText = getActivitiesFieldset[0].childNodes[7].innerText;
-// 3) var jsLibs = getActivitiesFieldset[0].childNodes[7].firstChild;
-//    remove innerText
-// 4) getActivitiesFieldset[0].childNodes[7].innerText = '';
-// 5) getActivitiesFieldset[0].childNodes[7].append(newSpan);
-      ^---doubled up now
-//    append newInput
-// 6) getActivitiesFieldset[0].childNodes[7].prepend(jsLibs);
-// 7) add CSS rule: this isn't working in Bootply now, was last night.
-  // .strikethrough:disabled + span {
-  // text-decoration: line-through;}
-
   // TODO: As a user selects activities, a running total should display below the list of checkboxes.
   // For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
   // Append a label to this fieldtest & update its innerText w/ total.
 
-
-
-
-
-
-
-
   // TODO: Refactor function w/ jQuery to seperate CSS from JS.
 }
+
+function addStrikeThrough(num) {
+  // Add a class='strike-through' to inputs to implement CSS rule change.
+  var getActivitiesFieldset = document.getElementsByClassName('activities');
+  // The Below Worked In the Console!
+  var newSpan = document.createElement('span');
+  newSpan.innerText = getActivitiesFieldset[0].childNodes[num].innerText;
+  var jsLibs = getActivitiesFieldset[0].childNodes[num].firstChild;
+  //    remove innerText
+  jsLibs.setAttribute('class', 'strike-through');
+  getActivitiesFieldset[0].childNodes[num].innerText = '';
+  getActivitiesFieldset[0].childNodes[num].append(newSpan);
+  //      ^---doubled up now
+  //    append newInput
+  getActivitiesFieldset[0].childNodes[num].prepend(jsLibs);
+}
+
+function removeStrikeThrough() {
+  //Remove the strike-through class from input to change CSS rule.
+
+}
+
+
 
 
 
