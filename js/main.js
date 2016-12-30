@@ -9,7 +9,7 @@ function setInitialFocus() {
   $setPageLoadFocus.focus();
 }
 
-const createOtherJobTextarea = () => {
+function createOtherJobTextarea() {
   // DONE: A text field that will be revealed when the "Other" option is selected from the "Job Role" drop down menu.  Give the field an id of “other-title,” and add the placeholder text of "Your Job Role" to the field.
   // TODO: Fix error thrown to console when else clause conditional runs while there is No input text to remove.
   // TODO: Fix margins on newTextArea to fit better onto the form.
@@ -63,14 +63,46 @@ const tShirtInfo = () => {
 };
 
 
-
-
 const registerForActivities = () => {
   // TODO: Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox and visually indicate that the workshop in the competing time slot isn't available.
+
+  const getActivitiesFieldset = document.getElementsByClassName('activities');
+
+  $('.activities').change(function() {
+    if (getActivitiesFieldset[0].childNodes[5].children[0].checked) {
+      // If A checked, disable C:
+      getActivitiesFieldset[0].childNodes[9].children[0].disabled = true;
+    }
+    if (getActivitiesFieldset[0].childNodes[9].children[0].checked) {
+      // If C checked, disable A:
+      getActivitiesFieldset[0].childNodes[5].children[0].disabled = true;
+    }
+    if (getActivitiesFieldset[0].childNodes[7].children[0].checked) {
+      // If B checked, disable D:
+      getActivitiesFieldset[0].childNodes[11].children[0].disabled = true;
+    }
+    if (getActivitiesFieldset[0].childNodes[11].children[0].checked) {
+      // If D checked, disable B:
+      getActivitiesFieldset[0].childNodes[7].children[0].disabled = true;
+    }
+
+
+
+
+
+});
+
+
   // When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
-  // As a user selects activities, a running total should display below the list of checkboxes. For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
+
+  // TODO: As a user selects activities, a running total should display below the list of checkboxes.
+  // For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
+  // Append a label to this fieldtest & update its innerText w/ total.
+
 
 }
+
+
 
 
 const paymentInfoSection = () => {
@@ -125,4 +157,5 @@ $(document).ready(function() {
   setInitialFocus();
   createOtherJobTextarea();
   tShirtInfo();
+  registerForActivities();
 });
