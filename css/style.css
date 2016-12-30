@@ -149,7 +149,7 @@ button:hover {
   clear: both;
 }
 
-.strike-through:checked + span {
+.strike-through:disabled + span {
   text-decoration: line-through;
 }
 

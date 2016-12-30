@@ -2,6 +2,9 @@
 
 // TODO: When JavaScript is switched off or unavailable, all the form fields that need to be filled out should be visible. For example, the “Your Job Role” text field should be visible on the page when JavaScript is switched off.
 
+/* Global Variables */
+var getActivitiesFieldset = document.getElementsByClassName('activities');
+
 
 // DONE: Set focus on first text field on page load w/ jQuery.
 function setInitialFocus() {
@@ -66,7 +69,7 @@ const registerForActivities = () => {
   // DONE: And visually indicate that the workshop in the competing time slot isn't available.  When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
   // getActivitiesFieldset[0].childNodes[5].before('TIME CONFLICT!');
 
-  var getActivitiesFieldset = document.getElementsByClassName('activities');
+  // var getActivitiesFieldset = document.getElementsByClassName('activities');
 
   $('.activities').change(function() {
     if (getActivitiesFieldset[0].childNodes[5].children[0].checked) {
@@ -77,7 +80,7 @@ const registerForActivities = () => {
     }
     if (getActivitiesFieldset[0].childNodes[9].children[0].checked) {
       // If C checked, disable A:
-      addStrikeThrough(9);
+      addStrikeThrough(5);
       getActivitiesFieldset[0].childNodes[5].children[0].disabled = true;
       getActivitiesFieldset[0].childNodes[5].style.backgroundColor = 'rgba(255,30,30, .8)';
     }
@@ -126,24 +129,22 @@ const registerForActivities = () => {
 }
 
 function addStrikeThrough(num) {
-  // Add a class='strike-through' to inputs to implement CSS rule change.
-  var getActivitiesFieldset = document.getElementsByClassName('activities');
-  // The Below Worked In the Console!
+  // Function adds class='strike-through' to inputs to implement CSS rule change.
+  // Sets variable to traverse & manipulate labels & inputs.
+  // var getActivitiesFieldset = document.getElementsByClassName('activities');
+  // Create new span to hold innerText to implent a CSS rule.
   var newSpan = document.createElement('span');
   newSpan.innerText = getActivitiesFieldset[0].childNodes[num].innerText;
+  // Variable is a copy of the input, to replace it
+  // add class='strike-through' to it.
   var jsLibs = getActivitiesFieldset[0].childNodes[num].firstChild;
-  //    remove innerText
   jsLibs.setAttribute('class', 'strike-through');
+  // Remove the innerText now that a copy is in the span.
   getActivitiesFieldset[0].childNodes[num].innerText = '';
+  // Append the span.
   getActivitiesFieldset[0].childNodes[num].append(newSpan);
-  //      ^---doubled up now
-  //    append newInput
+  // Prepend the input.
   getActivitiesFieldset[0].childNodes[num].prepend(jsLibs);
-}
-
-function removeStrikeThrough() {
-  //Remove the strike-through class from input to change CSS rule.
-
 }
 
 
