@@ -50,7 +50,6 @@ const tShirtInfo = () => {
         for (let idx=0; idx<3; idx++) {
           getColorSelect[idx].style.display = 'none';
         }
-
         for (let idx=3; idx<6; idx++) {
           getColorSelect[idx].style.display = 'block';
         }
@@ -62,9 +61,10 @@ const tShirtInfo = () => {
   });
 };
 
-
 const registerForActivities = () => {
   // DONE: Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox.
+  // DONE: And visually indicate that the workshop in the competing time slot isn't available.  When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
+  // getActivitiesFieldset[0].childNodes[5].before('TIME CONFLICT!');
 
   const getActivitiesFieldset = document.getElementsByClassName('activities');
 
@@ -112,28 +112,21 @@ const registerForActivities = () => {
       // If D unchecked, enable B:
       getActivitiesFieldset[0].childNodes[7].children[0].disabled = false;
       getActivitiesFieldset[0].childNodes[7].style.backgroundColor = '#85b5ca';
-
     }
-
-  // TODO: And visually indicate that the workshop in the competing time slot isn't available.
-  // add jQuery: .css('text-decoration', 'line-through');
-//   p.line {
-//     text-decoration: line-through;
-// }
-//   label[name="js-frameworks"] {
-//       text-decoration: line-through;
-// }
-
 });
-
-
-  // When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
 
   // TODO: As a user selects activities, a running total should display below the list of checkboxes.
   // For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
   // Append a label to this fieldtest & update its innerText w/ total.
 
 
+
+
+
+
+
+
+  // TODO: Refactor function w/ jQuery to seperate CSS from JS.
 }
 
 
