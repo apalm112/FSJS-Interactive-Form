@@ -125,28 +125,44 @@ const registerForActivities = () => {
 }
 
 function runningTotal() {
-  // TODO: As a user selects activities, a running total should display below the list of checkboxes.
+  // DONE: As a user selects activities, a running total should display below the list of checkboxes.
   // For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
   // Append a label to this fieldtest & update its innerText w/ total.
   var label = document.createElement('label');
   var total = 0;
-  label.innerText = 'Total: ' + total;
+  var totalArr = [];
+  var inputLength = getActivitiesFieldset[0].childNodes.length;
   $('input[type="checkbox"]').change(function() {
-    console.log(this);
-    for (var idx=3; idx<17; idx += 2) {
+    // console.log(this);
+
+    // TODO: Problem: current running total does not Subtract amount when input is unchecked, instead it Adds that amount again! And adds amounts for inputs that are checked and already added to total.
+    // SOLUTION: create an array, if checked, then grab that name=value, push it to the array.
+    // if (checked && not in the array) {add that value to total}
+    // if unchecked, Not sure how to check for that, remove that name=value from the array and subtract that value from the total.
+
+
+    for (var idx=3; idx < inputLength; idx += 2) {
       // Truthy/Falsey if checkbox is checked or not.
-      if (getActivitiesFieldset[0].childNodes[idx].children[0].checked) {
+      if (getActivitiesFieldset[0].childNodes[idx].children[0].checked && !totalArr.includes(getName)) {
+        var getName = getActivitiesFieldset[0].childNodes[idx].firstChild.attributes[1].value;
+        totalArr.push(getName);
         var dollar = getActivitiesFieldset[0].childNodes[idx].innerText;
         var num = dollar.match((/([0-9]{3})/g));
-        // TODO: Problem: regex is Not working, fix it.
-        console.log('num: ' + num);
         total += parseInt(num);
-        console.log('parseInt num: ' + num);
-        console.log('total: ' + total);
       }
-   }
+      // } else if (getActivitiesFieldset[0].childNodes[idx].children[0].checked === false && total > 0 ) {
+      //
+      //   var dollar = getActivitiesFieldset[0].childNodes[idx].innerText;
+      //   var num = dollar.match((/([0-9]{3})/g));
+      //   total -= parseInt(num);
+      // }
+    }
+
+    label.innerText = 'Total: $' + total;
     getActivitiesFieldset[0].append(label);
   });
+
+
 }
 
 
