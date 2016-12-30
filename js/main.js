@@ -115,11 +115,18 @@ const registerForActivities = () => {
     }
 });
 
-  // Dynamically append a <span class="strikethrough"> btwn the input & closing label tag, how?
+  // Dynamically append a <span class="strikethrough">
+    getActivitiesFieldset[0].childNodes[5].children[0].after(span);
   // Target the .innerText of label.strikethrough:
-    // const getThatText = getActivitiesFieldset[0].childNodes[5].innerText;
-    // Move that text into the span, should work.
-    //
+      const getThatText = getActivitiesFieldset[0].childNodes[5].innerText;
+      // Get text from label into a variable
+    const getThatText = getActivitiesFieldset[0].childNodes[5].innerText;
+    // Put that variable into the span
+    getActivitiesFieldset[0].childNodes[5].children[1].innerText = getThatText;
+    // Remove original text from label
+    getActivitiesFieldset[0].childNodes[5].innerText = '';
+    // TODO: Problem--this line above ^ ends up deleting the <input> from the DOM, & conditional statements throw TypeError!
+
 
   // Then add CSS rule:
   // .strikethrough:disabled + span {
