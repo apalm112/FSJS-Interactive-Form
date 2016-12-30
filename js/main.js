@@ -115,6 +115,16 @@ const registerForActivities = () => {
     }
 });
 
+  // Dynamically append a <span class="strikethrough"> btwn the input & closing label tag, how?
+  // Target the .innerText of label.strikethrough:
+    // const getThatText = getActivitiesFieldset[0].childNodes[5].innerText;
+    // Move that text into the span, should work.
+    //
+
+  // Then add CSS rule:
+  // .strikethrough:disabled + span {
+  // text-decoration: line-through;}
+
   // TODO: As a user selects activities, a running total should display below the list of checkboxes.
   // For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
   // Append a label to this fieldtest & update its innerText w/ total.
