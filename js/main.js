@@ -64,7 +64,7 @@ const tShirtInfo = () => {
 
 
 const registerForActivities = () => {
-  // TODO: Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox and visually indicate that the workshop in the competing time slot isn't available.
+  // DONE: Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox.
 
   const getActivitiesFieldset = document.getElementsByClassName('activities');
 
@@ -72,39 +72,57 @@ const registerForActivities = () => {
     if (getActivitiesFieldset[0].childNodes[5].children[0].checked) {
       // If A checked, disable C:
       getActivitiesFieldset[0].childNodes[9].children[0].disabled = true;
+      getActivitiesFieldset[0].childNodes[9].style.backgroundColor = 'rgba(255,30,30, .8)';
     }
     if (getActivitiesFieldset[0].childNodes[9].children[0].checked) {
       // If C checked, disable A:
       getActivitiesFieldset[0].childNodes[5].children[0].disabled = true;
+      getActivitiesFieldset[0].childNodes[5].style.backgroundColor = 'rgba(255,30,30, .8)';
     }
     if (getActivitiesFieldset[0].childNodes[7].children[0].checked) {
       // If B checked, disable D:
       getActivitiesFieldset[0].childNodes[11].children[0].disabled = true;
+      getActivitiesFieldset[0].childNodes[11].style.backgroundColor = 'rgba(255,30,30, .8)';
     }
     if (getActivitiesFieldset[0].childNodes[11].children[0].checked) {
       // If D checked, disable B:
       getActivitiesFieldset[0].childNodes[7].children[0].disabled = true;
+      getActivitiesFieldset[0].childNodes[7].style.backgroundColor = 'rgba(255,30,30, .8)';
     }
     // Reverse disabled = true;
     if (!getActivitiesFieldset[0].childNodes[5].children[0].checked) {
-      // If A checked, disable C:
+      // If A unchecked, enable C:
       getActivitiesFieldset[0].childNodes[9].children[0].disabled = false;
+      getActivitiesFieldset[0].childNodes[9].style.backgroundColor = '#85b5ca';
+
     }
     if (!getActivitiesFieldset[0].childNodes[9].children[0].checked) {
-      // If C checked, disable A:
+      // If C unchecked, enable A:
       getActivitiesFieldset[0].childNodes[5].children[0].disabled = false;
+      getActivitiesFieldset[0].childNodes[5].style.backgroundColor = '#85b5ca';
+
     }
     if (!getActivitiesFieldset[0].childNodes[7].children[0].checked) {
-      // If B checked, disable D:
+      // If B unchecked, enable D:
       getActivitiesFieldset[0].childNodes[11].children[0].disabled = false;
+      getActivitiesFieldset[0].childNodes[11].style.backgroundColor = '#85b5ca';
+
     }
     if (!getActivitiesFieldset[0].childNodes[11].children[0].checked) {
-      // If D checked, disable B:
+      // If D unchecked, enable B:
       getActivitiesFieldset[0].childNodes[7].children[0].disabled = false;
+      getActivitiesFieldset[0].childNodes[7].style.backgroundColor = '#85b5ca';
+
     }
 
-
-
+  // TODO: And visually indicate that the workshop in the competing time slot isn't available.
+  // add jQuery: .css('text-decoration', 'line-through');
+//   p.line {
+//     text-decoration: line-through;
+// }
+//   label[name="js-frameworks"] {
+//       text-decoration: line-through;
+// }
 
 });
 
