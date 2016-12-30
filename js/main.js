@@ -39,23 +39,23 @@ const tShirtInfo = () => {
     // TODO: Change color select option value when attribute is disabled to corresponding color restrictions, i.e.--if tomato is selected & then theme is switched to js puns, automagically make the color select option change.
     if (getDesignSelect.value === 'js puns') {
       //  then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
-      for (var idx=3; idx<6; idx++) {
+      for (let idx=3; idx<6; idx++) {
         getColorSelect[idx].style.display = 'none';
       }
-      for (var idx=0; idx<3; idx++) {
+      for (let idx=0; idx<3; idx++) {
         getColorSelect[idx].style.display = 'block';
       }
     } else if (getDesignSelect.value === 'heart js') {
         // then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
-        for (var idx=0; idx<3; idx++) {
+        for (let idx=0; idx<3; idx++) {
           getColorSelect[idx].style.display = 'none';
         }
 
-        for (var idx=3; idx<6; idx++) {
+        for (let idx=3; idx<6; idx++) {
           getColorSelect[idx].style.display = 'block';
         }
     } else {
-      for (var idx=0; idx<getColorSelect.length; idx++) {
+      for (let idx=0; idx<getColorSelect.length; idx++) {
         getColorSelect[idx].style.display = 'block';
       }
     }
