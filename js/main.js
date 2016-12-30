@@ -65,6 +65,7 @@ const tShirtInfo = () => {
 };
 
 const registerForActivities = () => {
+  // TODO: Refactor function w/ jQuery to seperate CSS from JS.
   // DONE: Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox.
   // DONE: And visually indicate that the workshop in the competing time slot isn't available.  When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
   // getActivitiesFieldset[0].childNodes[5].before('TIME CONFLICT!');
@@ -120,13 +121,28 @@ const registerForActivities = () => {
       getActivitiesFieldset[0].childNodes[7].children[0].disabled = false;
       getActivitiesFieldset[0].childNodes[7].style.backgroundColor = '#85b5ca';
     }
-});
+  });
+}
+
+function runningTotal() {
   // TODO: As a user selects activities, a running total should display below the list of checkboxes.
   // For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
   // Append a label to this fieldtest & update its innerText w/ total.
-
-  // TODO: Refactor function w/ jQuery to seperate CSS from JS.
+  var label = document.createElement('label');
+  getActivitiesFieldset[0].append(label);
+  label.innerText = 'Total: ' + total;
+  var total = 0;
+  $('.activities').change(function() {
+    console.log(this);
+    // if (checked) {
+    //   var dollar = getActivitiesFieldset[0].childNodes[this].innerText;
+    //   var num = dollar.replace(/[^0-9]/g,'');
+    //   total += num;
+    // }
+  });
 }
+
+
 
 function addStrikeThrough(num) {
   // Function adds class='strike-through' to inputs to implement CSS rule change.
@@ -145,11 +161,6 @@ function addStrikeThrough(num) {
   getActivitiesFieldset[0].childNodes[num].prepend(input);
 }
 
-
-
-
-
-
 const paymentInfoSection = () => {
   // TODO: Display payment sections based on the payment option chosen in the select menu
   // The "Credit Card" payment option should be selected by default, display the #credit-card div, and hide the "Paypal" and "Bitcoin information.
@@ -157,7 +168,6 @@ const paymentInfoSection = () => {
   // When a user selects the "Bitcoin" payment option, the Bitcoin information should display, and the credit card and “PayPal” information should be hidden.
   //
 }
-
 
 const formValidation = () => {
   // TODO:
@@ -185,12 +195,10 @@ const hideColorOptions = () => {
 
 }
 
-
 const errorMessageInfo = () => {
 // TODO: Program at least one of your error messages so that more information is provided depending on the error. For example, if the user hasn’t entered a credit card number and the field is completely blank, the error message reads “Please enter a credit card number.” If the field isn’t empty but contains only 10 numbers, the error message reads “Please enter a number that is at least 16 digits long.”
 
 }
-
 
 const realTimeValidationError = () => {
 // TODO:Program your form so that it provides a real-time validation error message for at least one text input field. Rather than providing an error message on submit, your form should check for errors and display messages as the user begins typing inside a text field. For example, if the user enters an invalid email address, the error appears as the user begins to type, and disappears as soon as the user has entered a complete and correctly formatted email address.
@@ -203,4 +211,5 @@ $(document).ready(function() {
   createOtherJobTextarea();
   tShirtInfo();
   registerForActivities();
+  runningTotal();
 });
