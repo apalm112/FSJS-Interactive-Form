@@ -115,20 +115,52 @@ const registerForActivities = () => {
     }
 });
 
-  // Dynamically append a <span class="strikethrough">
+// Dynamically create a <span class="strikethrough">
         // let span = document.createElement('span');
-        // getActivitiesFieldset[0].childNodes[5].children[0].after(span);
-  // Target the .innerText of label.strikethrough:
+// Target the .innerText of label.strikethrough:
         // let getThatText = getActivitiesFieldset[0].childNodes[5].innerText;
-  // Put that variable into the span
-        // getActivitiesFieldset[0].childNodes[5].children[1].innerText = getThatText;  //duplicates the text in this current order!
-  // Remove original text from label, then this line removes the duplicate text
+// Put that variable into the span
+        // span.innerText = getThatText;
+// Append span to DOM:
+        // getActivitiesFieldset[0].childNodes[5].children[0].after(span);
+// Remove original text from label, is now duplicate text
         // getActivitiesFieldset[0].childNodes[5].innerText = '';
   // ^ above line also makes a new label, so end up w/ one label w/ a class only & second label w/ input & span.  Then throws TypeError.
-    // TODO: Problem--this line above ^ ends up deleting the <input> from the DOM, & conditional statements throw TypeError!  Solution: Switch const to let.
+  // The <input> is counted as part of <label>.innerText
+
+    // TODO: Problem--this line above ^ ends up deleting the <input> from the DOM, & conditional statements throw TypeError!
+    // Solution: Try removing the original text from the DOM FIRST, then appending the span, this worked in the console.
 
 
-  // Then add CSS rule:
+The Below Workded In the Console!
+var newInput = document.createElement('input');
+newInput.setAttribute('type', 'checkbox');
+newInput.setAttribute('name', 'js-libs');
+getActivitiesFieldset[0].childNodes[7].prepend(newInput);
+var libsText = getActivitiesFieldset[0].childNodes[7].innerText;
+^---  DO this line Before removing text.
+var newSpan = document.createElement('span');
+newSpan.innerText = libsText;
+newSpan.innerText = libsText;
+getActivitiesFieldset[0].childNodes[7].append(newSpan);
+
+
+
+
+    getActivitiesFieldset[0].childNodes[7].append(newInput)
+    ^--- this seems like to much work to make it halpen.
+getActivitiesFieldset[0].childNodes[7].append(span);
+
+
+    // Solution: Try moving inputs out of label in index.html. NOPE. Not a valid option.
+
+
+
+      // Removed:
+    // getActivitiesFieldset[0].childNodes[5].children[1].innerText = getThatText;  //duplicates the text in this current order!
+
+
+  // Then add CSS rule: this isn't working in Bootply now, was last night.
   // .strikethrough:disabled + span {
   // text-decoration: line-through;}
 
