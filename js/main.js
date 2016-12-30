@@ -39,27 +39,15 @@ const tShirtInfo = () => {
     // TODO: Change color select option value when attribute is disabled to corresponding color restrictions.
     if (getDesignSelect.value === 'js puns') {
       //  then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
-      // $getColorSelect.slice[4, 7].detach();
-
       for (var idx=3; idx<6; idx++) {
         getColorSelect[idx].setAttribute('disabled', 'true');
       }
 
-      // getColorSelect[3].setAttribute('disabled', 'true');
-      // getColorSelect[4].setAttribute('disabled', 'true');
-      // getColorSelect[5].setAttribute('disabled', 'true');
-
       for (var idx=0; idx<2; idx++) {
         getColorSelect[idx].removeAttribute('disabled');
       }
-
-      // getColorSelect[0].removeAttribute('disabled');
-      // getColorSelect[1].removeAttribute('disabled');
-      // getColorSelect[2].removeAttribute('disabled');
     } else if (getDesignSelect.value === 'heart js') {
         // then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
-        // $getColorSelect.detach = $getColorSelect.slice[4, 6];
-
         for (var idx=0; idx<3; idx++) {
           getColorSelect[idx].setAttribute('disabled', 'true');
         }
@@ -67,14 +55,6 @@ const tShirtInfo = () => {
         for (var idx=3; idx<6; idx++) {
           getColorSelect[idx].removeAttribute('disabled');
         }
-
-        // getColorSelect[0].setAttribute('disabled', 'true');
-        // getColorSelect[1].setAttribute('disabled', 'true');
-        // getColorSelect[2].setAttribute('disabled', 'true');
-        // getColorSelect[3].removeAttribute('disabled', 'true');
-        // getColorSelect[4].removeAttribute('disabled', 'true');
-        // getColorSelect[5].removeAttribute('disabled', 'true');
-
     } else {
       for (var idx=0; idx<getColorSelect.length; idx++) {
         getColorSelect[idx].removeAttribute('disabled');
