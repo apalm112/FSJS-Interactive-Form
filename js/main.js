@@ -27,7 +27,7 @@ function createOtherJobTextarea() {
 }
 
 const tShirtInfo = () => {
-  // TODO: For the T-Shirt color menu:  only display the color options that match the design selected in the "Design" menu.
+  // DONE: For the T-Shirt color menu:  only display the color options that match the design selected in the "Design" menu.
   const getDesignSelect = document.getElementById('design');
   // const $getDesignSelect = $('design');
 
@@ -36,7 +36,7 @@ const tShirtInfo = () => {
 
 
   $('#design').change(function() {
-    // TODO: Change color select option value when attribute is disabled to corresponding color restrictions.
+    // TODO: Change color select option value when attribute is disabled to corresponding color restrictions, i.e.--if tomato is selected & then theme is switched to js puns, automagically make the color select option change.
     if (getDesignSelect.value === 'js puns') {
       //  then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
       for (var idx=3; idx<6; idx++) {
