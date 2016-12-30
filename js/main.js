@@ -28,15 +28,41 @@ function createOtherJobTextarea() {
 
 const tShirtInfo = () => {
   // TODO: For the T-Shirt color menu:  only display the color options that match the design selected in the "Design" menu.
-            // If the user selects "Theme - JS Puns" then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
-  const getfieldsetShirt = document.getElementsByClassName('shirt');
   const getDesignSelect = document.getElementById('design');
+  // const $getDesignSelect = $('design');
+
   const getColorSelect = document.getElementById('color');
+  // const $getColorSelect = $('color');
 
-            // If the user selects "Theme - I ♥ JS" then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
-            
+
+  $('#design').change(function() {
+    // TODO: Change color select option value when attribute is disabled to corresponding color restrictions.
+    if (getDesignSelect.value === 'js puns') {
+      //  then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
+      // $getColorSelect.slice[4, 7].detach();
+      getColorSelect[3].setAttribute('disabled', 'true');
+      getColorSelect[4].setAttribute('disabled', 'true');
+      getColorSelect[5].setAttribute('disabled', 'true');
+      getColorSelect[0].removeAttribute('disabled', 'true');
+      getColorSelect[1].removeAttribute('disabled', 'true');
+      getColorSelect[2].removeAttribute('disabled', 'true');
+    } else if (getDesignSelect.value === 'heart js') {
+        // then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
+        // $getColorSelect.detach = $getColorSelect.slice[4, 6];
+        getColorSelect[0].setAttribute('disabled', 'true');
+        getColorSelect[1].setAttribute('disabled', 'true');
+        getColorSelect[2].setAttribute('disabled', 'true');
+        getColorSelect[3].removeAttribute('disabled', 'true');
+        getColorSelect[4].removeAttribute('disabled', 'true');
+        getColorSelect[5].removeAttribute('disabled', 'true');
+
+    } else {
+      for (var idx=0; idx<getColorSelect.length; idx++) {
+        getColorSelect[idx].removeAttribute('disabled');
+      }
+    }
+  });
 }
-
 
 
 
@@ -99,4 +125,5 @@ const realTimeValidationError = () => {
 $(document).ready(function() {
   setInitialFocus();
   createOtherJobTextarea();
+  tShirtInfo();
 });
