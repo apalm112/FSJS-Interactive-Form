@@ -64,12 +64,10 @@ const tShirtInfo = () => {
   });
 };
 
-const registerForActivities = () => {
+function registerForActivities() {
   // TODO: Refactor function w/ jQuery to seperate CSS from JS.
   // DONE: Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox.
   // DONE: And visually indicate that the workshop in the competing time slot isn't available.  When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
-  // getActivitiesFieldset[0].childNodes[5].before('TIME CONFLICT!');
-
   // var getActivitiesFieldset = document.getElementsByClassName('activities');
 
   $('.activities').change(function() {
@@ -122,7 +120,7 @@ const registerForActivities = () => {
       getActivitiesFieldset[0].childNodes[7].style.color = '#000';
     }
   });
-};
+}
 
 function runningTotal() {
   // DONE: As a user selects activities, a running total should display below the list of checkboxes.
@@ -158,6 +156,7 @@ function runningTotal() {
         }
       }
     }
+    label.className = 'cost';
     label.innerText = 'Total: $' + total;
     getActivitiesFieldset[0].append(label);
   });
