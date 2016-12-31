@@ -122,7 +122,7 @@ const registerForActivities = () => {
       getActivitiesFieldset[0].childNodes[7].style.backgroundColor = '#85b5ca';
     }
   });
-}
+};
 
 function runningTotal() {
   // DONE: As a user selects activities, a running total should display below the list of checkboxes.
@@ -132,6 +132,7 @@ function runningTotal() {
   var total = 0;
   var totalArr = [];
   var inputLength = getActivitiesFieldset[0].childNodes.length;
+
   $('input[type="checkbox"]').change(function() {
     // console.log(this);
 
@@ -140,24 +141,27 @@ function runningTotal() {
     // if (checked && not in the array) {add that value to total}
     // if unchecked, Not sure how to check for that, remove that name=value from the array and subtract that value from the total.
 
-
     for (var idx=3; idx < inputLength; idx += 2) {
       // Truthy/Falsey if checkbox is checked or not.
-      if (getActivitiesFieldset[0].childNodes[idx].children[0].checked && !totalArr.includes(getName)) {
+      // getName used out of Scope below:
+      if (getActivitiesFieldset[0].childNodes[idx].children[0].checked) {
+        // console.log(!totalArr.includes(getName));
         var getName = getActivitiesFieldset[0].childNodes[idx].firstChild.attributes[1].value;
-        totalArr.push(getName);
+        if (!totalArr.includes(getName) && totalArr.length <= 7) {
+          totalArr.push(getName);
+        console.log(getName);
         var dollar = getActivitiesFieldset[0].childNodes[idx].innerText;
         var num = dollar.match((/([0-9]{3})/g));
         total += parseInt(num);
+        console.log(totalArr);
+        } else if (totalArr.length > 7) {
+        totalArr = [];
+        var dollar = getActivitiesFieldset[0].childNodes[idx].innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        total -= parseInt(num);
+        }
       }
-      // } else if (getActivitiesFieldset[0].childNodes[idx].children[0].checked === false && total > 0 ) {
-      //
-      //   var dollar = getActivitiesFieldset[0].childNodes[idx].innerText;
-      //   var num = dollar.match((/([0-9]{3})/g));
-      //   total -= parseInt(num);
-      // }
     }
-
     label.innerText = 'Total: $' + total;
     getActivitiesFieldset[0].append(label);
   });
@@ -190,7 +194,7 @@ const paymentInfoSection = () => {
   // When a user selects the "PayPal" payment option, the Paypal information should display, and the credit card and “Bitcoin” information should be hidden.
   // When a user selects the "Bitcoin" payment option, the Bitcoin information should display, and the credit card and “PayPal” information should be hidden.
   //
-}
+};
 
 const formValidation = () => {
   // TODO:
@@ -203,30 +207,30 @@ const formValidation = () => {
   // The zipcode field should accept a 5-digit number
   // The CVV should only accept a number that is exactly 3 digits long
 
-}
+};
 
 const formValidationMessages = () => {
   // TODO: Provide some kind of indication when there’s a validation error. The field’s borders could turn red, for example, or a message could appear near the field or at the top of the form
   // There should be an error indication for the name field, email field, “Register for Activities” checkboxes, credit card number, zip code, and CVV
 
-}
+};
 
 
 // STRETCH GOALS:
 const hideColorOptions = () => {
   // TODO: Hide the "Color" label and select menu until a T-Shirt design is selected from the "Design" menu.
 
-}
+};
 
 const errorMessageInfo = () => {
 // TODO: Program at least one of your error messages so that more information is provided depending on the error. For example, if the user hasn’t entered a credit card number and the field is completely blank, the error message reads “Please enter a credit card number.” If the field isn’t empty but contains only 10 numbers, the error message reads “Please enter a number that is at least 16 digits long.”
 
-}
+};
 
 const realTimeValidationError = () => {
 // TODO:Program your form so that it provides a real-time validation error message for at least one text input field. Rather than providing an error message on submit, your form should check for errors and display messages as the user begins typing inside a text field. For example, if the user enters an invalid email address, the error appears as the user begins to type, and disappears as soon as the user has entered a complete and correctly formatted email address.
 
-}
+};
 
 
 $(document).ready(function() {
