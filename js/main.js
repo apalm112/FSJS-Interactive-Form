@@ -232,9 +232,9 @@ function runningTotal() {
         npm_counter--;
       }
 
-    label.className = 'cost';
-    label.innerText = 'Total: $' + total;
-    getActivitiesFieldset[0].append(label);
+      label.className = 'cost';
+      label.innerText = 'Total: $' + total;
+      getActivitiesFieldset[0].append(label);
     };
   });
 }
@@ -260,7 +260,7 @@ function paymentInfoSection() {
   // DONE: Display payment sections based on the payment option chosen in the select menu
   var getThatDiv = document.getElementsByTagName('fieldset');
   var paymentSelect = document.getElementById('payment');
-  paymentSelect.addEventListener('click', paymentInfoSection );
+  paymentSelect.ntListener('click', paymentInfoSection );
 
   var credit = getThatDiv[3].childNodes[7];
   var paypal = getThatDiv[3].childNodes[9];
@@ -287,20 +287,42 @@ function paymentInfoSection() {
 
 function formValidation() {
   // TODO:  If any of the following validation errors exist, prevent the user from submitting the form:
+  var button = document.getElementsByTagName('button');
+  button[0].
+  $('button').change(function() {
 
+
+  });
+}
+
+function validName() {
   // TODO Name field can't be blank
+  var getName = document.getElementById('name');
+  getName.value;
+}
 
-
+function validEmail() {
   // TODO Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
+}
 
+function validActivities()
   // TODO Must select at least one checkbox under the "Register for Activities" section of the form.
+}
 
+function validCreditCard() {
   // TODO If the selected payment option is "Credit Card," make sure the user has supplied a credit card number, a zip code, and a 3 number CVV value before the form can be submitted.
+}
 
+function ccLength() {
   // TODO Credit card field should only accept a number between 13 and 16 digits
+}
 
+function validZipCode() {
   // TODO The zipcode field should accept a 5-digit number
 
+}
+
+function validCVV() {
   // TODO The CVV should only accept a number that is exactly 3 digits long
 
 }
