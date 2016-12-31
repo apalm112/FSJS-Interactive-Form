@@ -69,55 +69,53 @@ function registerForActivities() {
   // TODO: Refactor function w/ jQuery to seperate CSS from JS.
   // DONE: Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox.
   // DONE: And visually indicate that the workshop in the competing time slot isn't available.  When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
-  // getActivitiesFieldset[0].childNodes[5].before('TIME CONFLICT!');
-
   // var getActivitiesFieldset = document.getElementsByClassName('activities');
 
   $('.activities').change(function() {
     if (getActivitiesFieldset[0].childNodes[5].children[0].checked) {
       // If A checked, disable C:
       getActivitiesFieldset[0].childNodes[9].children[0].disabled = true;
-      getActivitiesFieldset[0].childNodes[9].style.backgroundColor = 'rgba(255,30,30, .8)';
+      getActivitiesFieldset[0].childNodes[9].style.color = '#706D73';
       addStrikeThrough(9);
     }
     if (getActivitiesFieldset[0].childNodes[9].children[0].checked) {
       // If C checked, disable A:
       addStrikeThrough(5);
       getActivitiesFieldset[0].childNodes[5].children[0].disabled = true;
-      getActivitiesFieldset[0].childNodes[5].style.backgroundColor = 'rgba(255,30,30, .8)';
+      getActivitiesFieldset[0].childNodes[5].style.color = '#706D73';
     }
     if (getActivitiesFieldset[0].childNodes[7].children[0].checked) {
       // If B checked, disable D:
       getActivitiesFieldset[0].childNodes[11].children[0].disabled = true;
-      getActivitiesFieldset[0].childNodes[11].style.backgroundColor = 'rgba(255,30,30, .8)';
+      getActivitiesFieldset[0].childNodes[11].style.color = '#706D73';
       addStrikeThrough(11);
     }
     if (getActivitiesFieldset[0].childNodes[11].children[0].checked) {
       // If D checked, disable B:
       getActivitiesFieldset[0].childNodes[7].children[0].disabled = true;
-      getActivitiesFieldset[0].childNodes[7].style.backgroundColor = 'rgba(255,30,30, .8)';
+      getActivitiesFieldset[0].childNodes[7].style.color = '#706D73';
       addStrikeThrough(7);
     }
     // Reverse disabled = true;
     if (!getActivitiesFieldset[0].childNodes[5].children[0].checked) {
       // If A unchecked, enable C:
       getActivitiesFieldset[0].childNodes[9].children[0].disabled = false;
-      getActivitiesFieldset[0].childNodes[9].style.backgroundColor = '#85b5ca';
+      getActivitiesFieldset[0].childNodes[9].style.color = '#000';
     }
     if (!getActivitiesFieldset[0].childNodes[9].children[0].checked) {
       // If C unchecked, enable A:
       getActivitiesFieldset[0].childNodes[5].children[0].disabled = false;
-      getActivitiesFieldset[0].childNodes[5].style.backgroundColor = '#85b5ca';
+      getActivitiesFieldset[0].childNodes[5].style.color = '#000';
     }
     if (!getActivitiesFieldset[0].childNodes[7].children[0].checked) {
       // If B unchecked, enable D:
       getActivitiesFieldset[0].childNodes[11].children[0].disabled = false;
-      getActivitiesFieldset[0].childNodes[11].style.backgroundColor = '#85b5ca';
+      getActivitiesFieldset[0].childNodes[11].style.color = '#000';
     }
     if (!getActivitiesFieldset[0].childNodes[11].children[0].checked) {
       // If D unchecked, enable B:
       getActivitiesFieldset[0].childNodes[7].children[0].disabled = false;
-      getActivitiesFieldset[0].childNodes[7].style.backgroundColor = '#85b5ca';
+      getActivitiesFieldset[0].childNodes[7].style.color = '#000';
     }
   });
 }
@@ -126,38 +124,118 @@ function runningTotal() {
   // DONE: As a user selects activities, a running total should display below the list of checkboxes.
   // For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
   // Append a label to this fieldtest & update its innerText w/ total.
+  var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
   var label = document.createElement('label');
   var total = 0;
-  var totalArr = [];
-  var inputLength = getActivitiesFieldset[0].childNodes.length;
+  var all_counter = 0;
+  var jsframeworks_counter = 0;
+  var jslibs_counter = 0;
+  var express_counter = 0;
+  var node_counter = 0;
+  var build_tools_counter = 0;
+  var npm_counter = 0;
 
   $('input[type="checkbox"]').change(function() {
-    // TODO: Problem: current running total does not Subtract amount when input is unchecked.
-    // SOLUTION: create an array, if checked, then grab that name=value, push it to the array.
-    // if (checked && not in the array) {add that value to total}
-    // if unchecked, Not sure how to check for that, remove that name=value from the array and subtract that value from the total.
-
+    // DONE: Problem: current running total does not Subtract amount when input is unchecked.
     for (var idx=3; idx < inputLength; idx += 2) {
-      // Truthy/Falsey if checkbox is checked or not.
-      // getName used out of Scope below:
-      if (getActivitiesFieldset[0].childNodes[idx].children[0].checked) {
-        var getName = getActivitiesFieldset[0].childNodes[idx].firstChild.attributes[1].value;
-        if (!totalArr.includes(getName) && totalArr.length <= 4) {
-          totalArr.push(getName);
-          var dollar = getActivitiesFieldset[0].childNodes[idx].innerText;
-          var num = dollar.match((/([0-9]{3})/g));
-          total += parseInt(num);
-        } else if (totalArr.includes(getName) ) {
-          // If totalArr is emptied, Then it could be filled multiple times & as a result the total cost could be more than max allowed.
-        // totalArr.remove(getName)
-        // var dollar = getActivitiesFieldset[0].childNodes[idx].innerText;
-        // var num = dollar.match((/([0-9]{3})/g));
-        // total -= parseInt(num);
-        }
+      // var getLabelInput = <label><input name='all'>Main Conf $200</label>
+      var getLabelInput = getActivitiesFieldset[0].childNodes[idx];
+      // var getName = all, js-frameworks, express, node, etc
+      var getName = getLabelInput.firstChild.attributes[1].value;
+      // var isChecked = true or false val for input checkbox
+      var isChecked = getLabelInput.childNodes[0].checked;
+
+      if (getName === 'all' && isChecked === true && all_counter === 0 ) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total += parseInt(count);
+        all_counter++;
+      } else if (getName ==='all' && isChecked === false && all_counter === 1) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total -= parseInt(count);
+        all_counter--;
       }
-    }
+      if (getName === 'js-frameworks' && isChecked === true && jsframeworks_counter === 0 ) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total += parseInt(count);
+        jsframeworks_counter++;
+      } else if (getName ==='js-frameworks' && isChecked === false && jsframeworks_counter === 1) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total -= parseInt(count);
+        jsframeworks_counter--;
+      }if (getName === 'js-libs' && isChecked === true && jslibs_counter === 0 ) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total += parseInt(count);
+        jslibs_counter++;
+      } else if (getName ==='js-libs' && isChecked === false && jslibs_counter === 1) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total -= parseInt(count);
+        jslibs_counter--;
+      }if (getName === 'express' && isChecked === true && express_counter === 0 ) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total += parseInt(count);
+        express_counter++;
+      } else if (getName ==='express' && isChecked === false && express_counter === 1) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total -= parseInt(count);
+        express_counter--;
+      }if (getName === 'node' && isChecked === true && node_counter === 0 ) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total += parseInt(count);
+        node_counter++;
+      } else if (getName ==='node' && isChecked === false && node_counter === 1) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total -= parseInt(count);
+        node_counter--;
+      }if (getName === 'build-tools' && isChecked === true && build_tools_counter === 0 ) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total += parseInt(count);
+        build_tools_counter++;
+      } else if (getName ==='build-tools' && isChecked === false && build_tools_counter === 1) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total -= parseInt(count);
+        build_tools_counter--;
+      }if (getName === 'npm' && isChecked === true && npm_counter === 0 ) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total += parseInt(count);
+        npm_counter++;
+      } else if (getName ==='npm' && isChecked === false && npm_counter === 1) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total -= parseInt(count);
+        npm_counter--;
+      }
+
+    label.className = 'cost';
     label.innerText = 'Total: $' + total;
     getActivitiesFieldset[0].append(label);
+    };
   });
 }
 

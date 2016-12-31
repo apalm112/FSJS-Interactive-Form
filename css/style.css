@@ -135,6 +135,14 @@ button:hover {
 	margin-top: 1.25em;
 }
 
+.cost  {
+  font: 1.45em;
+  color: #184f68;
+	font-weight: 500;
+  width: 100%;
+}
+
+
 /* =================================
   Helper Classes
 ==================================== */
@@ -152,8 +160,6 @@ button:hover {
 .strike-through:disabled + span {
   text-decoration: line-through;
 }
-
-
 
 /* =================================
   Media Queries
