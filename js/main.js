@@ -126,6 +126,7 @@ function runningTotal() {
   // DONE: As a user selects activities, a running total should display below the list of checkboxes.
   // For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
   // Append a label to this fieldtest & update its innerText w/ total.
+  var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
   var label = document.createElement('label');
   var total = 0;
   /* Counters for New Attemp */
@@ -134,17 +135,11 @@ function runningTotal() {
   var jslibs_counter = 0;
   var express_counter = 0;
   var node_counter = 0;
-  var built_tools_counter = 0;
+  var build_tools_counter = 0;
   var npm_counter = 0;
-  // var totalArr = [];
-  var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
 
   $('input[type="checkbox"]').change(function() {
-
     // TODO: Problem: current running total does not Subtract amount when input is unchecked.
-    // SOLUTION: create an array, if checked, then grab that name=value, push it to the array.
-    // if (checked && not in the array) {add that value to total}
-    // if unchecked, Not sure how to check for that, remove that name=value from the array and subtract that value from the total.
 /* -------------------------------------------------------------*/
     // NEW Attempt at Running Total:
     for (var idx=3; idx < inputLength; idx += 2) {
@@ -169,12 +164,84 @@ function runningTotal() {
         total -= parseInt(count);
         all_counter--;
       }
-
+      if (getName === 'js-frameworks' && isChecked === true && jsframeworks_counter === 0 ) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total += parseInt(count);
+        jsframeworks_counter++;
+      } else if (getName ==='js-frameworks' && isChecked === false && jsframeworks_counter === 1) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total -= parseInt(count);
+        jsframeworks_counter--;
+      }if (getName === 'js-libs' && isChecked === true && jslibs_counter === 0 ) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total += parseInt(count);
+        jslibs_counter++;
+      } else if (getName ==='js-libs' && isChecked === false && jslibs_counter === 1) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total -= parseInt(count);
+        jslibs_counter--;
+      }if (getName === 'express' && isChecked === true && express_counter === 0 ) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total += parseInt(count);
+        express_counter++;
+      } else if (getName ==='express' && isChecked === false && express_counter === 1) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total -= parseInt(count);
+        express_counter--;
+      }if (getName === 'node' && isChecked === true && node_counter === 0 ) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total += parseInt(count);
+        node_counter++;
+      } else if (getName ==='node' && isChecked === false && node_counter === 1) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total -= parseInt(count);
+        node_counter--;
+      }if (getName === 'build-tools' && isChecked === true && build_tools_counter === 0 ) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total += parseInt(count);
+        build_tools_counter++;
+      } else if (getName ==='build-tools' && isChecked === false && build_tools_counter === 1) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total -= parseInt(count);
+        build_tools_counter--;
+      }if (getName === 'npm' && isChecked === true && npm_counter === 0 ) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total += parseInt(count);
+        npm_counter++;
+      } else if (getName ==='npm' && isChecked === false && npm_counter === 1) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total -= parseInt(count);
+        npm_counter--;
+      }
 
     label.className = 'cost';
     label.innerText = 'Total: $' + total;
     getActivitiesFieldset[0].append(label);
-    };
+    };    // End of for loop
   });
 }
 
