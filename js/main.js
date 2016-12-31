@@ -129,7 +129,6 @@ function runningTotal() {
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
   var label = document.createElement('label');
   var total = 0;
-  /* Counters for New Attemp */
   var all_counter = 0;
   var jsframeworks_counter = 0;
   var jslibs_counter = 0;
@@ -139,9 +138,7 @@ function runningTotal() {
   var npm_counter = 0;
 
   $('input[type="checkbox"]').change(function() {
-    // TODO: Problem: current running total does not Subtract amount when input is unchecked.
-/* -------------------------------------------------------------*/
-    // NEW Attempt at Running Total:
+    // DONE: Problem: current running total does not Subtract amount when input is unchecked.
     for (var idx=3; idx < inputLength; idx += 2) {
 
       // var getLabelInput = <label><input name='all'>Main Conf $200</label>
@@ -241,7 +238,7 @@ function runningTotal() {
     label.className = 'cost';
     label.innerText = 'Total: $' + total;
     getActivitiesFieldset[0].append(label);
-    };    // End of for loop
+    };
   });
 }
 
