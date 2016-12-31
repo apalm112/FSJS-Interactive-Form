@@ -76,50 +76,50 @@ const registerForActivities = () => {
     if (getActivitiesFieldset[0].childNodes[5].children[0].checked) {
       // If A checked, disable C:
       getActivitiesFieldset[0].childNodes[9].children[0].disabled = true;
-      getActivitiesFieldset[0].childNodes[9].style.backgroundColor = 'rgba(255,30,30, .8)';
+      getActivitiesFieldset[0].childNodes[9].style.color = '#706D73';
       addStrikeThrough(9);
     }
     if (getActivitiesFieldset[0].childNodes[9].children[0].checked) {
       // If C checked, disable A:
       addStrikeThrough(5);
       getActivitiesFieldset[0].childNodes[5].children[0].disabled = true;
-      getActivitiesFieldset[0].childNodes[5].style.backgroundColor = 'rgba(255,30,30, .8)';
+      getActivitiesFieldset[0].childNodes[5].style.color = '#706D73';
     }
     if (getActivitiesFieldset[0].childNodes[7].children[0].checked) {
       // If B checked, disable D:
       getActivitiesFieldset[0].childNodes[11].children[0].disabled = true;
-      getActivitiesFieldset[0].childNodes[11].style.backgroundColor = 'rgba(255,30,30, .8)';
+      getActivitiesFieldset[0].childNodes[11].style.color = '#706D73';
       addStrikeThrough(11);
     }
     if (getActivitiesFieldset[0].childNodes[11].children[0].checked) {
       // If D checked, disable B:
       getActivitiesFieldset[0].childNodes[7].children[0].disabled = true;
-      getActivitiesFieldset[0].childNodes[7].style.backgroundColor = 'rgba(255,30,30, .8)';
+      getActivitiesFieldset[0].childNodes[7].style.color = '#706D73';
       addStrikeThrough(7);
     }
     // Reverse disabled = true;
     if (!getActivitiesFieldset[0].childNodes[5].children[0].checked) {
       // If A unchecked, enable C:
       getActivitiesFieldset[0].childNodes[9].children[0].disabled = false;
-      getActivitiesFieldset[0].childNodes[9].style.backgroundColor = '#85b5ca';
+      getActivitiesFieldset[0].childNodes[9].style.color = '#000';
 
     }
     if (!getActivitiesFieldset[0].childNodes[9].children[0].checked) {
       // If C unchecked, enable A:
       getActivitiesFieldset[0].childNodes[5].children[0].disabled = false;
-      getActivitiesFieldset[0].childNodes[5].style.backgroundColor = '#85b5ca';
+      getActivitiesFieldset[0].childNodes[5].style.color = '#000';
 
     }
     if (!getActivitiesFieldset[0].childNodes[7].children[0].checked) {
       // If B unchecked, enable D:
       getActivitiesFieldset[0].childNodes[11].children[0].disabled = false;
-      getActivitiesFieldset[0].childNodes[11].style.backgroundColor = '#85b5ca';
+      getActivitiesFieldset[0].childNodes[11].style.color = '#000';
 
     }
     if (!getActivitiesFieldset[0].childNodes[11].children[0].checked) {
       // If D unchecked, enable B:
       getActivitiesFieldset[0].childNodes[7].children[0].disabled = false;
-      getActivitiesFieldset[0].childNodes[7].style.backgroundColor = '#85b5ca';
+      getActivitiesFieldset[0].childNodes[7].style.color = '#000';
     }
   });
 };
