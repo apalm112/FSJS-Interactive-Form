@@ -134,9 +134,7 @@ function runningTotal() {
   var inputLength = getActivitiesFieldset[0].childNodes.length;
 
   $('input[type="checkbox"]').change(function() {
-    // console.log(this);
-
-    // TODO: Problem: current running total does not Subtract amount when input is unchecked, instead it Adds that amount again! And adds amounts for inputs that are checked and already added to total.
+    // TODO: Problem: current running total does not Subtract amount when input is unchecked.
     // SOLUTION: create an array, if checked, then grab that name=value, push it to the array.
     // if (checked && not in the array) {add that value to total}
     // if unchecked, Not sure how to check for that, remove that name=value from the array and subtract that value from the total.
@@ -145,31 +143,25 @@ function runningTotal() {
       // Truthy/Falsey if checkbox is checked or not.
       // getName used out of Scope below:
       if (getActivitiesFieldset[0].childNodes[idx].children[0].checked) {
-        // console.log(!totalArr.includes(getName));
         var getName = getActivitiesFieldset[0].childNodes[idx].firstChild.attributes[1].value;
-        if (!totalArr.includes(getName) && totalArr.length <= 7) {
+        if (!totalArr.includes(getName) && totalArr.length <= 4) {
           totalArr.push(getName);
-        console.log(getName);
-        var dollar = getActivitiesFieldset[0].childNodes[idx].innerText;
-        var num = dollar.match((/([0-9]{3})/g));
-        total += parseInt(num);
-        console.log(totalArr);
-        } else if (totalArr.length > 7) {
-        totalArr = [];
-        var dollar = getActivitiesFieldset[0].childNodes[idx].innerText;
-        var num = dollar.match((/([0-9]{3})/g));
-        total -= parseInt(num);
+          var dollar = getActivitiesFieldset[0].childNodes[idx].innerText;
+          var num = dollar.match((/([0-9]{3})/g));
+          total += parseInt(num);
+      } else if (totalArr.includes(getName) ) {
+          // If totalArr is emptied, Then it could be filled multiple times & as a result the total cost could be more than max allowed.
+        // totalArr.remove(getName)
+        // var dollar = getActivitiesFieldset[0].childNodes[idx].innerText;
+        // var num = dollar.match((/([0-9]{3})/g));
+        // total -= parseInt(num);
         }
       }
     }
     label.innerText = 'Total: $' + total;
     getActivitiesFieldset[0].append(label);
   });
-
-
 }
-
-
 
 function addStrikeThrough(num) {
   // Function adds class='strike-through' to inputs to implement CSS rule change.
