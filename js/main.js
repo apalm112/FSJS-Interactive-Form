@@ -183,9 +183,21 @@ function addStrikeThrough(num) {
 const paymentInfoSection = () => {
   // TODO: Display payment sections based on the payment option chosen in the select menu
   // The "Credit Card" payment option should be selected by default, display the #credit-card div, and hide the "Paypal" and "Bitcoin information.
+  var getThatDiv = document.getElementsByTagName('fieldset');
+  var credit = getThatDiv[3].childNodes[7];
+  var paypal = getThatDiv[3].childNodes[9];
+  var bitcoin = getThatDiv[3].childNodes[11];
+
+  paypal.style.display = 'none';
+  bitcoin.style.display = 'none';
+
   // When a user selects the "PayPal" payment option, the Paypal information should display, and the credit card and “Bitcoin” information should be hidden.
+
+
   // When a user selects the "Bitcoin" payment option, the Bitcoin information should display, and the credit card and “PayPal” information should be hidden.
   //
+
+
 };
 
 const formValidation = () => {
@@ -231,4 +243,5 @@ $(document).ready(function() {
   tShirtInfo();
   registerForActivities();
   runningTotal();
+  paymentInfoSection();
 });
