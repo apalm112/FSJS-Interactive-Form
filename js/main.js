@@ -291,27 +291,48 @@ function formValidation() {
   button[0].setAttribute('id', 'register-button');
   var register = document.getElementById('register-button');
   register.addEventListener('click', validName);
+  register.addEventListener('click', validEmail);
+  // register.addEventListener('click', validActivities);
+  // register.addEventListener('click', validCreditCard);
+  // register.addEventListener('click', validCVV);
 }
-
 
 function validName(event) {
   // TODO Name field can't be blank
   event.preventDefault();
   var getName = document.getElementById('name');
-  getName.value;
   if (getName.value) {
-    console.log('Something entered.');
+    console.log('name entered.');
+    getName.style.border = '2px solid #c1deeb';
   } else if (!getName.value) {
     console.log('Name field blank.');
+    getName.style.border = '3px solid red';
   }
 }
 
-function validEmail() {
+function validEmail(event) {
   // TODO Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
+  event.preventDefault();
+  var getEmail = document.getElementById('mail');
+  if (getEmail.value) {
+    console.log('email entered.');
+  } else if (!getEmail) {
+    console.log('email field blank.');
+    getEmailstyle.border = '3px solid red';
+  }
 }
 
-function validActivities() {
+function validActivities(event) {
   // TODO Must select at least one checkbox under the "Register for Activities" section of the form.
+  event.preventDefault();
+  var getActivities = document.getElementById('mail');
+  getEmail;
+  if (getEmail.value) {
+    console.log('email entered.');
+  } else if (!getEmailvalue) {
+    console.log('email field blank.');
+    getEmailstyle.border = '3px solid red';
+  }
 }
 
 function validCreditCard() {
