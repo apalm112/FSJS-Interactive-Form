@@ -180,25 +180,35 @@ function addStrikeThrough(num) {
   getActivitiesFieldset[0].childNodes[num].prepend(input);
 }
 
-const paymentInfoSection = () => {
-  // TODO: Display payment sections based on the payment option chosen in the select menu
-  // The "Credit Card" payment option should be selected by default, display the #credit-card div, and hide the "Paypal" and "Bitcoin information.
+function paymentInfoSection() {
+  // DONE: Display payment sections based on the payment option chosen in the select menu
   var getThatDiv = document.getElementsByTagName('fieldset');
+  var paymentSelect = document.getElementById('payment');
+  paymentSelect.addEventListener('click', paymentInfoSection );
+
   var credit = getThatDiv[3].childNodes[7];
   var paypal = getThatDiv[3].childNodes[9];
   var bitcoin = getThatDiv[3].childNodes[11];
-
+  // DONE: The "Credit Card" payment option should be selected by default, display the #credit-card div, and hide the "Paypal" and "Bitcoin information.
   paypal.style.display = 'none';
   bitcoin.style.display = 'none';
+  // DONE: When a user selects the "PayPal" payment option, the Paypal information should display, and the credit card and “Bitcoin” information should be hidden.
+  if (paymentSelect.value === "paypal") {
+    paypal.style.display = 'block';
+    credit.style.display = 'none';
+    bitcoin.style.display = 'none';
+  } else if (paymentSelect.value === "bitcoin") {
+    // DONE: When a user selects the "Bitcoin" payment option, the Bitcoin information should display, and the credit card and “PayPal” information should be hidden.
+    bitcoin.style.display = 'block';
+    paypal.style.display = 'none';
+    credit.style.display = 'none';
+  } else if (paymentSelect.value === "credit card") {
+    credit.style.display = 'block';
+    paypal.style.display = 'none';
+    bitcoin.style.display = 'none';
+  }
+}
 
-  // When a user selects the "PayPal" payment option, the Paypal information should display, and the credit card and “Bitcoin” information should be hidden.
-
-
-  // When a user selects the "Bitcoin" payment option, the Bitcoin information should display, and the credit card and “PayPal” information should be hidden.
-  //
-
-
-};
 
 const formValidation = () => {
   // TODO:
