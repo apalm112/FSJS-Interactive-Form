@@ -149,6 +149,12 @@ button:hover {
   clear: both;
 }
 
+.strike-through:disabled + span {
+  text-decoration: line-through;
+}
+
+
+
 /* =================================
   Media Queries
 ==================================== */
