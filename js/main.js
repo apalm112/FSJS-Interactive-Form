@@ -260,7 +260,7 @@ function paymentInfoSection() {
   // DONE: Display payment sections based on the payment option chosen in the select menu
   var getThatDiv = document.getElementsByTagName('fieldset');
   var paymentSelect = document.getElementById('payment');
-  paymentSelect.ntListener('click', paymentInfoSection );
+  paymentSelect.addEventListener('click', paymentInfoSection );
 
   var credit = getThatDiv[3].childNodes[7];
   var paypal = getThatDiv[3].childNodes[9];
@@ -288,24 +288,29 @@ function paymentInfoSection() {
 function formValidation() {
   // TODO:  If any of the following validation errors exist, prevent the user from submitting the form:
   var button = document.getElementsByTagName('button');
-  button[0].
-  $('button').change(function() {
-
-
-  });
+  button[0].setAttribute('id', 'register-button');
+  var register = document.getElementById('register-button');
+  register.addEventListener('click', validName);
 }
 
-function validName() {
+
+function validName(event) {
   // TODO Name field can't be blank
+  event.preventDefault();
   var getName = document.getElementById('name');
   getName.value;
+  if (getName.value) {
+    console.log('Something entered.');
+  } else if (!getName.value) {
+    console.log('Name field blank.');
+  }
 }
 
 function validEmail() {
   // TODO Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
 }
 
-function validActivities()
+function validActivities() {
   // TODO Must select at least one checkbox under the "Register for Activities" section of the form.
 }
 
@@ -359,4 +364,5 @@ $(document).ready(function() {
   registerForActivities();
   runningTotal();
   paymentInfoSection();
+  formValidation();
 });
