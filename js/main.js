@@ -128,7 +128,15 @@ function runningTotal() {
   // Append a label to this fieldtest & update its innerText w/ total.
   var label = document.createElement('label');
   var total = 0;
-  var totalArr = [];
+  /* Counters for New Attemp */
+  var all_counter = 0;
+  var jsframeworks_counter = 0;
+  var jslibs_counter = 0;
+  var express_counter = 0;
+  var node_counter = 0;
+  var built_tools_counter = 0;
+  var npm_counter = 0;
+  // var totalArr = [];
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
 
   $('input[type="checkbox"]').change(function() {
@@ -137,30 +145,36 @@ function runningTotal() {
     // SOLUTION: create an array, if checked, then grab that name=value, push it to the array.
     // if (checked && not in the array) {add that value to total}
     // if unchecked, Not sure how to check for that, remove that name=value from the array and subtract that value from the total.
-
+/* -------------------------------------------------------------*/
+    // NEW Attempt at Running Total:
     for (var idx=3; idx < inputLength; idx += 2) {
-      // Truthy/Falsey if checkbox is checked or not.
-      if (getActivitiesFieldset[0].childNodes[idx].children[0].checked) {
-        // get the name value of each checkbox      // getName used out of Scope below:
-        var getName = getActivitiesFieldset[0].childNodes[idx].firstChild.attributes[1].value;
-        // conditional only runs if name/value is not in the arr
-        if (!totalArr.includes(getName) && totalArr.length <= 4) {
-          totalArr.push(getName);
-          var dollar = getActivitiesFieldset[0].childNodes[idx].innerText;
-          var num = dollar.match((/([0-9]{3})/g));
-          total += parseInt(num);
-      } else if (totalArr.includes(getName) ) {
-          // If totalArr is emptied, Then it could be filled multiple times & as a result the total cost could be more than max allowed.
-          totalArr.pop(getName);
-          var dollar = getActivitiesFieldset[0].childNodes[idx].innerText;
-          var num = dollar.match((/([0-9]{3})/g));
-          total -= parseInt(num);
-        }
+
+      // var getLabelInput = <label><input name='all'>Main Conf $200</label>
+      var getLabelInput = getActivitiesFieldset[0].childNodes[idx];
+      // var getName = all, js-frameworks, express, node, etc
+      var getName = getLabelInput.firstChild.attributes[1].value;
+      // var isChecked = true or false val for input checkbox
+      var isChecked = getLabelInput.childNodes[0].checked;
+
+      if (getName === 'all' && isChecked === true && all_counter === 0 ) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total += parseInt(count);
+        all_counter++;
+      } else if (getName ==='all' && isChecked === false && all_counter === 1) {
+        var dollar = getLabelInput.innerText;
+        var num = dollar.match((/([0-9]{3})/g));
+        var count = num.pop();
+        total -= parseInt(count);
+        all_counter--;
       }
-    }
+
+
     label.className = 'cost';
     label.innerText = 'Total: $' + total;
     getActivitiesFieldset[0].append(label);
+    };
   });
 }
 
