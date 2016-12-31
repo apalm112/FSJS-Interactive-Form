@@ -129,9 +129,10 @@ function runningTotal() {
   var label = document.createElement('label');
   var total = 0;
   var totalArr = [];
-  var inputLength = getActivitiesFieldset[0].childNodes.length;
+  var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
 
   $('input[type="checkbox"]').change(function() {
+
     // TODO: Problem: current running total does not Subtract amount when input is unchecked.
     // SOLUTION: create an array, if checked, then grab that name=value, push it to the array.
     // if (checked && not in the array) {add that value to total}
@@ -139,9 +140,10 @@ function runningTotal() {
 
     for (var idx=3; idx < inputLength; idx += 2) {
       // Truthy/Falsey if checkbox is checked or not.
-      // getName used out of Scope below:
       if (getActivitiesFieldset[0].childNodes[idx].children[0].checked) {
+        // get the name value of each checkbox      // getName used out of Scope below:
         var getName = getActivitiesFieldset[0].childNodes[idx].firstChild.attributes[1].value;
+        // conditional only runs if name/value is not in the arr
         if (!totalArr.includes(getName) && totalArr.length <= 4) {
           totalArr.push(getName);
           var dollar = getActivitiesFieldset[0].childNodes[idx].innerText;
@@ -149,10 +151,10 @@ function runningTotal() {
           total += parseInt(num);
       } else if (totalArr.includes(getName) ) {
           // If totalArr is emptied, Then it could be filled multiple times & as a result the total cost could be more than max allowed.
-        // totalArr.remove(getName)
-        // var dollar = getActivitiesFieldset[0].childNodes[idx].innerText;
-        // var num = dollar.match((/([0-9]{3})/g));
-        // total -= parseInt(num);
+          totalArr.pop(getName);
+          var dollar = getActivitiesFieldset[0].childNodes[idx].innerText;
+          var num = dollar.match((/([0-9]{3})/g));
+          total -= parseInt(num);
         }
       }
     }
