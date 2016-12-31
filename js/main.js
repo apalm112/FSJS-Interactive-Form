@@ -285,19 +285,26 @@ function paymentInfoSection() {
   }
 }
 
-
 function formValidation() {
-  // TODO:
-  // If any of the following validation errors exist, prevent the user from submitting the form:
-  // Name field can't be blank
-  // Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
-  // Must select at least one checkbox under the "Register for Activities" section of the form.
-  // If the selected payment option is "Credit Card," make sure the user has supplied a credit card number, a zip code, and a 3 number CVV value before the form can be submitted.
-  // Credit card field should only accept a number between 13 and 16 digits
-  // The zipcode field should accept a 5-digit number
-  // The CVV should only accept a number that is exactly 3 digits long
+  // TODO:  If any of the following validation errors exist, prevent the user from submitting the form:
+
+  // TODO Name field can't be blank
+
+
+  // TODO Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
+
+  // TODO Must select at least one checkbox under the "Register for Activities" section of the form.
+
+  // TODO If the selected payment option is "Credit Card," make sure the user has supplied a credit card number, a zip code, and a 3 number CVV value before the form can be submitted.
+
+  // TODO Credit card field should only accept a number between 13 and 16 digits
+
+  // TODO The zipcode field should accept a 5-digit number
+
+  // TODO The CVV should only accept a number that is exactly 3 digits long
 
 }
+
 
 function formValidationMessages() {
   // TODO: Provide some kind of indication when there’s a validation error. The field’s borders could turn red, for example, or a message could appear near the field or at the top of the form
