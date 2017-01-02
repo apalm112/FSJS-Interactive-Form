@@ -307,14 +307,11 @@ function validName(event) {
   // DONE: Name field can't be blank
   event.preventDefault();
   var getName = document.getElementById('name');
-
-  if (getName.value.length > 5) {
-    console.log('name entered.');
+  if (getName.value.length >= 4) {
     getName.previousElementSibling.style.color = '#000';
     getName.previousElementSibling.innerText = 'Name:';
   } else {
-    console.log('Name field blank.');
-    getName.previousElementSibling.style.color = 'red';
+    getName.previousElementSibling.style.color = '#c92233';
     getName.previousElementSibling.innerText = 'Name:  (please provide your name)';
   }
 }
@@ -322,15 +319,16 @@ function validName(event) {
 function validEmail(event) {
   // TODO Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
   event.preventDefault();
-  var getEmail = document.getElementById('mail');
-  if (getEmail.value) {
-    console.log('email entered.');
-    getEmail.previousElementSibling.style.color = '#000';
-    getEmail.previousElementSibling.innerText = 'Email:';
-  } else if (!getEmail.value) {
-    console.log('email field blank.');
-    getEmail.previousElementSibling.style.color = 'red';
-    getEmail.previousElementSibling.innerText = 'Email:  (please provide your email)';
+  var getId = document.getElementById('mail');
+  var wha = getId.value;
+  var checkEmail = wha.match((/([a-z]{2,})\@[a-z]{3,}\.[a-z]{2}/g));
+
+  if (checkEmail) {
+    getId.previousElementSibling.style.color = '#000';
+    getId.previousElementSibling.innerText = 'Email:';
+  } else if (!checkEmail) {
+    getId.previousElementSibling.style.color = '#c92233';
+    getId.previousElementSibling.innerText = 'Email:  (please provide your email)';
   }
 }
 
@@ -340,10 +338,11 @@ function validTShirt(event) {
   var getTShirt = document.getElementById('design');
   var getTShirtLegend = document.getElementsByClassName('shirt');
   if (getTShirt.value === 'Select Theme') {
-    getTShirtLegend[0].childNodes[1].innerHTML = 'T-Shirt Info' + '<p id="shirtValid">Don\'t forget to pick a shirt WEIRDO!</p>';
-    getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.color = 'red';
-  } else {
-    getTShirtLegend[0].childNodes[1].firstChild.nextSibling.remove();
+    getTShirtLegend[0].childNodes[1].innerHTML = 'T-Shirt Info' + '<p id="shirtValid">Don\'t forget to pick a shirt</p>';
+    getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
+  }
+  if (getTShirt.value !== 'Select Theme') {
+    getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.display='none';
   }
 }
 
@@ -370,7 +369,7 @@ function validActivities(event) {
     console.log('no activity checked.');
     // getActivitiesFieldset[0].childNodes[1].style.color = 'red';
     getActivitiesFieldset[0].childNodes[1].appendChild(noActivity);
-    getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.color = 'red';
+    getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
   }
 }
 
