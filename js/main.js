@@ -297,6 +297,7 @@ function formValidation() {
   var register = document.getElementById('register-button');
   register.addEventListener('click', validName);
   register.addEventListener('click', validEmail);
+  register.addEventListener('click', validTShirt);
   register.addEventListener('click', validActivities);
   register.addEventListener('click', validCreditCard);
   // register.addEventListener('click', validCVV);
@@ -304,23 +305,19 @@ function formValidation() {
 
 function validName(event) {
   // TODO Name field can't be blank
-  // TODO check jQueryBasics folder for password submission app.js!
   event.preventDefault();
   var getName = document.getElementById('name');
-  // var nameSpan = document.createElement('span');
-  // nameSpan.setAttribute('id', 'validate');
-  // nameSpan.style.background = 'blue';
 
   if (getName.value) {
     console.log('name entered.');
-    getName.style.border = '2px solid #c1deeb';
+    // getName.style.border = '2px solid #c1deeb';
     getName.previousElementSibling.style.color = '#000';
+    getName.previousElementSibling.innerText = 'Name:';
   } else if (!getName.value) {
-    // getName.append(nameSpan);
     console.log('Name field blank.');
-    getName.style.border = '3px solid red';
     getName.previousElementSibling.style.color = 'red';
-    getName.setAttribute('required', 'required');
+    getName.previousElementSibling.innerText = 'Name:  (please provide your name)';
+    // getName.setAttribute('required', 'required');
   }
 }
 
@@ -330,12 +327,26 @@ function validEmail(event) {
   var getEmail = document.getElementById('mail');
   if (getEmail.value) {
     console.log('email entered.');
-    getEmail.style.border = '2px solid #c1deeb';
     getEmail.previousElementSibling.style.color = '#000';
+    getEmail.previousElementSibling.innerText = 'Email:';
   } else if (!getEmail.value) {
     console.log('email field blank.');
-    getEmail.style.border = '3px solid red';
     getEmail.previousElementSibling.style.color = 'red';
+    getEmail.previousElementSibling.innerText = 'Email:  (please provide your email)';
+  }
+}
+
+function validTShirt(event) {
+  // TODO Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
+  event.preventDefault();
+  var getTShirt = document.getElementById('design');
+  var getTShirtLegend = document.getElementsByClassName('shirt');
+  if (getTShirt.value === 'Select Theme') {
+    getTShirtLegend[0].childNodes[1].style.color = 'red';
+    getTShirtLegend[0].childNodes[1].innerText = 'T-Shirt Info (Don\'t forget to pick a T-Shirt)';
+  } else {
+    getTShirtLegend[0].childNodes[1].style.color = '#000';
+    getTShirtLegend[0].childNodes[1].innerText = 'T-Shirt Info';
   }
 }
 
