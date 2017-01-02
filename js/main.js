@@ -300,7 +300,8 @@ function formValidation() {
   register.addEventListener('click', validTShirt);
   register.addEventListener('click', validActivities);
   register.addEventListener('click', validCreditCard);
-  // register.addEventListener('click', validCVV);
+  register.addEventListener('click', validZipCode);
+  register.addEventListener('click', validCVV);
 }
 
 function validName(event) {
@@ -369,42 +370,40 @@ function validActivities(event) {
 }
 
 
-function validCreditCard(event) {
+/* function validCreditCard(event) {
   // TODO If the selected payment option is "Credit Card," make sure the user has supplied a credit card number, a zip code, and a 3 number CVV value before the form can be submitted.
   ccLength();
-}
+  validCVV();
+}*/
 
-function ccLength() {
+function validCreditCard(event) {
   // TODO Credit card field should only accept a number between 13 and 16 digits
+  event.preventDefault();
   var getCC = document.getElementById('cc-num');
-  var nums = getCC.value;
-  var checkCC = nums.match((/[^0-9]/g));
+  getCC.setAttribute('maxlength', 16);
+  var checkCC = (/\d{13,16}$/g);
 
-  if (isNaN(nums) || nums === '') {
+  if (!checkCC.test(getCC.value)) {
     getCC.previousElementSibling.style.color = '#c92233';
     getCC.previousElementSibling.innerText = 'Card Number: Enter a valid card number Hobbit';
-  } else if (!isNaN(nums) && nums.length > 12 && nums.length < 17) {
+  } else {
     getCC.previousElementSibling.style.color = '#000';
     getCC.previousElementSibling.innerText = 'Card Number';
   }
-
-// a*[a-z];
-  // if (checkCC !== null && getCC.value.length > 12 && getCC.value.length < 17 && ) {
-  // } else {
-  //   getCC.previousElementSibling.style.color = '#c92233';
-  //   getCC.previousElementSibling.innerText = 'Card Number: Enter a valid card number Hobbit';
-  // }
 }
 
-function validZipCode() {
+function validZipCode(event) {
   // TODO The zipcode field should accept a 5-digit number
-
+  event.preventDefault();
+  var zipCode = document.getElementById('zip');
+  zipCode.setAttribute('maxlength', 5);
 }
 
-function validCVV() {
+function validCVV(event) {
   // TODO The CVV should only accept a number that is exactly 3 digits long
+  event.preventDefault();
   var cvv = document.getElementById('cvv');
-  var getCvv = cvv.value;
+  cvv.setAttribute('maxlength', 3);
 }
 
 
