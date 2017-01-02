@@ -323,7 +323,7 @@ function validEmail(event) {
   var wha = getId.value;
   var checkEmail = wha.match((/([a-z]{2,})\@[a-z]{3,}\.[a-z]{2}/g));
 
-  if (checkEmail) {
+  if (checkEmail !== null) {
     getId.previousElementSibling.style.color = '#000';
     getId.previousElementSibling.innerText = 'Email:';
   } else if (!checkEmail) {
@@ -378,15 +378,23 @@ function ccLength() {
   // TODO Credit card field should only accept a number between 13 and 16 digits
   var getCC = document.getElementById('cc-num');
   var nums = getCC.value;
-  var checkCC = nums.match((/[0-9]{13, 16}/g));
+  var checkCC = nums.match((/[^0-9]/g));
 
-  if (getCC.value.length > 12 && getCC.value.length < 17) {
-    getCC.previousElementSibling.style.color = '#000';
-    getCC.previousElementSibling.innerText = 'Card Number';
-  } else {
+  if (nums.match(/[^0-9]/g)) {
+    // if not true input is all numbers only
     getCC.previousElementSibling.style.color = '#c92233';
     getCC.previousElementSibling.innerText = 'Card Number: Enter a valid card number Hobbit';
+  } else {
+    getCC.previousElementSibling.style.color = '#000';
+    getCC.previousElementSibling.innerText = 'Card Number';
   }
+
+// a*[a-z];
+  // if (checkCC !== null && getCC.value.length > 12 && getCC.value.length < 17 && ) {
+  // } else {
+  //   getCC.previousElementSibling.style.color = '#c92233';
+  //   getCC.previousElementSibling.innerText = 'Card Number: Enter a valid card number Hobbit';
+  // }
 }
 
 function validZipCode() {
