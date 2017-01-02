@@ -304,20 +304,18 @@ function formValidation() {
 }
 
 function validName(event) {
-  // TODO Name field can't be blank
+  // DONE: Name field can't be blank
   event.preventDefault();
   var getName = document.getElementById('name');
 
-  if (getName.value) {
+  if (getName.value.length > 5) {
     console.log('name entered.');
-    // getName.style.border = '2px solid #c1deeb';
     getName.previousElementSibling.style.color = '#000';
     getName.previousElementSibling.innerText = 'Name:';
-  } else if (!getName.value) {
+  } else {
     console.log('Name field blank.');
     getName.previousElementSibling.style.color = 'red';
     getName.previousElementSibling.innerText = 'Name:  (please provide your name)';
-    // getName.setAttribute('required', 'required');
   }
 }
 
@@ -337,37 +335,45 @@ function validEmail(event) {
 }
 
 function validTShirt(event) {
-  // TODO Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
+  // DONE
   event.preventDefault();
   var getTShirt = document.getElementById('design');
   var getTShirtLegend = document.getElementsByClassName('shirt');
+  var pickTShirt = document.createElement('label');
+  pickTShirt.innerText = 'Don\'t forget to pick a T-Shirt';
+
   if (getTShirt.value === 'Select Theme') {
-    getTShirtLegend[0].childNodes[1].style.color = 'red';
-    getTShirtLegend[0].childNodes[1].innerText = 'T-Shirt Info (Don\'t forget to pick a T-Shirt)';
+    getTShirtLegend[0].childNodes[1].appendChild(pickTShirt);
+    getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.color = 'red';
   } else {
-    getTShirtLegend[0].childNodes[1].style.color = '#000';
-    getTShirtLegend[0].childNodes[1].innerText = 'T-Shirt Info';
+    getTShirtLegend[0].childNodes[1].firstChild.nextSibling.remove(pickTShirt);
   }
 }
 
 function validActivities(event) {
-  // TODO Must select at least one checkbox under the "Register for Activities" section of the form. This function is NOT working. b
+  // TODO Must select at least one checkbox under the "Register for Activities" section of the form. This function is NOT working.
   event.preventDefault();
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
+  var noActivity = document.createElement('label');
+  noActivity.innerText = 'Please select an Activity';
+
   for (var idx=3; idx < inputLength; idx += 2) {
     // var getLabelInput = <label><input name='all'>Main Conf $200</label>
     var getLabelInput = getActivitiesFieldset[0].childNodes[idx];
     // var isChecked = true or false val for input checkbox
     var isChecked = getLabelInput.childNodes[0].checked;
   }
-  // var getActivities = document.getElementById('');
+
   var checkForActivity = getActivitiesFieldset[0].childNodes[5].children[0].checked;
   if (checkForActivity) {
     console.log('activity checked.');
     getActivitiesFieldset[0].childNodes[1].style.color = '#184f68';
+    getActivitiesFieldset[0].childNodes[1].remove(noActivity);
   } else if (!checkForActivity) {
     console.log('no activity checked.');
-    getActivitiesFieldset[0].childNodes[1].style.color = 'red';
+    // getActivitiesFieldset[0].childNodes[1].style.color = 'red';
+    getActivitiesFieldset[0].childNodes[1].appendChild(noActivity);
+    getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.color = 'red';
   }
 }
 
