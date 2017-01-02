@@ -350,8 +350,8 @@ function validActivities(event) {
   // TODO Must select at least one checkbox under the "Register for Activities" section of the form. This function is NOT working.
   event.preventDefault();
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
-  var noActivity = document.createElement('label');
-  noActivity.innerText = 'Please select an Activity';
+  // var noActivity = document.createElement('label');
+  // noActivity.innerText = 'Please select an Activity';
 
   for (var idx=3; idx < inputLength; idx += 2) {
     // var getLabelInput = <label><input name='all'>Main Conf $200</label>
@@ -360,18 +360,20 @@ function validActivities(event) {
     var isChecked = getLabelInput.childNodes[0].checked;
   }
 
-  var checkForActivity = getActivitiesFieldset[0].childNodes[5].children[0].checked;
-  if (checkForActivity) {
+  // var checkForActivity = getActivitiesFieldset[0].childNodes[5].children[0].checked;
+
+  if (isChecked) {
     console.log('activity checked.');
     getActivitiesFieldset[0].childNodes[1].style.color = '#184f68';
-    getActivitiesFieldset[0].childNodes[1].remove(noActivity);
-  } else if (!checkForActivity) {
+    getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.display='none';
+  } else if (!isChecked) {
     console.log('no activity checked.');
     // getActivitiesFieldset[0].childNodes[1].style.color = 'red';
-    getActivitiesFieldset[0].childNodes[1].appendChild(noActivity);
+    getActivitiesFieldset[0].childNodes[1].innerHTML = 'Register for Activities' + '<p>Please select an Activity</p>';
     getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
   }
 }
+
 
 function validCreditCard() {
   // TODO If the selected payment option is "Credit Card," make sure the user has supplied a credit card number, a zip code, and a 3 number CVV value before the form can be submitted.
