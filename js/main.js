@@ -14,11 +14,13 @@ function setInitialFocus() {
 
 function createOtherJobTextarea() {
   // DONE: A text field that will be revealed when the "Other" option is selected from the "Job Role" drop down menu.  Give the field an id of “other-title,” and add the placeholder text of "Your Job Role" to the field.
-  // TODO: Fix error thrown to console when else clause conditional runs while there is No input text to remove.
-  // TODO: Fix margins on newTextArea to fit better onto the form.
+  // DONE: Fix error thrown to console when else clause conditional runs while there is No input text to remove.
+  // DONE: Fix margins on newTextArea to fit better onto the form.
   var getSelectJobRole = document.getElementById('title');
   var newTextArea = document.createElement('input');
-  newTextArea.setAttribute('id', 'other-title');
+  newTextArea.setAttribute('type', 'text');
+  newTextArea.setAttribute('id', 'other_title');
+  newTextArea.setAttribute('name', 'job_role');
   newTextArea.setAttribute('placeholder', 'Your Job Role');
   $('#title').change(function() {
     if (getSelectJobRole.value === 'other') {
@@ -302,17 +304,20 @@ function validName(event) {
   // TODO check jQueryBasics folder for password submission app.js!
   event.preventDefault();
   var getName = document.getElementById('name');
-  var nameSpan = document.createElement('span');
-  nameSpan.setAttribute('id', 'validate');
-  nameSpan.style.background = 'blue';
+  // var nameSpan = document.createElement('span');
+  // nameSpan.setAttribute('id', 'validate');
+  // nameSpan.style.background = 'blue';
 
   if (getName.value) {
     console.log('name entered.');
     getName.style.border = '2px solid #c1deeb';
+    getName.previousElementSibling.style.color = '#000';
   } else if (!getName.value) {
-    getName.append(nameSpan);
+    // getName.append(nameSpan);
     console.log('Name field blank.');
     getName.style.border = '3px solid red';
+    getName.previousElementSibling.style.color = 'red';
+    getName.setAttribute('required', 'required');
   }
 }
 
@@ -323,14 +328,16 @@ function validEmail(event) {
   if (getEmail.value) {
     console.log('email entered.');
     getEmail.style.border = '2px solid #c1deeb';
+    getEmail.previousElementSibling.style.color = '#000';
   } else if (!getEmail.value) {
     console.log('email field blank.');
     getEmail.style.border = '3px solid red';
+    getEmail.previousElementSibling.style.color = 'red';
   }
 }
 
 function validActivities(event) {
-  // TODO Must select at least one checkbox under the "Register for Activities" section of the form.
+  // TODO Must select at least one checkbox under the "Register for Activities" section of the form. This function is NOT working. b
   event.preventDefault();
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
   for (var idx=3; idx < inputLength; idx += 2) {
@@ -343,10 +350,10 @@ function validActivities(event) {
   var checkForActivity = getActivitiesFieldset[0].childNodes[5].children[0].checked;
   if (checkForActivity) {
     console.log('activity checked.');
-    getActivitiesFieldset[0].childNodes[1].style.border = '2px solid #c1deeb';
+    getActivitiesFieldset[0].childNodes[1].style.color = '#184f68';
   } else if (!checkForActivity) {
     console.log('no activity checked.');
-    getActivitiesFieldset[0].childNodes[1].style.border = '3px solid red';
+    getActivitiesFieldset[0].childNodes[1].style.color = 'red';
   }
 }
 
