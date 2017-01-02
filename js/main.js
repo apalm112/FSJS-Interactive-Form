@@ -292,19 +292,25 @@ function formValidation() {
   var register = document.getElementById('register-button');
   register.addEventListener('click', validName);
   register.addEventListener('click', validEmail);
-  // register.addEventListener('click', validActivities);
-  // register.addEventListener('click', validCreditCard);
+  register.addEventListener('click', validActivities);
+  register.addEventListener('click', validCreditCard);
   // register.addEventListener('click', validCVV);
 }
 
 function validName(event) {
   // TODO Name field can't be blank
+  // TODO check jQueryBasics folder for password submission app.js!
   event.preventDefault();
   var getName = document.getElementById('name');
+  var nameSpan = document.createElement('span');
+  nameSpan.setAttribute('id', 'validate');
+  nameSpan.style.background = 'blue';
+
   if (getName.value) {
     console.log('name entered.');
     getName.style.border = '2px solid #c1deeb';
   } else if (!getName.value) {
+    getName.append(nameSpan);
     console.log('Name field blank.');
     getName.style.border = '3px solid red';
   }
@@ -316,22 +322,31 @@ function validEmail(event) {
   var getEmail = document.getElementById('mail');
   if (getEmail.value) {
     console.log('email entered.');
-  } else if (!getEmail) {
+    getEmail.style.border = '2px solid #c1deeb';
+  } else if (!getEmail.value) {
     console.log('email field blank.');
-    getEmailstyle.border = '3px solid red';
+    getEmail.style.border = '3px solid red';
   }
 }
 
 function validActivities(event) {
   // TODO Must select at least one checkbox under the "Register for Activities" section of the form.
   event.preventDefault();
-  var getActivities = document.getElementById('mail');
-  getEmail;
-  if (getEmail.value) {
-    console.log('email entered.');
-  } else if (!getEmailvalue) {
-    console.log('email field blank.');
-    getEmailstyle.border = '3px solid red';
+  var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
+  for (var idx=3; idx < inputLength; idx += 2) {
+    // var getLabelInput = <label><input name='all'>Main Conf $200</label>
+    var getLabelInput = getActivitiesFieldset[0].childNodes[idx];
+    // var isChecked = true or false val for input checkbox
+    var isChecked = getLabelInput.childNodes[0].checked;
+  }
+  // var getActivities = document.getElementById('');
+  var checkForActivity = getActivitiesFieldset[0].childNodes[5].children[0].checked;
+  if (checkForActivity) {
+    console.log('activity checked.');
+    getActivitiesFieldset[0].childNodes[1].style.border = '2px solid #c1deeb';
+  } else if (!checkForActivity) {
+    console.log('no activity checked.');
+    getActivitiesFieldset[0].childNodes[1].style.border = '3px solid red';
   }
 }
 

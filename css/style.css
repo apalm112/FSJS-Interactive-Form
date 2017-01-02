@@ -161,6 +161,13 @@ button:hover {
   text-decoration: line-through;
 }
 
+.validate {
+  border: 2px solid red;
+  width: 50%;
+  heigth: 50%;
+  background-color: pink;
+}
+
 /* =================================
   Media Queries
 ==================================== */
