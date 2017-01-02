@@ -380,11 +380,10 @@ function ccLength() {
   var nums = getCC.value;
   var checkCC = nums.match((/[^0-9]/g));
 
-  if (nums.match(/[^0-9]/g)) {
-    // if not true input is all numbers only
+  if (isNaN(nums) || nums === '') {
     getCC.previousElementSibling.style.color = '#c92233';
     getCC.previousElementSibling.innerText = 'Card Number: Enter a valid card number Hobbit';
-  } else {
+  } else if (!isNaN(nums) && nums.length > 12 && nums.length < 17) {
     getCC.previousElementSibling.style.color = '#000';
     getCC.previousElementSibling.innerText = 'Card Number';
   }
@@ -404,7 +403,8 @@ function validZipCode() {
 
 function validCVV() {
   // TODO The CVV should only accept a number that is exactly 3 digits long
-
+  var cvv = document.getElementById('cvv');
+  var getCvv = cvv.value;
 }
 
 
