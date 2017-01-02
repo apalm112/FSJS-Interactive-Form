@@ -339,14 +339,11 @@ function validTShirt(event) {
   event.preventDefault();
   var getTShirt = document.getElementById('design');
   var getTShirtLegend = document.getElementsByClassName('shirt');
-  var pickTShirt = document.createElement('label');
-  pickTShirt.innerText = 'Don\'t forget to pick a T-Shirt';
-
   if (getTShirt.value === 'Select Theme') {
-    getTShirtLegend[0].childNodes[1].appendChild(pickTShirt);
+    getTShirtLegend[0].childNodes[1].innerHTML = 'T-Shirt Info' + '<p id="shirtValid">Don\'t forget to pick a shirt WEIRDO!</p>';
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.color = 'red';
   } else {
-    getTShirtLegend[0].childNodes[1].firstChild.nextSibling.remove(pickTShirt);
+    getTShirtLegend[0].childNodes[1].firstChild.nextSibling.remove();
   }
 }
 
