@@ -350,27 +350,23 @@ function validActivities(event) {
   // TODO Must select at least one checkbox under the "Register for Activities" section of the form. This function is NOT working.
   event.preventDefault();
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
-  // var noActivity = document.createElement('label');
-  // noActivity.innerText = 'Please select an Activity';
 
   for (var idx=3; idx < inputLength; idx += 2) {
     // var getLabelInput = <label><input name='all'>Main Conf $200</label>
     var getLabelInput = getActivitiesFieldset[0].childNodes[idx];
     // var isChecked = true or false val for input checkbox
     var isChecked = getLabelInput.childNodes[0].checked;
-  }
 
-  // var checkForActivity = getActivitiesFieldset[0].childNodes[5].children[0].checked;
-
-  if (isChecked) {
-    console.log('activity checked.');
-    getActivitiesFieldset[0].childNodes[1].style.color = '#184f68';
-    getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.display='none';
-  } else if (!isChecked) {
-    console.log('no activity checked.');
-    // getActivitiesFieldset[0].childNodes[1].style.color = 'red';
-    getActivitiesFieldset[0].childNodes[1].innerHTML = 'Register for Activities' + '<p>Please select an Activity</p>';
-    getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
+    if (isChecked) {
+      console.log('yeah');
+      getActivitiesFieldset[0].childNodes[1].style.color = '#184f68';
+      getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.display='none';
+      return;
+    } else if (!isChecked) {
+      console.log('nnnoooooooo');
+      getActivitiesFieldset[0].childNodes[1].innerHTML = 'Register for Activities' + '<p>Please select an Activity</p>';
+      getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
+    }
   }
 }
 
