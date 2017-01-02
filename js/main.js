@@ -5,7 +5,6 @@
 /* Global Variables */
 var getActivitiesFieldset = document.getElementsByClassName('activities');
 
-
 // DONE: Set focus on first text field on page load w/ jQuery.
 function setInitialFocus() {
   var $setPageLoadFocus = $('#name');
@@ -14,7 +13,7 @@ function setInitialFocus() {
 
 function createOtherJobTextarea() {
   // DONE: A text field that will be revealed when the "Other" option is selected from the "Job Role" drop down menu.  Give the field an id of “other-title,” and add the placeholder text of "Your Job Role" to the field.
-  // TODO: Fix error thrown to console when else clause conditional runs while there is No input text to remove.
+  // DONE: Fix error thrown to console when else clause conditional runs while there is No input text to remove.
   // DONE: Fix margins on newTextArea to fit better onto the form.
   var getSelectJobRole = document.getElementById('title');
   var newTextArea = document.createElement('input');
@@ -32,19 +31,17 @@ function createOtherJobTextarea() {
   });
 }
 
-
 function tShirtInfo() {
   // DONE: For the T-Shirt color menu:  only display the color options that match the design selected in the "Design" menu.
   var getDesignSelect = document.getElementById('design');
   // var $getDesignSelect = $('design');
-
   var getColorSelect = document.getElementById('color');
   // var $getColorSelect = $('color');
-
   $('#design').change(function() {
-    // TODO: Change color select option value when attribute is disabled to corresponding color restrictions, i.e.--if tomato is selected & then theme is switched to js puns, automagically make the color select option change.
+    // DONE: Change color select option value when attribute is disabled to corresponding color restrictions, i.e.--if tomato is selected & then theme is switched to js puns, automagically make the color select option change.
     if (getDesignSelect.value === 'js puns') {
       //  then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
+      getColorSelect[3].defaultSelected = false;
       getColorSelect[0].defaultSelected = true;
       for (var idx=3; idx<6; idx++) {
         getColorSelect[idx].style.display = 'none';
@@ -54,6 +51,7 @@ function tShirtInfo() {
       }
     } else if (getDesignSelect.value === 'heart js') {
         // then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
+      getColorSelect[0].defaultSelected = false;
       getColorSelect[3].defaultSelected = true;
       for (var idx=0; idx<3; idx++) {
         getColorSelect[idx].style.display = 'none';
@@ -62,6 +60,9 @@ function tShirtInfo() {
         getColorSelect[idx].style.display = 'block';
       }
     } else {
+      getColorSelect[0].defaultSelected = false;
+      getColorSelect[3].defaultSelected = false;
+      getColorSelect[0].defaultSelected = true;
       for (var idx=0; idx<getColorSelect.length; idx++) {
         getColorSelect[idx].style.display = 'block';
       }
