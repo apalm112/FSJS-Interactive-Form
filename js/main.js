@@ -347,7 +347,7 @@ function validTShirt(event) {
 }
 
 function validActivities(event) {
-  // TODO Must select at least one checkbox under the "Register for Activities" section of the form. This function is NOT working.
+  // DONE Must select at least one checkbox under the "Register for Activities" section of the form. This function is NOT working.
   event.preventDefault();
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
 
@@ -358,12 +358,10 @@ function validActivities(event) {
     var isChecked = getLabelInput.childNodes[0].checked;
 
     if (isChecked) {
-      console.log('yeah');
       getActivitiesFieldset[0].childNodes[1].style.color = '#184f68';
       getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.display='none';
       return;
     } else if (!isChecked) {
-      console.log('nnnoooooooo');
       getActivitiesFieldset[0].childNodes[1].innerHTML = 'Register for Activities' + '<p>Please select an Activity</p>';
       getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
     }
@@ -371,12 +369,24 @@ function validActivities(event) {
 }
 
 
-function validCreditCard() {
+function validCreditCard(event) {
   // TODO If the selected payment option is "Credit Card," make sure the user has supplied a credit card number, a zip code, and a 3 number CVV value before the form can be submitted.
+  ccLength();
 }
 
 function ccLength() {
   // TODO Credit card field should only accept a number between 13 and 16 digits
+  var getCC = document.getElementById('cc-num');
+  var nums = getCC.value;
+  var checkCC = nums.match((/[0-9]{13, 16}/g));
+
+  if (getCC.value.length > 12 && getCC.value.length < 17) {
+    getCC.previousElementSibling.style.color = '#000';
+    getCC.previousElementSibling.innerText = 'Card Number';
+  } else {
+    getCC.previousElementSibling.style.color = '#c92233';
+    getCC.previousElementSibling.innerText = 'Card Number: Enter a valid card number Hobbit';
+  }
 }
 
 function validZipCode() {
