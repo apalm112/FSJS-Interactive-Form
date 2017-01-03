@@ -435,13 +435,13 @@ function validCVV(event) {
 // STRETCH GOALS:
 function errorMessage(input) {
 // DONE: Form provides at least one error message that changes depending on the error.  For example, if the user hasn’t entered a credit card number and the field is completely blank, the error message reads “Please enter a credit card number.” If the field isn’t empty but contains only 10 numbers, the error message reads “Please enter a number that is at least 16 digits long.”
-  var regex = (/\d{13,16}$/g);
+  var regex = (/\d{16}$/g);
   var regexAlpha = (/([a-z])/g);   // regerex to check for alpha chars
 
   if (input.value === '') {
     input.previousElementSibling.style.color = '#c92233';
-    input.previousElementSibling.innerText = 'Card Number: You must enter a valid number';
-  } else if (input.value.length < 13 && (!regexAlpha.test(input.value))) {
+    input.previousElementSibling.innerText = 'Card Number: You must enter a valid card number';
+  } else if (input.value.length < 16 && (!regexAlpha.test(input.value))) {
     input.previousElementSibling.style.color = '#c92233';
     input.previousElementSibling.innerText = 'Enter card number at least 16 digits long';
   } else if (regexAlpha.test(input.value)) {
@@ -458,7 +458,45 @@ function errorMessage(input) {
 
 function realTimeValidationError() {
   // TODO:Program your form so that it provides a real-time validation error message for at least one text input field. Rather than providing an error message on submit, your form should check for errors and display messages as the user begins typing inside a text field. For example, if the user enters an invalid email address, the error appears as the user begins to type, and disappears as soon as the user has entered a complete and correctly formatted email address.
+// Get spans & hide them on page load
+  var spans = document.getElementsByClassName('real-time');
+  var ccNum = document.getElementById('cc-num');
+  var zipCode = document.getElementById('zip');
+  var cvv = document.getElementById('cvv');
+  var getId = document.getElementById('mail');
+
+  for (idx = 0; idx < spans.length; idx++) {
+    spans[idx].style.display = 'none';
+  }
+
+  getId.addEventListener('focus', validEmail);
+  getId.addEventListener('keyup', validEmail);
+  getId.addEventListener('focusout', validEmail);
+
+
+
+  ccNum.addEventListener('focus', validCreditCard);
+  ccNum.addEventListener('keyup', validCreditCard);
+  ccNum.addEventListener('focusout', validCreditCard);
+
+  zipCode.addEventListener('focus', validZipCode);
+  zipCode.addEventListener('keyup', validZipCode);
+  zipCode.addEventListener('focusout', validZipCode);
+
+  cvv.addEventListener('focus', validCVV);
+  cvv.addEventListener('keyup', validCVV);
+  cvv.addEventListener('focusout', validCVV);
+
+  validEmail();
+  validCreditCard();
+  validZipCode();
+  validCVV();
+
+// no
+
 }
+
+
 $(document).ready(function() {
   setInitialFocus();
   createOtherJobTextarea();
@@ -467,4 +505,5 @@ $(document).ready(function() {
   runningTotal();
   paymentInfoSection();
   formValidation();
+  realTimeValidationError();
 });
