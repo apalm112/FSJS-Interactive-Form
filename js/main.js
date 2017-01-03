@@ -291,7 +291,7 @@ function paymentInfoSection() {
 }
 
 function formValidation() {
-  // TODO:  If any of the following validation errors exist, prevent the user from submitting the form:
+  // DONE:  If any of the following validation errors exist, prevent the user from submitting the form:
   var button = document.getElementsByTagName('button');
   button[0].setAttribute('id', 'register-button');
   var register = document.getElementById('register-button');
@@ -370,7 +370,10 @@ function validActivities(event) {
 }
 
 
-  // TODO If the selected payment option is "Credit Card," make sure the user has supplied a credit card number, a zip code, and a 3 number CVV value before the form can be submitted.
+  // DONE If the selected payment option is "Credit Card," make sure the user has supplied a credit card number, a zip code, and a 3 number CVV value before the form can be submitted.
+  // DONE: Provide some kind of indication when there’s a validation error. The field’s borders could turn red, for example, or a message could appear near the field or at the top of the form
+  // There should be an error indication for the name field, email field, “Register for Activities” checkboxes, credit card number, zip code, and CVV
+
 function validCreditCard(event) {
   // TODO Credit card field should only accept a number between 13 and 16 digits
   event.preventDefault();
@@ -389,7 +392,7 @@ function validCreditCard(event) {
 }
 
 function validZipCode(event) {
-  // TODO The zipcode field should accept a 5-digit number
+  // DONE The zipcode field should accept a 5-digit number
   event.preventDefault();
   var zipCode = document.getElementById('zip');
   zipCode.setAttribute('maxlength', 5);
@@ -405,7 +408,7 @@ function validZipCode(event) {
 }
 
 function validCVV(event) {
-  // TODO The CVV should only accept a number that is exactly 3 digits long
+  // DONE The CVV should only accept a number that is exactly 3 digits long
   event.preventDefault();
   var cvv = document.getElementById('cvv');
   cvv.setAttribute('maxlength', 3);
@@ -419,14 +422,6 @@ function validCVV(event) {
     cvv.previousElementSibling.innerText = 'CVV';
   }
 }
-
-
-function formValidationMessages() {
-  // TODO: Provide some kind of indication when there’s a validation error. The field’s borders could turn red, for example, or a message could appear near the field or at the top of the form
-  // There should be an error indication for the name field, email field, “Register for Activities” checkboxes, credit card number, zip code, and CVV
-
-}
-
 
 // STRETCH GOALS:
 function hideColorOptions() {
