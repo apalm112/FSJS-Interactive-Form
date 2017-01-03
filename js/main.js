@@ -478,7 +478,7 @@ function realTimeValidationError() {
   cvv.addEventListener('keyup', validCVV);
   // TODO: add real-time validation in the scenario where a blank form is submitted all error messages are shown & as each input field is correctly filled then remove the corresponding error message for that input field.
   getName.addEventListener('keyup', validName);
-  getColorSelect.addEventListener('keyup', validTShirt);
+  getColorSelect.addEventListener('click', validTShirt);
   var getActivity = document.getElementById('register-error');
   getActivity.addEventListener('keyup', registerForActivities);
 }
