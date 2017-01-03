@@ -142,23 +142,6 @@ button:hover {
   width: 100%;
 }
 
-.real-time {
-  width: 170px;
-  height: 45px;
-  float: right;
-  border: transparent;
-  border-radius: 8px;
-  margin: 0 0 2px 3px;
-  padding: 3px;
-  color: #000;
-  background-color: #e54d4d;
-  text-align: center;
-
-
-}
-
-
-
 /* =================================
   Helper Classes
 ==================================== */

@@ -2,8 +2,12 @@
 
 // DONE: When JavaScript is switched off or unavailable, all the form fields that need to be filled out should be visible. For example, the “Your Job Role” text field should be visible on the page when JavaScript is switched off.
 
-/* Global Variables */
+/* Global Variables --------------------------------------------- */
 var getActivitiesFieldset = document.getElementsByClassName('activities');
+var getMail = document.getElementById('mail');
+var ccNum = document.getElementById('cc-num');
+var zipCode = document.getElementById('zip');
+var cvv = document.getElementById('cvv');
 
 
 // DONE: Set focus on first text field on page load w/ jQuery.
@@ -330,16 +334,16 @@ function validName(event) {
 function validEmail(event) {
   // DONE Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
   event.preventDefault();
-  var getId = document.getElementById('mail');
-  var userEmail = getId.value;
+  var getMail = document.getElementById('mail');
+  var userEmail = getMail.value;
   var checkEmail = userEmail.match((/([a-z]{2,})\@[a-z]{3,}\.[a-z]{2}/g));
 
   if (checkEmail !== null) {
-    getId.previousElementSibling.style.color = '#000';
-    getId.previousElementSibling.innerText = 'Email:';
+    getMail.previousElementSibling.style.color = '#000';
+    getMail.previousElementSibling.innerText = 'Email:';
   } else if (!checkEmail) {
-    getId.previousElementSibling.style.color = '#c92233';
-    getId.previousElementSibling.innerText = 'Email:  (please provide your email)';
+    getMail.previousElementSibling.style.color = '#c92233';
+    getMail.previousElementSibling.innerText = 'Email:  (please provide your email)';
   }
 }
 
@@ -387,10 +391,9 @@ function validActivities(event) {
 function validCreditCard(event) {
   // DONE Credit card field should only accept a number between 13 and 16 digits
   event.preventDefault();
-  var getCC = document.getElementById('cc-num');
-  getCC.setAttribute('maxlength', 16);
-  getCC.setAttribute('minlength', 13);
-  errorMessage(getCC);
+  ccNum.setAttribute('maxlength', 16);
+  ccNum.setAttribute('minlength', 13);
+  errorMessage(ccNum);
 }
 
 function validZipCode(event) {
@@ -437,7 +440,6 @@ function errorMessage(input) {
 // DONE: Form provides at least one error message that changes depending on the error.  For example, if the user hasn’t entered a credit card number and the field is completely blank, the error message reads “Please enter a credit card number.” If the field isn’t empty but contains only 10 numbers, the error message reads “Please enter a number that is at least 16 digits long.”
   var regex = (/\d{16}$/g);
   var regexAlpha = (/([a-z])/g);   // regerex to check for alpha chars
-
   if (input.value === '') {
     input.previousElementSibling.style.color = '#c92233';
     input.previousElementSibling.innerText = 'Card Number: You must enter a valid card number';
@@ -457,45 +459,19 @@ function errorMessage(input) {
 }
 
 function realTimeValidationError() {
-  // TODO:Program your form so that it provides a real-time validation error message for at least one text input field. Rather than providing an error message on submit, your form should check for errors and display messages as the user begins typing inside a text field. For example, if the user enters an invalid email address, the error appears as the user begins to type, and disappears as soon as the user has entered a complete and correctly formatted email address.
-// Get spans & hide them on page load
-  var spans = document.getElementsByClassName('real-time');
-  var ccNum = document.getElementById('cc-num');
-  var zipCode = document.getElementById('zip');
-  var cvv = document.getElementById('cvv');
-  var getId = document.getElementById('mail');
-
-  for (idx = 0; idx < spans.length; idx++) {
-    spans[idx].style.display = 'none';
-  }
-
-  getId.addEventListener('focus', validEmail);
-  getId.addEventListener('keyup', validEmail);
-  getId.addEventListener('focusout', validEmail);
-
-
+  // DONE:Program your form so that it provides a real-time validation error message for at least one text input field. Rather than providing an error message on submit, your form should check for errors and display messages as the user begins typing inside a text field. For example, if the user enters an invalid email address, the error appears as the user begins to type, and disappears as soon as the user has entered a complete and correctly formatted email address.
+  getMail.addEventListener('focus', validEmail);
+  getMail.addEventListener('keyup', validEmail);
 
   ccNum.addEventListener('focus', validCreditCard);
   ccNum.addEventListener('keyup', validCreditCard);
-  ccNum.addEventListener('focusout', validCreditCard);
 
   zipCode.addEventListener('focus', validZipCode);
   zipCode.addEventListener('keyup', validZipCode);
-  zipCode.addEventListener('focusout', validZipCode);
 
   cvv.addEventListener('focus', validCVV);
   cvv.addEventListener('keyup', validCVV);
-  cvv.addEventListener('focusout', validCVV);
-
-  validEmail();
-  validCreditCard();
-  validZipCode();
-  validCVV();
-
-// no
-
 }
-
 
 $(document).ready(function() {
   setInitialFocus();
