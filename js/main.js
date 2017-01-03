@@ -5,7 +5,6 @@
 /* Global Variables */
 var getActivitiesFieldset = document.getElementsByClassName('activities');
 
-
 // DONE: Set focus on first text field on page load w/ jQuery.
 function setInitialFocus() {
   var $setPageLoadFocus = $('#name');
@@ -14,11 +13,13 @@ function setInitialFocus() {
 
 function createOtherJobTextarea() {
   // DONE: A text field that will be revealed when the "Other" option is selected from the "Job Role" drop down menu.  Give the field an id of “other-title,” and add the placeholder text of "Your Job Role" to the field.
-  // TODO: Fix error thrown to console when else clause conditional runs while there is No input text to remove.
-  // TODO: Fix margins on newTextArea to fit better onto the form.
+  // DONE: Fix error thrown to console when else clause conditional runs while there is No input text to remove.
+  // DONE: Fix margins on newTextArea to fit better onto the form.
   var getSelectJobRole = document.getElementById('title');
   var newTextArea = document.createElement('input');
-  newTextArea.setAttribute('id', 'other-title');
+  newTextArea.setAttribute('type', 'text');
+  newTextArea.setAttribute('id', 'other_title');
+  newTextArea.setAttribute('name', 'job_role');
   newTextArea.setAttribute('placeholder', 'Your Job Role');
   $('#title').change(function() {
     if (getSelectJobRole.value === 'other') {
@@ -30,19 +31,18 @@ function createOtherJobTextarea() {
   });
 }
 
-
 function tShirtInfo() {
   // DONE: For the T-Shirt color menu:  only display the color options that match the design selected in the "Design" menu.
   var getDesignSelect = document.getElementById('design');
   // var $getDesignSelect = $('design');
-
   var getColorSelect = document.getElementById('color');
   // var $getColorSelect = $('color');
-
   $('#design').change(function() {
-    // TODO: Change color select option value when attribute is disabled to corresponding color restrictions, i.e.--if tomato is selected & then theme is switched to js puns, automagically make the color select option change.
+    // DONE: Change color select option value when attribute is disabled to corresponding color restrictions, i.e.--if tomato is selected & then theme is switched to js puns, automagically make the color select option change.
     if (getDesignSelect.value === 'js puns') {
       //  then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
+      getColorSelect[3].defaultSelected = false;
+      getColorSelect[0].defaultSelected = true;
       for (var idx=3; idx<6; idx++) {
         getColorSelect[idx].style.display = 'none';
       }
@@ -51,6 +51,8 @@ function tShirtInfo() {
       }
     } else if (getDesignSelect.value === 'heart js') {
         // then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
+      getColorSelect[0].defaultSelected = false;
+      getColorSelect[3].defaultSelected = true;
       for (var idx=0; idx<3; idx++) {
         getColorSelect[idx].style.display = 'none';
       }
@@ -58,6 +60,9 @@ function tShirtInfo() {
         getColorSelect[idx].style.display = 'block';
       }
     } else {
+      getColorSelect[0].defaultSelected = false;
+      getColorSelect[3].defaultSelected = false;
+      getColorSelect[0].defaultSelected = true;
       for (var idx=0; idx<getColorSelect.length; idx++) {
         getColorSelect[idx].style.display = 'block';
       }
@@ -232,9 +237,9 @@ function runningTotal() {
         npm_counter--;
       }
 
-    label.className = 'cost';
-    label.innerText = 'Total: $' + total;
-    getActivitiesFieldset[0].append(label);
+      label.className = 'cost';
+      label.innerText = 'Total: $' + total;
+      getActivitiesFieldset[0].append(label);
     };
   });
 }
@@ -286,32 +291,137 @@ function paymentInfoSection() {
 }
 
 function formValidation() {
-  // TODO:  If any of the following validation errors exist, prevent the user from submitting the form:
+  // DONE:  If any of the following validation errors exist, prevent the user from submitting the form:
+  var button = document.getElementsByTagName('button');
+  button[0].setAttribute('id', 'register-button');
+  var register = document.getElementById('register-button');
+  register.addEventListener('click', validName);
+  register.addEventListener('click', validEmail);
+  register.addEventListener('click', validTShirt);
+  register.addEventListener('click', validActivities);
+  register.addEventListener('click', validCreditCard);
+  register.addEventListener('click', validZipCode);
+  register.addEventListener('click', validCVV);
+}
 
-  // TODO Name field can't be blank
+function validName(event) {
+  // DONE: Name field can't be blank
+  event.preventDefault();
+  var getName = document.getElementById('name');
+  if (getName.value.length >= 4) {
+    getName.previousElementSibling.style.color = '#000';
+    getName.previousElementSibling.innerText = 'Name:';
+  } else {
+    getName.previousElementSibling.style.color = '#c92233';
+    getName.previousElementSibling.innerText = 'Name:  (please provide your name)';
+  }
+}
 
-
+function validEmail(event) {
   // TODO Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
+  event.preventDefault();
+  var getId = document.getElementById('mail');
+  var wha = getId.value;
+  var checkEmail = wha.match((/([a-z]{2,})\@[a-z]{3,}\.[a-z]{2}/g));
 
-  // TODO Must select at least one checkbox under the "Register for Activities" section of the form.
+  if (checkEmail !== null) {
+    getId.previousElementSibling.style.color = '#000';
+    getId.previousElementSibling.innerText = 'Email:';
+  } else if (!checkEmail) {
+    getId.previousElementSibling.style.color = '#c92233';
+    getId.previousElementSibling.innerText = 'Email:  (please provide your email)';
+  }
+}
 
-  // TODO If the selected payment option is "Credit Card," make sure the user has supplied a credit card number, a zip code, and a 3 number CVV value before the form can be submitted.
+function validTShirt(event) {
+  // DONE
+  event.preventDefault();
+  var getTShirt = document.getElementById('design');
+  var getTShirtLegend = document.getElementsByClassName('shirt');
+  if (getTShirt.value === 'Select Theme') {
+    getTShirtLegend[0].childNodes[1].innerHTML = 'T-Shirt Info' + '<p id="shirtValid">Don\'t forget to pick a shirt</p>';
+    getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
+  }
+  if (getTShirt.value !== 'Select Theme') {
+    getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.display='none';
+  }
+}
 
-  // TODO Credit card field should only accept a number between 13 and 16 digits
+function validActivities(event) {
+  // DONE Must select at least one checkbox under the "Register for Activities" section of the form. This function is NOT working.
+  event.preventDefault();
+  var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
 
-  // TODO The zipcode field should accept a 5-digit number
+  for (var idx=3; idx < inputLength; idx += 2) {
+    // var getLabelInput = <label><input name='all'>Main Conf $200</label>
+    var getLabelInput = getActivitiesFieldset[0].childNodes[idx];
+    // var isChecked = true or false val for input checkbox
+    var isChecked = getLabelInput.childNodes[0].checked;
 
-  // TODO The CVV should only accept a number that is exactly 3 digits long
-
+    if (isChecked) {
+      getActivitiesFieldset[0].childNodes[1].style.color = '#184f68';
+      getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.display='none';
+      return;
+    } else if (!isChecked) {
+      getActivitiesFieldset[0].childNodes[1].innerHTML = 'Register for Activities' + '<p>Please select an Activity</p>';
+      getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
+    }
+  }
 }
 
 
-function formValidationMessages() {
-  // TODO: Provide some kind of indication when there’s a validation error. The field’s borders could turn red, for example, or a message could appear near the field or at the top of the form
+  // DONE If the selected payment option is "Credit Card," make sure the user has supplied a credit card number, a zip code, and a 3 number CVV value before the form can be submitted.
+  // DONE: Provide some kind of indication when there’s a validation error. The field’s borders could turn red, for example, or a message could appear near the field or at the top of the form
   // There should be an error indication for the name field, email field, “Register for Activities” checkboxes, credit card number, zip code, and CVV
 
+function validCreditCard(event) {
+  // TODO Credit card field should only accept a number between 13 and 16 digits
+  event.preventDefault();
+  var getCC = document.getElementById('cc-num');
+  getCC.setAttribute('maxlength', 16);
+  getCC.setAttribute('minlength', 13);
+  var regex = (/\d{13,16}$/g);
+
+  if (!regex.test(getCC.value)) {
+    getCC.previousElementSibling.style.color = '#c92233';
+    getCC.previousElementSibling.innerText = 'Card Number: Enter a valid card number';
+  } else {
+    getCC.previousElementSibling.style.color = '#000';
+    getCC.previousElementSibling.innerText = 'Card Number';
+  }
 }
 
+function validZipCode(event) {
+  // DONE The zipcode field should accept a 5-digit number
+  event.preventDefault();
+  var zipCode = document.getElementById('zip');
+  zipCode.setAttribute('maxlength', 5);
+  zipCode.setAttribute('minlength', 5);
+  var regex = (/\d{5}$/g);
+  if (!regex.test(zipCode.value)) {
+    zipCode.previousElementSibling.style.color = '#c92233';
+    zipCode.previousElementSibling.innerText = 'Zip Code: Enter a valid zip code';
+  } else {
+    zipCode.previousElementSibling.style.color = '#000';
+    zipCode.previousElementSibling.innerText = 'Zip Code:';
+  }
+}
+
+function validCVV(event) {
+  // DONE The CVV should only accept a number that is exactly 3 digits long
+  event.preventDefault();
+  var cvv = document.getElementById('cvv');
+  cvv.setAttribute('maxlength', 3);
+  cvv.setAttribute('minlength', 3);
+  var regex = (/\d{3}$/g);
+  if (!regex.test(cvv.value)) {
+    cvv.previousElementSibling.style.color = '#c92233';
+    cvv.previousElementSibling.innerText = 'CVV: Enter a valid CVV';
+  } else {
+    cvv.previousElementSibling.style.color = '#000';
+    cvv.previousElementSibling.innerText = 'CVV';
+  }
+}
 
 // STRETCH GOALS:
 function hideColorOptions() {
@@ -337,4 +447,5 @@ $(document).ready(function() {
   registerForActivities();
   runningTotal();
   paymentInfoSection();
+  formValidation();
 });
