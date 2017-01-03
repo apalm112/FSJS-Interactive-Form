@@ -336,7 +336,7 @@ function validEmail(event) {
   event.preventDefault();
   var getMail = document.getElementById('mail');
   var userEmail = getMail.value;
-  var checkEmail = userEmail.match((/([a-z]{2,})\@[a-z]{3,}\.[a-z]{2}/g));
+  var checkEmail = userEmail.match((/([a-z]{2,})\@[a-z]{3,}\.[a-z]{3}/g));
 
   if (checkEmail !== null) {
     getMail.previousElementSibling.style.color = '#000';
@@ -356,7 +356,7 @@ function validTShirt(event) {
     getTShirtLegend[0].childNodes[1].innerHTML = 'T-Shirt Info' + '<p id="shirtValid">Don\'t forget to pick a shirt</p>';
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
   }
-  if (getTShirt.value !== 'Select Theme') {
+  if (getTShirt.value !== 'Select Theme' && getTShirtLegend[0].childNodes[1].firstChild.nextSibling.hasAttribute('id')) {
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.display='none';
   }
 }
@@ -458,11 +458,6 @@ function errorMessage(input) {
   }
 }
 
-function inputMatchValid() {
-  // Provide error message removal in real-time when input field is correctly filled in by user.
-
-}
-
 function realTimeValidationError() {
   // DONE:Program your form so that it provides a real-time validation error message for at least one text input field. Rather than providing an error message on submit, your form should check for errors and display messages as the user begins typing inside a text field. For example, if the user enters an invalid email address, the error appears as the user begins to type, and disappears as soon as the user has entered a complete and correctly formatted email address.
   getMail.addEventListener('focus', validEmail);
@@ -476,12 +471,11 @@ function realTimeValidationError() {
 
   cvv.addEventListener('focus', validCVV);
   cvv.addEventListener('keyup', validCVV);
-  // TODO: add real-time validation in the scenario where a blank form is submitted all error messages are shown & as each input field is correctly filled then remove the corresponding error message for that input field.
+  // DONE: add real-time validation in the scenario where a blank form is submitted all error messages are shown & as each input field is correctly filled then remove the corresponding error message for that input field.
   getName.addEventListener('keyup', validName);
   getColorSelect.addEventListener('click', validTShirt);
-  var getActivity = document.getElementById('register-error');
-  getActivity.addEventListener('keyup', registerForActivities);
-}
+  // TODO: Get the please select an activity error message to be removed when an activity is checked.
+  }
 
 $(document).ready(function() {
   setInitialFocus();
