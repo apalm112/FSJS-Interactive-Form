@@ -21,12 +21,17 @@ function createOtherJobTextarea() {
   newTextArea.setAttribute('id', 'other_title');
   newTextArea.setAttribute('name', 'job_role');
   newTextArea.setAttribute('placeholder', 'Your Job Role');
+
+  // Make form inputs available for browsers w/ JS disabled.
+  getSelectJobRole.after(newTextArea);
+  getSelectJobRole.nextElementSibling.style.display = 'none';
+
   $('#title').change(function() {
     if (getSelectJobRole.value === 'other') {
-      getSelectJobRole.after(newTextArea);
+      getSelectJobRole.nextElementSibling.style.display = 'inline-block';
       newTextArea.focus();
     } else {
-      getSelectJobRole.nextElementSibling.remove();
+      getSelectJobRole.nextElementSibling.style.display = 'none';
     }
   });
 }
