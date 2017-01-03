@@ -370,22 +370,18 @@ function validActivities(event) {
 }
 
 
-/* function validCreditCard(event) {
   // TODO If the selected payment option is "Credit Card," make sure the user has supplied a credit card number, a zip code, and a 3 number CVV value before the form can be submitted.
-  ccLength();
-  validCVV();
-}*/
-
 function validCreditCard(event) {
   // TODO Credit card field should only accept a number between 13 and 16 digits
   event.preventDefault();
   var getCC = document.getElementById('cc-num');
   getCC.setAttribute('maxlength', 16);
-  var checkCC = (/\d{13,16}$/g);
+  getCC.setAttribute('minlength', 13);
+  var regex = (/\d{13,16}$/g);
 
-  if (!checkCC.test(getCC.value)) {
+  if (!regex.test(getCC.value)) {
     getCC.previousElementSibling.style.color = '#c92233';
-    getCC.previousElementSibling.innerText = 'Card Number: Enter a valid card number Hobbit';
+    getCC.previousElementSibling.innerText = 'Card Number: Enter a valid card number';
   } else {
     getCC.previousElementSibling.style.color = '#000';
     getCC.previousElementSibling.innerText = 'Card Number';
@@ -397,6 +393,15 @@ function validZipCode(event) {
   event.preventDefault();
   var zipCode = document.getElementById('zip');
   zipCode.setAttribute('maxlength', 5);
+  zipCode.setAttribute('minlength', 5);
+  var regex = (/\d{5}$/g);
+  if (!regex.test(zipCode.value)) {
+    zipCode.previousElementSibling.style.color = '#c92233';
+    zipCode.previousElementSibling.innerText = 'Zip Code: Enter a valid zip code';
+  } else {
+    zipCode.previousElementSibling.style.color = '#000';
+    zipCode.previousElementSibling.innerText = 'Zip Code:';
+  }
 }
 
 function validCVV(event) {
@@ -404,6 +409,15 @@ function validCVV(event) {
   event.preventDefault();
   var cvv = document.getElementById('cvv');
   cvv.setAttribute('maxlength', 3);
+  cvv.setAttribute('minlength', 3);
+  var regex = (/\d{3}$/g);
+  if (!regex.test(cvv.value)) {
+    cvv.previousElementSibling.style.color = '#c92233';
+    cvv.previousElementSibling.innerText = 'CVV: Enter a valid CVV';
+  } else {
+    cvv.previousElementSibling.style.color = '#000';
+    cvv.previousElementSibling.innerText = 'CVV';
+  }
 }
 
 
