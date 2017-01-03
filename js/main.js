@@ -44,53 +44,39 @@ function tShirtInfo() {
   // DONE: For the T-Shirt color menu:  only display the color options that match the design selected in the "Design" menu.
   var getDesignSelect = document.getElementById('design');
   var getColorSelect = document.getElementById('color');
+  var hideColor = document.getElementById('colors-js-puns');
+  var removeOpt = document.getElementById('remove');
 
-  var selectTheme = document.createElement('option');
-  selectTheme.setAttribute('value', 'picktheme');
-  selectTheme.innerText = 'Please select a fucking T-shirt theme';
-  getColorSelect.prepend(selectTheme);
+  hideColor.style.display = 'none';
 
-  $('#design').change(function() {
+  // $('#design').change(function() {});
     // DONE: Change color select option value when attribute is disabled to corresponding color restrictions, i.e.--if tomato is selected & then theme is switched to js puns, automagically make the color select option change.
+    //  then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
+    // then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
+
+    getDesignSelect.addEventListener('change', tShirtInfo);
+
     if (getDesignSelect.value === 'js puns') {
-      //  then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
-      getColorSelect[0].defaultSelected = false;
-      getColorSelect[0].style.display = 'none';
-      getColorSelect[1].defaultSelected = true;
-      for (var idx=4; idx<7; idx++) {
+      hideColor.style.display = 'block';
+      removeOpt.disabled = true;
+      getColorSelect[0].selected = true;
+      for (var idx=3; idx<6; idx++) {
         getColorSelect[idx].style.display = 'none';
       }
-      for (var idx=1; idx<4; idx++) {
+      for (var idx=0; idx<3; idx++) {
         getColorSelect[idx].style.display = 'block';
       }
     } else if (getDesignSelect.value === 'heart js') {
-        // then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
-      getColorSelect[0].defaultSelected = false;
-      getColorSelect[4].defaultSelected = true;
-      for (var idx=1; idx<4; idx++) {
+      hideColor.style.display = 'block';
+      removeOpt.disabled = true;
+      getColorSelect[3].selected = true;
+      for (var idx=0; idx<3; idx++) {
         getColorSelect[idx].style.display = 'none';
       }
-      for (var idx=4; idx<7; idx++) {
+      for (var idx=3; idx<6; idx++) {
         getColorSelect[idx].style.display = 'block';
       }
-    } else if (getDesignSelect[0].selected) {
-      getColorSelect[1].defaultSelected = false;
-      getColorSelect[4].defaultSelected = false;
-      getColorSelect[0].defaultSelected = true;
-      for (var idx=1; idx<getColorSelect.length; idx++) {
-        getColorSelect[idx].style.display = 'none';
-      }
     }
-  });
-  // TODO: No color options appear in the “Color” menu until the user chooses a T-Shirt theme. The “Color” menu reads “Please select a T-shirt theme” until a theme is selected from the “Design” menu.
-  if (getDesignSelect.value === 'Select Theme') {
-    getColorSelect[0].defaultSelected = true;
-    for (var idx=0; idx<getColorSelect.length; idx++) {
-      getColorSelect[idx].style.display = 'none';
-    }
-  } else if (getDesignSelect.value !== 'Select Theme') {
-    getColorSelect[0].style.display = 'none';
-  }
 }
 
 function registerForActivities() {
@@ -447,22 +433,13 @@ function validCVV(event) {
 }
 
 // STRETCH GOALS:
-function hideColorOptions() {
-  // TODO: Hide the "Color" label and select menu until a T-Shirt design is selected from the "Design" menu.
-
-}
-
 function errorMessageInfo() {
 // TODO: Program at least one of your error messages so that more information is provided depending on the error. For example, if the user hasn’t entered a credit card number and the field is completely blank, the error message reads “Please enter a credit card number.” If the field isn’t empty but contains only 10 numbers, the error message reads “Please enter a number that is at least 16 digits long.”
 
 }
-
 function realTimeValidationError() {
 // TODO:Program your form so that it provides a real-time validation error message for at least one text input field. Rather than providing an error message on submit, your form should check for errors and display messages as the user begins typing inside a text field. For example, if the user enters an invalid email address, the error appears as the user begins to type, and disappears as soon as the user has entered a complete and correctly formatted email address.
-
 }
-
-
 $(document).ready(function() {
   setInitialFocus();
   createOtherJobTextarea();
