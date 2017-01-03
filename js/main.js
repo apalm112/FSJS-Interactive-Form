@@ -20,7 +20,8 @@ function createOtherJobTextarea() {
   // DONE: Fix error thrown to console when else clause conditional runs while there is No input text to remove.
   // DONE: Fix margins on newTextArea to fit better onto the form.
   var getSelectJobRole = document.getElementById('title');
-  var newTextArea = document.createElement('input');
+  var getOther = document.getElementById('other_title');
+  // var newTextArea = document.createElement('input');
   // newTextArea.setAttribute('type', 'text');
   // newTextArea.setAttribute('id', 'other_title');
   // newTextArea.setAttribute('name', 'job_role');
@@ -33,7 +34,7 @@ function createOtherJobTextarea() {
   $('#title').change(function() {
     if (getSelectJobRole.value === 'other') {
       getSelectJobRole.nextElementSibling.style.display = 'inline-block';
-      newTextArea.focus();
+      getOther.focus();
     } else {
       getSelectJobRole.nextElementSibling.style.display = 'none';
     }
@@ -330,8 +331,8 @@ function validEmail(event) {
   // DONE Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
   event.preventDefault();
   var getId = document.getElementById('mail');
-  var wha = getId.value;
-  var checkEmail = wha.match((/([a-z]{2,})\@[a-z]{3,}\.[a-z]{2}/g));
+  var userEmail = getId.value;
+  var checkEmail = userEmail.match((/([a-z]{2,})\@[a-z]{3,}\.[a-z]{2}/g));
 
   if (checkEmail !== null) {
     getId.previousElementSibling.style.color = '#000';
@@ -389,15 +390,7 @@ function validCreditCard(event) {
   var getCC = document.getElementById('cc-num');
   getCC.setAttribute('maxlength', 16);
   getCC.setAttribute('minlength', 13);
-  var regex = (/\d{13,16}$/g);
-
-  if (!regex.test(getCC.value)) {
-    getCC.previousElementSibling.style.color = '#c92233';
-    getCC.previousElementSibling.innerText = 'Card Number: Enter a valid card number';
-  } else {
-    getCC.previousElementSibling.style.color = '#000';
-    getCC.previousElementSibling.innerText = 'Card Number';
-  }
+  errorMessage(getCC);
 }
 
 function validZipCode(event) {
@@ -405,9 +398,16 @@ function validZipCode(event) {
   event.preventDefault();
   var zipCode = document.getElementById('zip');
   zipCode.setAttribute('maxlength', 5);
-  zipCode.setAttribute('minlength', 5);
-  var regex = (/\d{5}$/g);
-  if (!regex.test(zipCode.value)) {
+  var regex = (/\d{5}$/);
+  var regexAlpha = (/([a-z])/);
+
+  if (zipCode.value === '') {
+    zipCode.previousElementSibling.style.color = '#c92233';
+    zipCode.previousElementSibling.innerText = 'Zip Code: cannot be left blank';
+  }  else if (regexAlpha.test(zipCode.value)) {
+    zipCode.previousElementSibling.style.color = '#c92233';
+    zipCode.previousElementSibling.innerText = 'Zip Code may not contain alphabetic characters';
+  } else if (!regex.test(zipCode.value)) {
     zipCode.previousElementSibling.style.color = '#c92233';
     zipCode.previousElementSibling.innerText = 'Zip Code: Enter a valid zip code';
   } else {
@@ -433,10 +433,34 @@ function validCVV(event) {
 }
 
 // STRETCH GOALS:
-function errorMessageInfo() {
-// TODO: Program at least one of your error messages so that more information is provided depending on the error. For example, if the user hasn’t entered a credit card number and the field is completely blank, the error message reads “Please enter a credit card number.” If the field isn’t empty but contains only 10 numbers, the error message reads “Please enter a number that is at least 16 digits long.”
+function errorMessage(input) {
+// TODO: Form provides at least one error message that changes depending on the error.  For example, if the user hasn’t entered a credit card number and the field is completely blank, the error message reads “Please enter a credit card number.” If the field isn’t empty but contains only 10 numbers, the error message reads “Please enter a number that is at least 16 digits long.”
+
+  var regex = (/\d{13,16}$/g);
+  var regexAlpha = (/([a-z])/g);   // regerex to check for alpha chars
+
+  if (input.value === '') {
+    input.previousElementSibling.style.color = '#c92233';
+    input.previousElementSibling.innerText = 'Card Number: You must enter a valid number';
+  } else if (input.value.length < 13 && (!regexAlpha.test(input.value))) {
+    input.previousElementSibling.style.color = '#c92233';
+    input.previousElementSibling.innerText = 'Enter card number at least 16 digits long';
+  } else if (regexAlpha.test(input.value)) {
+    input.previousElementSibling.style.color = '#c92233';
+    input.previousElementSibling.innerText = 'Card may not contain alphabetic characters';
+  } else if (!regex.test(input.value)) {
+    input.previousElementSibling.style.color = '#c92233';
+    input.previousElementSibling.innerText = 'Card Number: Enter a valid card number';
+  } else {
+    input.previousElementSibling.style.color = '#000';
+    input.previousElementSibling.innerText = 'Card Number';
+  }
+
 
 }
+
+
+
 function realTimeValidationError() {
 // TODO:Program your form so that it provides a real-time validation error message for at least one text input field. Rather than providing an error message on submit, your form should check for errors and display messages as the user begins typing inside a text field. For example, if the user enters an invalid email address, the error appears as the user begins to type, and disappears as soon as the user has entered a complete and correctly formatted email address.
 }
