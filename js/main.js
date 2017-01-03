@@ -1,9 +1,13 @@
 /* Treehouse Project-03: Build an Interactive Form */
 
-// TODO: When JavaScript is switched off or unavailable, all the form fields that need to be filled out should be visible. For example, the “Your Job Role” text field should be visible on the page when JavaScript is switched off.
+// DONE: When JavaScript is switched off or unavailable, all the form fields that need to be filled out should be visible. For example, the “Your Job Role” text field should be visible on the page when JavaScript is switched off.
 
 /* Global Variables */
 var getActivitiesFieldset = document.getElementsByClassName('activities');
+
+var otherText = document.getElementById('other_title');
+otherText.style.display = 'none';
+
 
 // DONE: Set focus on first text field on page load w/ jQuery.
 function setInitialFocus() {
@@ -17,14 +21,14 @@ function createOtherJobTextarea() {
   // DONE: Fix margins on newTextArea to fit better onto the form.
   var getSelectJobRole = document.getElementById('title');
   var newTextArea = document.createElement('input');
-  newTextArea.setAttribute('type', 'text');
-  newTextArea.setAttribute('id', 'other_title');
-  newTextArea.setAttribute('name', 'job_role');
-  newTextArea.setAttribute('placeholder', 'Your Job Role');
+  // newTextArea.setAttribute('type', 'text');
+  // newTextArea.setAttribute('id', 'other_title');
+  // newTextArea.setAttribute('name', 'job_role');
+  // newTextArea.setAttribute('placeholder', 'Your Job Role');
 
   // Make form inputs available for browsers w/ JS disabled.
-  getSelectJobRole.after(newTextArea);
-  getSelectJobRole.nextElementSibling.style.display = 'none';
+  // getSelectJobRole.after(newTextArea);
+  // getSelectJobRole.nextElementSibling.style.display = 'none';
 
   $('#title').change(function() {
     if (getSelectJobRole.value === 'other') {
@@ -39,15 +43,23 @@ function createOtherJobTextarea() {
 function tShirtInfo() {
   // DONE: For the T-Shirt color menu:  only display the color options that match the design selected in the "Design" menu.
   var getDesignSelect = document.getElementById('design');
-  // var $getDesignSelect = $('design');
   var getColorSelect = document.getElementById('color');
-  // var $getColorSelect = $('color');
-  $('#design').change(function() {
+  var hideColor = document.getElementById('colors-js-puns');
+  var removeOpt = document.getElementById('remove');
+
+  hideColor.style.display = 'none';
+
+  // $('#design').change(function() {});
     // DONE: Change color select option value when attribute is disabled to corresponding color restrictions, i.e.--if tomato is selected & then theme is switched to js puns, automagically make the color select option change.
+    //  then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
+    // then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
+
+    getDesignSelect.addEventListener('change', tShirtInfo);
+
     if (getDesignSelect.value === 'js puns') {
-      //  then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
-      getColorSelect[3].defaultSelected = false;
-      getColorSelect[0].defaultSelected = true;
+      hideColor.style.display = 'block';
+      removeOpt.disabled = true;
+      getColorSelect[0].selected = true;
       for (var idx=3; idx<6; idx++) {
         getColorSelect[idx].style.display = 'none';
       }
@@ -55,25 +67,17 @@ function tShirtInfo() {
         getColorSelect[idx].style.display = 'block';
       }
     } else if (getDesignSelect.value === 'heart js') {
-        // then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
-      getColorSelect[0].defaultSelected = false;
-      getColorSelect[3].defaultSelected = true;
+      hideColor.style.display = 'block';
+      removeOpt.disabled = true;
+      getColorSelect[3].selected = true;
       for (var idx=0; idx<3; idx++) {
         getColorSelect[idx].style.display = 'none';
       }
       for (var idx=3; idx<6; idx++) {
         getColorSelect[idx].style.display = 'block';
       }
-    } else {
-      getColorSelect[0].defaultSelected = false;
-      getColorSelect[3].defaultSelected = false;
-      getColorSelect[0].defaultSelected = true;
-      for (var idx=0; idx<getColorSelect.length; idx++) {
-        getColorSelect[idx].style.display = 'block';
-      }
     }
-  });
-};
+}
 
 function registerForActivities() {
   // TODO: Refactor function w/ jQuery to seperate CSS from JS.
@@ -323,7 +327,7 @@ function validName(event) {
 }
 
 function validEmail(event) {
-  // TODO Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
+  // DONE Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
   event.preventDefault();
   var getId = document.getElementById('mail');
   var wha = getId.value;
@@ -380,7 +384,7 @@ function validActivities(event) {
   // There should be an error indication for the name field, email field, “Register for Activities” checkboxes, credit card number, zip code, and CVV
 
 function validCreditCard(event) {
-  // TODO Credit card field should only accept a number between 13 and 16 digits
+  // DONE Credit card field should only accept a number between 13 and 16 digits
   event.preventDefault();
   var getCC = document.getElementById('cc-num');
   getCC.setAttribute('maxlength', 16);
@@ -429,22 +433,13 @@ function validCVV(event) {
 }
 
 // STRETCH GOALS:
-function hideColorOptions() {
-  // TODO: Hide the "Color" label and select menu until a T-Shirt design is selected from the "Design" menu.
-
-}
-
 function errorMessageInfo() {
 // TODO: Program at least one of your error messages so that more information is provided depending on the error. For example, if the user hasn’t entered a credit card number and the field is completely blank, the error message reads “Please enter a credit card number.” If the field isn’t empty but contains only 10 numbers, the error message reads “Please enter a number that is at least 16 digits long.”
 
 }
-
 function realTimeValidationError() {
 // TODO:Program your form so that it provides a real-time validation error message for at least one text input field. Rather than providing an error message on submit, your form should check for errors and display messages as the user begins typing inside a text field. For example, if the user enters an invalid email address, the error appears as the user begins to type, and disappears as soon as the user has entered a complete and correctly formatted email address.
-
 }
-
-
 $(document).ready(function() {
   setInitialFocus();
   createOtherJobTextarea();
