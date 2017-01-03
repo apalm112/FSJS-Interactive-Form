@@ -142,6 +142,16 @@ button:hover {
   width: 100%;
 }
 
+.real-time {
+  position: inherit;
+  width: 150px;
+  height: 45px;
+  float: right;
+  border: 3px solid blue;
+
+}
+
+
 
 /* =================================
   Helper Classes
