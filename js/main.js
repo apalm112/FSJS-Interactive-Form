@@ -73,7 +73,7 @@ function tShirtInfo() {
       for (var idx=4; idx<7; idx++) {
         getColorSelect[idx].style.display = 'block';
       }
-    } else if (getDesignSelect.value === 'picktheme') {
+    } else if (getDesignSelect[0].selected) {
       getColorSelect[1].defaultSelected = false;
       getColorSelect[4].defaultSelected = false;
       getColorSelect[0].defaultSelected = true;
@@ -82,10 +82,7 @@ function tShirtInfo() {
       }
     }
   });
-
   // TODO: No color options appear in the “Color” menu until the user chooses a T-Shirt theme. The “Color” menu reads “Please select a T-shirt theme” until a theme is selected from the “Design” menu.
-
-
   if (getDesignSelect.value === 'Select Theme') {
     getColorSelect[0].defaultSelected = true;
     for (var idx=0; idx<getColorSelect.length; idx++) {
@@ -94,7 +91,6 @@ function tShirtInfo() {
   } else if (getDesignSelect.value !== 'Select Theme') {
     getColorSelect[0].style.display = 'none';
   }
-
 }
 
 function registerForActivities() {
