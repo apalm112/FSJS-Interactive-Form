@@ -3,6 +3,8 @@
 // DONE: When JavaScript is switched off or unavailable, all the form fields that need to be filled out should be visible. For example, the “Your Job Role” text field should be visible on the page when JavaScript is switched off.
 
 /* Global Variables --------------------------------------------- */
+var getName = document.getElementById('name');
+var getColorSelect = document.getElementById('color');
 var getActivitiesFieldset = document.getElementsByClassName('activities');
 var getMail = document.getElementById('mail');
 var ccNum = document.getElementById('cc-num');
@@ -48,7 +50,6 @@ function createOtherJobTextarea() {
 function tShirtInfo() {
   // DONE: For the T-Shirt color menu:  only display the color options that match the design selected in the "Design" menu.
   var getDesignSelect = document.getElementById('design');
-  var getColorSelect = document.getElementById('color');
   var hideColor = document.getElementById('colors-js-puns');
   var removeOpt = document.getElementById('remove');
 
@@ -321,7 +322,6 @@ function formValidation() {
 function validName(event) {
   // DONE: Name field can't be blank
   event.preventDefault();
-  var getName = document.getElementById('name');
   if (getName.value.length >= 4) {
     getName.previousElementSibling.style.color = '#000';
     getName.previousElementSibling.innerText = 'Name:';
@@ -460,7 +460,7 @@ function errorMessage(input) {
 
 function inputMatchValid() {
   // Provide error message removal in real-time when input field is correctly filled in by user.
-  
+
 }
 
 function realTimeValidationError() {
@@ -477,10 +477,10 @@ function realTimeValidationError() {
   cvv.addEventListener('focus', validCVV);
   cvv.addEventListener('keyup', validCVV);
   // TODO: add real-time validation in the scenario where a blank form is submitted all error messages are shown & as each input field is correctly filled then remove the corresponding error message for that input field.
-  getMail.addEventListener('keyup', inputMatchValid);
-  ccNum.addEventListener('keyup', inputMatchValid);
-  zipCode.addEventListener('keyup', inputMatchValid);
-  cvv.addEventListener('keyup', inputMatchValid);
+  getName.addEventListener('keyup', validName);
+  getColorSelect.addEventListener('keyup', validTShirt);
+  var getActivity = document.getElementById('register-error');
+  getActivity.addEventListener('keyup', registerForActivities);
 }
 
 $(document).ready(function() {
