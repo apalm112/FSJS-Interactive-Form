@@ -5,14 +5,14 @@
 /* Global Variables */
 var getActivitiesFieldset = document.getElementsByClassName('activities');
 
-var otherText = document.getElementById('other_title');
-otherText.style.display = 'none';
-
 
 // DONE: Set focus on first text field on page load w/ jQuery.
 function setInitialFocus() {
   var $setPageLoadFocus = $('#name');
   $setPageLoadFocus.focus();
+  // Hides the Other Job Role input text field that loads for no JS rubric.
+  var otherText = document.getElementById('other_title');
+  otherText.style.display = 'none';
 }
 
 function createOtherJobTextarea() {
@@ -434,8 +434,7 @@ function validCVV(event) {
 
 // STRETCH GOALS:
 function errorMessage(input) {
-// TODO: Form provides at least one error message that changes depending on the error.  For example, if the user hasn’t entered a credit card number and the field is completely blank, the error message reads “Please enter a credit card number.” If the field isn’t empty but contains only 10 numbers, the error message reads “Please enter a number that is at least 16 digits long.”
-
+// DONE: Form provides at least one error message that changes depending on the error.  For example, if the user hasn’t entered a credit card number and the field is completely blank, the error message reads “Please enter a credit card number.” If the field isn’t empty but contains only 10 numbers, the error message reads “Please enter a number that is at least 16 digits long.”
   var regex = (/\d{13,16}$/g);
   var regexAlpha = (/([a-z])/g);   // regerex to check for alpha chars
 
@@ -455,14 +454,10 @@ function errorMessage(input) {
     input.previousElementSibling.style.color = '#000';
     input.previousElementSibling.innerText = 'Card Number';
   }
-
-
 }
 
-
-
 function realTimeValidationError() {
-// TODO:Program your form so that it provides a real-time validation error message for at least one text input field. Rather than providing an error message on submit, your form should check for errors and display messages as the user begins typing inside a text field. For example, if the user enters an invalid email address, the error appears as the user begins to type, and disappears as soon as the user has entered a complete and correctly formatted email address.
+  // TODO:Program your form so that it provides a real-time validation error message for at least one text input field. Rather than providing an error message on submit, your form should check for errors and display messages as the user begins typing inside a text field. For example, if the user enters an invalid email address, the error appears as the user begins to type, and disappears as soon as the user has entered a complete and correctly formatted email address.
 }
 $(document).ready(function() {
   setInitialFocus();
