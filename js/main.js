@@ -2,8 +2,14 @@
 
 // DONE: When JavaScript is switched off or unavailable, all the form fields that need to be filled out should be visible. For example, the “Your Job Role” text field should be visible on the page when JavaScript is switched off.
 
-/* Global Variables */
+/* Global Variables --------------------------------------------- */
+var getName = document.getElementById('name');
+var getColorSelect = document.getElementById('color');
 var getActivitiesFieldset = document.getElementsByClassName('activities');
+var getMail = document.getElementById('mail');
+var ccNum = document.getElementById('cc-num');
+var zipCode = document.getElementById('zip');
+var cvv = document.getElementById('cvv');
 
 
 // DONE: Set focus on first text field on page load w/ jQuery.
@@ -44,7 +50,6 @@ function createOtherJobTextarea() {
 function tShirtInfo() {
   // DONE: For the T-Shirt color menu:  only display the color options that match the design selected in the "Design" menu.
   var getDesignSelect = document.getElementById('design');
-  var getColorSelect = document.getElementById('color');
   var hideColor = document.getElementById('colors-js-puns');
   var removeOpt = document.getElementById('remove');
 
@@ -317,7 +322,6 @@ function formValidation() {
 function validName(event) {
   // DONE: Name field can't be blank
   event.preventDefault();
-  var getName = document.getElementById('name');
   if (getName.value.length >= 4) {
     getName.previousElementSibling.style.color = '#000';
     getName.previousElementSibling.innerText = 'Name:';
@@ -330,16 +334,16 @@ function validName(event) {
 function validEmail(event) {
   // DONE Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
   event.preventDefault();
-  var getId = document.getElementById('mail');
-  var userEmail = getId.value;
-  var checkEmail = userEmail.match((/([a-z]{2,})\@[a-z]{3,}\.[a-z]{2}/g));
+  var getMail = document.getElementById('mail');
+  var userEmail = getMail.value;
+  var checkEmail = userEmail.match((/([a-z]{2,})\@[a-z]{3,}\.[a-z]{3}/g));
 
   if (checkEmail !== null) {
-    getId.previousElementSibling.style.color = '#000';
-    getId.previousElementSibling.innerText = 'Email:';
+    getMail.previousElementSibling.style.color = '#000';
+    getMail.previousElementSibling.innerText = 'Email:';
   } else if (!checkEmail) {
-    getId.previousElementSibling.style.color = '#c92233';
-    getId.previousElementSibling.innerText = 'Email:  (please provide your email)';
+    getMail.previousElementSibling.style.color = '#c92233';
+    getMail.previousElementSibling.innerText = 'Email:  (please provide your email)';
   }
 }
 
@@ -352,7 +356,7 @@ function validTShirt(event) {
     getTShirtLegend[0].childNodes[1].innerHTML = 'T-Shirt Info' + '<p id="shirtValid">Don\'t forget to pick a shirt</p>';
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
   }
-  if (getTShirt.value !== 'Select Theme') {
+  if (getTShirt.value !== 'Select Theme' && getTShirtLegend[0].childNodes[1].firstChild.nextSibling.hasAttribute('id')) {
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.display='none';
   }
 }
@@ -387,10 +391,9 @@ function validActivities(event) {
 function validCreditCard(event) {
   // DONE Credit card field should only accept a number between 13 and 16 digits
   event.preventDefault();
-  var getCC = document.getElementById('cc-num');
-  getCC.setAttribute('maxlength', 16);
-  getCC.setAttribute('minlength', 13);
-  errorMessage(getCC);
+  ccNum.setAttribute('maxlength', 16);
+  ccNum.setAttribute('minlength', 13);
+  errorMessage(ccNum);
 }
 
 function validZipCode(event) {
@@ -435,13 +438,12 @@ function validCVV(event) {
 // STRETCH GOALS:
 function errorMessage(input) {
 // DONE: Form provides at least one error message that changes depending on the error.  For example, if the user hasn’t entered a credit card number and the field is completely blank, the error message reads “Please enter a credit card number.” If the field isn’t empty but contains only 10 numbers, the error message reads “Please enter a number that is at least 16 digits long.”
-  var regex = (/\d{13,16}$/g);
+  var regex = (/\d{16}$/g);
   var regexAlpha = (/([a-z])/g);   // regerex to check for alpha chars
-
   if (input.value === '') {
     input.previousElementSibling.style.color = '#c92233';
-    input.previousElementSibling.innerText = 'Card Number: You must enter a valid number';
-  } else if (input.value.length < 13 && (!regexAlpha.test(input.value))) {
+    input.previousElementSibling.innerText = 'Card Number: You must enter a valid card number';
+  } else if (input.value.length < 16 && (!regexAlpha.test(input.value))) {
     input.previousElementSibling.style.color = '#c92233';
     input.previousElementSibling.innerText = 'Enter card number at least 16 digits long';
   } else if (regexAlpha.test(input.value)) {
@@ -457,8 +459,24 @@ function errorMessage(input) {
 }
 
 function realTimeValidationError() {
-  // TODO:Program your form so that it provides a real-time validation error message for at least one text input field. Rather than providing an error message on submit, your form should check for errors and display messages as the user begins typing inside a text field. For example, if the user enters an invalid email address, the error appears as the user begins to type, and disappears as soon as the user has entered a complete and correctly formatted email address.
-}
+  // DONE:Program your form so that it provides a real-time validation error message for at least one text input field. Rather than providing an error message on submit, your form should check for errors and display messages as the user begins typing inside a text field. For example, if the user enters an invalid email address, the error appears as the user begins to type, and disappears as soon as the user has entered a complete and correctly formatted email address.
+  getMail.addEventListener('focus', validEmail);
+  getMail.addEventListener('keyup', validEmail);
+
+  ccNum.addEventListener('focus', validCreditCard);
+  ccNum.addEventListener('keyup', validCreditCard);
+
+  zipCode.addEventListener('focus', validZipCode);
+  zipCode.addEventListener('keyup', validZipCode);
+
+  cvv.addEventListener('focus', validCVV);
+  cvv.addEventListener('keyup', validCVV);
+  // DONE: add real-time validation in the scenario where a blank form is submitted all error messages are shown & as each input field is correctly filled then remove the corresponding error message for that input field.
+  getName.addEventListener('keyup', validName);
+  getColorSelect.addEventListener('click', validTShirt);
+  // TODO: Get the please select an activity error message to be removed when an activity is checked.
+  }
+
 $(document).ready(function() {
   setInitialFocus();
   createOtherJobTextarea();
@@ -467,4 +485,5 @@ $(document).ready(function() {
   runningTotal();
   paymentInfoSection();
   formValidation();
+  realTimeValidationError();
 });
