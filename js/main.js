@@ -1,9 +1,13 @@
 /* Treehouse Project-03: Build an Interactive Form */
 
-// TODO: When JavaScript is switched off or unavailable, all the form fields that need to be filled out should be visible. For example, the “Your Job Role” text field should be visible on the page when JavaScript is switched off.
+// DONE: When JavaScript is switched off or unavailable, all the form fields that need to be filled out should be visible. For example, the “Your Job Role” text field should be visible on the page when JavaScript is switched off.
 
 /* Global Variables */
 var getActivitiesFieldset = document.getElementsByClassName('activities');
+
+var otherText = document.getElementById('other_title');
+otherText.style.display = 'none';
+
 
 // DONE: Set focus on first text field on page load w/ jQuery.
 function setInitialFocus() {
@@ -17,14 +21,14 @@ function createOtherJobTextarea() {
   // DONE: Fix margins on newTextArea to fit better onto the form.
   var getSelectJobRole = document.getElementById('title');
   var newTextArea = document.createElement('input');
-  newTextArea.setAttribute('type', 'text');
-  newTextArea.setAttribute('id', 'other_title');
-  newTextArea.setAttribute('name', 'job_role');
-  newTextArea.setAttribute('placeholder', 'Your Job Role');
+  // newTextArea.setAttribute('type', 'text');
+  // newTextArea.setAttribute('id', 'other_title');
+  // newTextArea.setAttribute('name', 'job_role');
+  // newTextArea.setAttribute('placeholder', 'Your Job Role');
 
   // Make form inputs available for browsers w/ JS disabled.
-  getSelectJobRole.after(newTextArea);
-  getSelectJobRole.nextElementSibling.style.display = 'none';
+  // getSelectJobRole.after(newTextArea);
+  // getSelectJobRole.nextElementSibling.style.display = 'none';
 
   $('#title').change(function() {
     if (getSelectJobRole.value === 'other') {
@@ -39,41 +43,59 @@ function createOtherJobTextarea() {
 function tShirtInfo() {
   // DONE: For the T-Shirt color menu:  only display the color options that match the design selected in the "Design" menu.
   var getDesignSelect = document.getElementById('design');
-  // var $getDesignSelect = $('design');
   var getColorSelect = document.getElementById('color');
-  // var $getColorSelect = $('color');
+
+  var selectTheme = document.createElement('option');
+  selectTheme.setAttribute('value', 'picktheme');
+  selectTheme.innerText = 'Please select a fucking T-shirt theme';
+  getColorSelect.prepend(selectTheme);
+
   $('#design').change(function() {
     // DONE: Change color select option value when attribute is disabled to corresponding color restrictions, i.e.--if tomato is selected & then theme is switched to js puns, automagically make the color select option change.
     if (getDesignSelect.value === 'js puns') {
       //  then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
-      getColorSelect[3].defaultSelected = false;
-      getColorSelect[0].defaultSelected = true;
-      for (var idx=3; idx<6; idx++) {
+      getColorSelect[0].defaultSelected = false;
+      getColorSelect[0].style.display = 'none';
+      getColorSelect[1].defaultSelected = true;
+      for (var idx=4; idx<7; idx++) {
         getColorSelect[idx].style.display = 'none';
       }
-      for (var idx=0; idx<3; idx++) {
+      for (var idx=1; idx<4; idx++) {
         getColorSelect[idx].style.display = 'block';
       }
     } else if (getDesignSelect.value === 'heart js') {
         // then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
       getColorSelect[0].defaultSelected = false;
-      getColorSelect[3].defaultSelected = true;
-      for (var idx=0; idx<3; idx++) {
+      getColorSelect[4].defaultSelected = true;
+      for (var idx=1; idx<4; idx++) {
         getColorSelect[idx].style.display = 'none';
       }
-      for (var idx=3; idx<6; idx++) {
+      for (var idx=4; idx<7; idx++) {
         getColorSelect[idx].style.display = 'block';
       }
-    } else {
-      getColorSelect[0].defaultSelected = false;
-      getColorSelect[3].defaultSelected = false;
+    } else if (getDesignSelect.value === 'picktheme') {
+      getColorSelect[1].defaultSelected = false;
+      getColorSelect[4].defaultSelected = false;
       getColorSelect[0].defaultSelected = true;
-      for (var idx=0; idx<getColorSelect.length; idx++) {
-        getColorSelect[idx].style.display = 'block';
+      for (var idx=1; idx<getColorSelect.length; idx++) {
+        getColorSelect[idx].style.display = 'none';
       }
     }
   });
-};
+
+  // TODO: No color options appear in the “Color” menu until the user chooses a T-Shirt theme. The “Color” menu reads “Please select a T-shirt theme” until a theme is selected from the “Design” menu.
+
+
+  if (getDesignSelect.value === 'Select Theme') {
+    getColorSelect[0].defaultSelected = true;
+    for (var idx=0; idx<getColorSelect.length; idx++) {
+      getColorSelect[idx].style.display = 'none';
+    }
+  } else if (getDesignSelect.value !== 'Select Theme') {
+    getColorSelect[0].style.display = 'none';
+  }
+
+}
 
 function registerForActivities() {
   // TODO: Refactor function w/ jQuery to seperate CSS from JS.
@@ -323,7 +345,7 @@ function validName(event) {
 }
 
 function validEmail(event) {
-  // TODO Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
+  // DONE Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
   event.preventDefault();
   var getId = document.getElementById('mail');
   var wha = getId.value;
@@ -380,7 +402,7 @@ function validActivities(event) {
   // There should be an error indication for the name field, email field, “Register for Activities” checkboxes, credit card number, zip code, and CVV
 
 function validCreditCard(event) {
-  // TODO Credit card field should only accept a number between 13 and 16 digits
+  // DONE Credit card field should only accept a number between 13 and 16 digits
   event.preventDefault();
   var getCC = document.getElementById('cc-num');
   getCC.setAttribute('maxlength', 16);
