@@ -20,7 +20,7 @@ function setInitialFocus() {
 }
 
 function createOtherJobTextarea() {
-  // A text field that will be revealed when the "Other" option is selected from the "Job Role" drop down menu.
+  // A text field will be revealed when the "Other" option is selected from the "Job Role" drop down menu.
   var getSelectJobRole = document.getElementById('title');
   var getOther = document.getElementById('other-title');
   getSelectJobRole.addEventListener('click', function() {
@@ -34,49 +34,40 @@ function createOtherJobTextarea() {
 }
 
 function tShirtInfo() {
-  // DONE: For the T-Shirt color menu:  only display the color options that match the design selected in the "Design" menu.
+  // Changes color select option value when attribute is disabled to corresponding color restrictions, i.e.--if tomato is selected & then theme is switched to js puns.
   var getDesignSelect = document.getElementById('design');
   var hideColor = document.getElementById('colors-js-puns');
   var removeOpt = document.getElementById('remove');
 
   hideColor.style.display = 'none';
-
-  // $('#design').change(function() {});
-    // DONE: Change color select option value when attribute is disabled to corresponding color restrictions, i.e.--if tomato is selected & then theme is switched to js puns, automagically make the color select option change.
-    //  then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
-    // then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
-
-    getDesignSelect.addEventListener('change', tShirtInfo);
-
-    if (getDesignSelect.value === 'js puns') {
-      hideColor.style.display = 'block';
-      removeOpt.disabled = true;
-      getColorSelect[0].selected = true;
-      for (var idx=3; idx<6; idx++) {
-        getColorSelect[idx].style.display = 'none';
-      }
-      for (var idx=0; idx<3; idx++) {
-        getColorSelect[idx].style.display = 'block';
-      }
-    } else if (getDesignSelect.value === 'heart js') {
-      hideColor.style.display = 'block';
-      removeOpt.disabled = true;
-      getColorSelect[3].selected = true;
-      for (var idx=0; idx<3; idx++) {
-        getColorSelect[idx].style.display = 'none';
-      }
-      for (var idx=3; idx<6; idx++) {
-        getColorSelect[idx].style.display = 'block';
-      }
+  getDesignSelect.addEventListener('change', tShirtInfo);
+  // Hide or show the corresponding color options based on which design option is currently selected.
+  if (getDesignSelect.value === 'js puns') {
+    hideColor.style.display = 'block';
+    removeOpt.disabled = true;
+    getColorSelect[0].selected = true;
+    for (var idx=3; idx<6; idx++) {
+      getColorSelect[idx].style.display = 'none';
     }
+    for (var idx=0; idx<3; idx++) {
+      getColorSelect[idx].style.display = 'block';
+    }
+  } else if (getDesignSelect.value === 'heart js') {
+    hideColor.style.display = 'block';
+    removeOpt.disabled = true;
+    getColorSelect[3].selected = true;
+    for (var idx=0; idx<3; idx++) {
+      getColorSelect[idx].style.display = 'none';
+    }
+    for (var idx=3; idx<6; idx++) {
+      getColorSelect[idx].style.display = 'block';
+    }
+  }
 }
 
 function registerForActivities() {
-  // TODO: Refactor function w/ jQuery to seperate CSS from JS.
-  // DONE: Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox.
-  // DONE: And visually indicate that the workshop in the competing time slot isn't available.  When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
-  // var getActivitiesFieldset = document.getElementsByClassName('activities');
-
+  // Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox.
+  // Visually indicates that the workshop in the competing time slot isn't available.  When a user unchecks an activity, the competing activities (if there are any) are no longer disabled.
   $('.activities').change(function() {
     if (getActivitiesFieldset[0].childNodes[5].children[0].checked) {
       // If A checked, disable C:
@@ -102,7 +93,7 @@ function registerForActivities() {
       getActivitiesFieldset[0].childNodes[7].style.color = '#706D73';
       addStrikeThrough(7);
     }
-    // Reverse disabled = true;
+    // Reverse the disabled input.
     if (!getActivitiesFieldset[0].childNodes[5].children[0].checked) {
       // If A unchecked, enable C:
       getActivitiesFieldset[0].childNodes[9].children[0].disabled = false;
@@ -127,22 +118,21 @@ function registerForActivities() {
 }
 
 function runningTotal() {
-  // DONE: As a user selects activities, a running total should display below the list of checkboxes.
-  // For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
-  // Append a label to this fieldtest & update its innerText w/ total.
+  // As a user selects activities, a running total displays below the list of checkboxes.
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
   var label = document.createElement('label');
   var total = 0;
-  var all_counter = 0;
-  var jsframeworks_counter = 0;
-  var jslibs_counter = 0;
-  var express_counter = 0;
-  var node_counter = 0;
-  var build_tools_counter = 0;
-  var npm_counter = 0;
+  // Initialize counters to help add/subtract for each activity.
+  var allCounter = 0;
+  var jsframeworksCounter = 0;
+  var jslibsCounter = 0;
+  var expressCounter = 0;
+  var nodeCounter = 0;
+  var buildToolsCounter = 0;
+  var npmCounter = 0;
 
+  // Each time an input is checked/unchecked the for loop calculates the total.
   $('input[type="checkbox"]').change(function() {
-    // DONE: Problem: current running total does not Subtract amount when input is unchecked.
     for (var idx=3; idx < inputLength; idx += 2) {
       // var getLabelInput = <label><input name='all'>Main Conf $200</label>
       var getLabelInput = getActivitiesFieldset[0].childNodes[idx];
@@ -151,93 +141,94 @@ function runningTotal() {
       // var isChecked = true or false val for input checkbox
       var isChecked = getLabelInput.childNodes[0].checked;
 
-      if (getName === 'all' && isChecked === true && all_counter === 0 ) {
+      // Massive conditional checks each input checkbox & adds/subtracts that activities value to the total displayed.
+      if (getName === 'all' && isChecked === true && allCounter === 0 ) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total += parseInt(count);
-        all_counter++;
-      } else if (getName ==='all' && isChecked === false && all_counter === 1) {
+        allCounter++;
+      } else if (getName ==='all' && isChecked === false && allCounter === 1) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total -= parseInt(count);
-        all_counter--;
+        allCounter--;
       }
-      if (getName === 'js-frameworks' && isChecked === true && jsframeworks_counter === 0 ) {
+      if (getName === 'js-frameworks' && isChecked === true && jsframeworksCounter === 0 ) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total += parseInt(count);
-        jsframeworks_counter++;
-      } else if (getName ==='js-frameworks' && isChecked === false && jsframeworks_counter === 1) {
+        jsframeworksCounter++;
+      } else if (getName ==='js-frameworks' && isChecked === false && jsframeworksCounter === 1) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total -= parseInt(count);
-        jsframeworks_counter--;
-      }if (getName === 'js-libs' && isChecked === true && jslibs_counter === 0 ) {
+        jsframeworksCounter--;
+      }if (getName === 'js-libs' && isChecked === true && jslibsCounter === 0 ) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total += parseInt(count);
-        jslibs_counter++;
-      } else if (getName ==='js-libs' && isChecked === false && jslibs_counter === 1) {
+        jslibsCounter++;
+      } else if (getName ==='js-libs' && isChecked === false && jslibsCounter === 1) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total -= parseInt(count);
-        jslibs_counter--;
-      }if (getName === 'express' && isChecked === true && express_counter === 0 ) {
+        jslibsCounter--;
+      }if (getName === 'express' && isChecked === true && expressCounter === 0 ) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total += parseInt(count);
-        express_counter++;
-      } else if (getName ==='express' && isChecked === false && express_counter === 1) {
+        expressCounter++;
+      } else if (getName ==='express' && isChecked === false && expressCounter === 1) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total -= parseInt(count);
-        express_counter--;
-      }if (getName === 'node' && isChecked === true && node_counter === 0 ) {
+        expressCounter--;
+      }if (getName === 'node' && isChecked === true && nodeCounter === 0 ) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total += parseInt(count);
-        node_counter++;
-      } else if (getName ==='node' && isChecked === false && node_counter === 1) {
+        nodeCounter++;
+      } else if (getName ==='node' && isChecked === false && nodeCounter === 1) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total -= parseInt(count);
-        node_counter--;
-      }if (getName === 'build-tools' && isChecked === true && build_tools_counter === 0 ) {
+        nodeCounter--;
+      }if (getName === 'build-tools' && isChecked === true && buildToolsCounter === 0 ) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total += parseInt(count);
-        build_tools_counter++;
-      } else if (getName ==='build-tools' && isChecked === false && build_tools_counter === 1) {
+        buildToolsCounter++;
+      } else if (getName ==='build-tools' && isChecked === false && buildToolsCounter === 1) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total -= parseInt(count);
-        build_tools_counter--;
-      }if (getName === 'npm' && isChecked === true && npm_counter === 0 ) {
+        buildToolsCounter--;
+      }if (getName === 'npm' && isChecked === true && npmCounter === 0 ) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total += parseInt(count);
-        npm_counter++;
-      } else if (getName ==='npm' && isChecked === false && npm_counter === 1) {
+        npmCounter++;
+      } else if (getName ==='npm' && isChecked === false && npmCounter === 1) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total -= parseInt(count);
-        npm_counter--;
+        npmCounter--;
       }
-
+      // Append a label to this fieldtest & update its innerText w/ total.
       label.className = 'cost';
       label.innerText = 'Total: $' + total;
       getActivitiesFieldset[0].append(label);
