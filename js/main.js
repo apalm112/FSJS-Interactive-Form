@@ -10,6 +10,7 @@ var zipCode = document.getElementById('zip');
 var cvv = document.getElementById('cvv');
 var counter = 0;
 
+/* Main Functions ------------------------------------------------*/
 function setInitialFocus() {
   // Sets focus in the name input field on page load.
   var setPageLoadFocus = document.getElementById('name');
