@@ -254,7 +254,7 @@ function addStrikeThrough(num) {
 }
 
 function paymentInfoSection() {
-  // DONE: Display payment sections based on the payment option chosen in the select menu
+  // Display payment sections based on the payment option chosen in the select menu.
   var getThatDiv = document.getElementsByTagName('fieldset');
   var paymentSelect = document.getElementById('payment');
   paymentSelect.addEventListener('click', paymentInfoSection );
@@ -262,16 +262,16 @@ function paymentInfoSection() {
   var credit = getThatDiv[3].childNodes[7];
   var paypal = getThatDiv[3].childNodes[9];
   var bitcoin = getThatDiv[3].childNodes[11];
-  // DONE: The "Credit Card" payment option should be selected by default, display the #credit-card div, and hide the "Paypal" and "Bitcoin information.
+  // The "Credit Card" payment option is selected by default, display the #credit-card div, and hide the "Paypal" and "Bitcoin information.
   paypal.style.display = 'none';
   bitcoin.style.display = 'none';
-  // DONE: When a user selects the "PayPal" payment option, the Paypal information should display, and the credit card and “Bitcoin” information should be hidden.
+  // When a user selects the "PayPal" payment option, the Paypal information displays, and the credit card and “Bitcoin” information are hidden.
   if (paymentSelect.value === 'paypal') {
     paypal.style.display = 'block';
     credit.style.display = 'none';
     bitcoin.style.display = 'none';
   } else if (paymentSelect.value === 'bitcoin') {
-    // DONE: When a user selects the "Bitcoin" payment option, the Bitcoin information should display, and the credit card and “PayPal” information should be hidden.
+    // When a user selects the "Bitcoin" payment option, the Bitcoin information displays, and the credit card and “PayPal” information are hidden.
     bitcoin.style.display = 'block';
     paypal.style.display = 'none';
     credit.style.display = 'none';
@@ -283,7 +283,7 @@ function paymentInfoSection() {
 }
 
 function formValidation() {
-  // DONE:  If any of the following validation errors exist, prevent the user from submitting the form:
+  // If any of the following validation errors exist, prevent the user from submitting the form:
   var button = document.getElementsByTagName('button');
   button[0].setAttribute('id', 'register-button');
   var register = document.getElementById('register-button');
@@ -297,7 +297,7 @@ function formValidation() {
 }
 
 function validName(event) {
-  // DONE: Name field can't be blank
+  // If name field is left blank, an error message displays.
   event.preventDefault();
   if (getName.value.length >= 4) {
     getName.previousElementSibling.style.color = '#000';
@@ -309,7 +309,7 @@ function validName(event) {
 }
 
 function validEmail(event) {
-  // DONE Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
+  // Email field must be a validly formatted e-mail address.
   event.preventDefault();
   var getMail = document.getElementById('mail');
   var userEmail = getMail.value;
@@ -325,7 +325,7 @@ function validEmail(event) {
 }
 
 function validTShirt(event) {
-  // DONE
+  // If a Tshirt Theme & color aren't selected, an error message displays.
   event.preventDefault();
   var getTShirt = document.getElementById('design');
   var getTShirtLegend = document.getElementsByClassName('shirt');
@@ -340,7 +340,7 @@ function validTShirt(event) {
 }
 
 function validActivities(event) {
-  // DONE Must select at least one checkbox under the "Register for Activities" section of the form. This function is NOT working.
+  // Must select at least one checkbox under the "Register for Activities" section of the form, if not then on submit an error message displays.
   event.preventDefault();
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
 
@@ -361,13 +361,8 @@ function validActivities(event) {
   }
 }
 
-
-  // DONE If the selected payment option is "Credit Card," make sure the user has supplied a credit card number, a zip code, and a 3 number CVV value before the form can be submitted.
-  // DONE: Provide some kind of indication when there’s a validation error. The field’s borders could turn red, for example, or a message could appear near the field or at the top of the form
-  // There should be an error indication for the name field, email field, “Register for Activities” checkboxes, credit card number, zip code, and CVV
-
 function validCreditCard(event) {
-  // DONE Credit card field should only accept a number between 13 and 16 digits
+  // Credit card field only accepts a 16 digit number.
   event.preventDefault();
   ccNum.setAttribute('maxlength', 16);
   ccNum.setAttribute('minlength', 13);
@@ -375,7 +370,7 @@ function validCreditCard(event) {
 }
 
 function validZipCode(event) {
-  // DONE The zipcode field should accept a 5-digit number
+  // The zipcode field accepts only a 5-digit number.
   event.preventDefault();
   var zipCode = document.getElementById('zip');
   zipCode.setAttribute('maxlength', 5);
@@ -398,7 +393,7 @@ function validZipCode(event) {
 }
 
 function validCVV(event) {
-  // DONE The CVV should only accept a number that is exactly 3 digits long
+  // The CVV only accepts a 3 digit number.
   event.preventDefault();
   var cvv = document.getElementById('cvv');
   cvv.setAttribute('maxlength', 3);
@@ -413,9 +408,9 @@ function validCVV(event) {
   }
 }
 
-// STRETCH GOALS:
+// Exceeds Goals -----------------------------------------------------
 function errorMessage(input) {
-// DONE: Form provides at least one error message that changes depending on the error.  For example, if the user hasn’t entered a credit card number and the field is completely blank, the error message reads “Please enter a credit card number.” If the field isn’t empty but contains only 10 numbers, the error message reads “Please enter a number that is at least 16 digits long.”
+// Form provides at least one error message that changes depending on the error.
   var regex = (/\d{16}$/g);
   var regexAlpha = (/([a-z])/g);   // regerex to check for alpha chars
   if (input.value === '') {
@@ -437,7 +432,8 @@ function errorMessage(input) {
 }
 
 function realTimeValidationError() {
-  // DONE:Program your form so that it provides a real-time validation error message for at least one text input field. Rather than providing an error message on submit, your form should check for errors and display messages as the user begins typing inside a text field. For example, if the user enters an invalid email address, the error appears as the user begins to type, and disappears as soon as the user has entered a complete and correctly formatted email address.
+  // Displays real-time error message when input field gets focus.
+  // Adds real-time validation in the scenario where a blank form is submitted all error messages are shown & as each input field is correctly filled then remove the corresponding error message for that input field, except Activities.
   getMail.addEventListener('focus', validEmail);
   getMail.addEventListener('keyup', validEmail);
 
@@ -449,7 +445,6 @@ function realTimeValidationError() {
 
   cvv.addEventListener('focus', validCVV);
   cvv.addEventListener('keyup', validCVV);
-  // DONE: add real-time validation in the scenario where a blank form is submitted all error messages are shown & as each input field is correctly filled then remove the corresponding error message for that input field.
   getName.addEventListener('keyup', validName);
   getColorSelect.addEventListener('click', validTShirt);
   // TODO: Get the please select an activity error message to be removed when an activity is checked.
