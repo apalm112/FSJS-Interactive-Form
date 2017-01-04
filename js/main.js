@@ -296,17 +296,16 @@ function formValidation() {
   var register = document.getElementById('register-button');
 
   register.addEventListener('click', function(event) {
-    event.preventDefault();
-    validName();
-    validEmail();
-    validTShirt();
-    validActivities();
-    validCreditCard();
-    validZipCode();
-    validCVV();
+    if (true) {
+      canSubmit();
+    } else {
+      event.preventDefault();
+    }
   });
 }
-
+function canSubmit() {
+  return validName() && validEmail() && validTShirt() && validActivities() && validCreditCard() && validZipCode() && validCVV();
+}
 function validName() {
   // If name field is left blank, an error message displays.
   if (getName.value.length >= 4) {
@@ -393,7 +392,7 @@ function validZipCode() {
     zipCode.previousElementSibling.style.color = '#c92233';
     zipCode.previousElementSibling.innerText = 'Zip Code: cannot be left blank';
     return false;
-  }  else if (regexAlpha.test(zipCode.value)) {
+  } else if (regexAlpha.test(zipCode.value)) {
     zipCode.previousElementSibling.style.color = '#c92233';
     zipCode.previousElementSibling.innerText = 'Zip Code may not contain alphabetic characters';
     return false;
@@ -433,24 +432,33 @@ function errorMessage(input) {
   if (input.value === '') {
     input.previousElementSibling.style.color = '#c92233';
     input.previousElementSibling.innerText = 'Card Number: You must enter a valid card number';
+    return false;
   } else if (input.value.length < 16 && (!regexAlpha.test(input.value))) {
     input.previousElementSibling.style.color = '#c92233';
     input.previousElementSibling.innerText = 'Enter credit card number 16 digits long';
+    return false;
   } else if (regexAlpha.test(input.value)) {
     input.previousElementSibling.style.color = '#c92233';
     input.previousElementSibling.innerText = 'Card may not contain alphabetic characters';
+    return false;
   } else if (!regex.test(input.value)) {
     input.previousElementSibling.style.color = '#c92233';
     input.previousElementSibling.innerText = 'Card Number: Enter a valid card number';
+    return false;
   } else {
     input.previousElementSibling.style.color = '#000';
     input.previousElementSibling.innerText = 'Card Number';
+    return true;
   }
 }
 
 function realTimeValidationError() {
   // Displays real-time error message when input field gets focus.
   // Adds real-time validation in the scenario where a blank form is submitted all error messages are shown & as each input field is correctly filled then remove the corresponding error message for that input field, except Activities.
+  getName.addEventListener('keyup', validName);
+  
+  getColorSelect.addEventListener('click', validTShirt);
+
   getMail.addEventListener('focus', validEmail);
   getMail.addEventListener('keyup', validEmail);
 
@@ -462,8 +470,6 @@ function realTimeValidationError() {
 
   cvv.addEventListener('focus', validCVV);
   cvv.addEventListener('keyup', validCVV);
-  getName.addEventListener('keyup', validName);
-  getColorSelect.addEventListener('click', validTShirt);
 }
 
 setInitialFocus();
