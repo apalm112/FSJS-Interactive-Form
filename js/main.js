@@ -271,6 +271,7 @@ function paymentInfoSection() {
   // The "Credit Card" payment option is selected by default, display the #credit-card div, and hide the "Paypal" and "Bitcoin information.
   paypal.style.display = 'none';
   bitcoin.style.display = 'none';
+  getThatDiv[3].childNodes[5].childNodes[1].disabled = true;
   // When a user selects the "PayPal" payment option, the Paypal information displays, and the credit card and “Bitcoin” information are hidden.
   if (paymentSelect.value === 'paypal') {
     paypal.style.display = 'block';
