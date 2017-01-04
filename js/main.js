@@ -306,11 +306,11 @@ function formValidation() {
     validZipCode();
     validCVV();
 
-    if (validName() && validEmail() && validTShirt() && validActivities() && validCreditCard() && validZipCode() && validCVV()) {
+  /*  if (validName() && validEmail() && validTShirt() && validActivities() && validCreditCard() && validZipCode() && validCVV()) {
       $('#register-button').prop('disabled', false);
     } else {
       $('#register-button').prop('disabled', true);
-    }
+    }*/
   });
 }
 
@@ -359,7 +359,6 @@ function validTShirt() {
   } else if (getTShirt.value !== 'Select Theme' && counter === 1) {
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.display='none';
     counter = 0;
-  } else {
     return true;
   }
 }
@@ -392,11 +391,11 @@ function validCreditCard() {
 
   ccNum.setAttribute('maxlength', 16);
   errorMessage(ccNum);
-  if (errorMessage()) {
+/*  if (errorMessage()) {
     return true;
   } else {
     return false;
-  }
+  }*/
 }
 
 function validZipCode() {
