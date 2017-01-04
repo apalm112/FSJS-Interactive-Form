@@ -1,7 +1,5 @@
 /* Treehouse Project-03: Build an Interactive Form */
 
-// DONE: When JavaScript is switched off or unavailable, all the form fields that need to be filled out should be visible. For example, the “Your Job Role” text field should be visible on the page when JavaScript is switched off.
-
 /* Global Variables --------------------------------------------- */
 var getName = document.getElementById('name');
 var getColorSelect = document.getElementById('color');
@@ -10,34 +8,22 @@ var getMail = document.getElementById('mail');
 var ccNum = document.getElementById('cc-num');
 var zipCode = document.getElementById('zip');
 var cvv = document.getElementById('cvv');
+var counter = 0;
 
-
-// DONE: Set focus on first text field on page load w/ jQuery.
 function setInitialFocus() {
-  var $setPageLoadFocus = $('#name');
-  $setPageLoadFocus.focus();
+  // Sets focus in the name input field on page load.
+  var setPageLoadFocus = document.getElementById('name');
+  setPageLoadFocus.focus();
   // Hides the Other Job Role input text field that loads for no JS rubric.
-  var otherText = document.getElementById('other_title');
+  var otherText = document.getElementById('other-title');
   otherText.style.display = 'none';
 }
 
 function createOtherJobTextarea() {
-  // DONE: A text field that will be revealed when the "Other" option is selected from the "Job Role" drop down menu.  Give the field an id of “other-title,” and add the placeholder text of "Your Job Role" to the field.
-  // DONE: Fix error thrown to console when else clause conditional runs while there is No input text to remove.
-  // DONE: Fix margins on newTextArea to fit better onto the form.
+  // A text field that will be revealed when the "Other" option is selected from the "Job Role" drop down menu.
   var getSelectJobRole = document.getElementById('title');
-  var getOther = document.getElementById('other_title');
-  // var newTextArea = document.createElement('input');
-  // newTextArea.setAttribute('type', 'text');
-  // newTextArea.setAttribute('id', 'other_title');
-  // newTextArea.setAttribute('name', 'job_role');
-  // newTextArea.setAttribute('placeholder', 'Your Job Role');
-
-  // Make form inputs available for browsers w/ JS disabled.
-  // getSelectJobRole.after(newTextArea);
-  // getSelectJobRole.nextElementSibling.style.display = 'none';
-
-  $('#title').change(function() {
+  var getOther = document.getElementById('other-title');
+  getSelectJobRole.addEventListener('click', function() {
     if (getSelectJobRole.value === 'other') {
       getSelectJobRole.nextElementSibling.style.display = 'inline-block';
       getOther.focus();
@@ -336,7 +322,7 @@ function validEmail(event) {
   event.preventDefault();
   var getMail = document.getElementById('mail');
   var userEmail = getMail.value;
-  var checkEmail = userEmail.match((/([a-z]{2,})\@[a-z]{3,}\.[a-z]{3}/g));
+  var checkEmail = userEmail.match((/([a-z]{4,})\@[a-z]{3,}\.[a-z]{3}/g));
 
   if (checkEmail !== null) {
     getMail.previousElementSibling.style.color = '#000';
@@ -353,11 +339,12 @@ function validTShirt(event) {
   var getTShirt = document.getElementById('design');
   var getTShirtLegend = document.getElementsByClassName('shirt');
   if (getTShirt.value === 'Select Theme') {
+    counter = 1;
     getTShirtLegend[0].childNodes[1].innerHTML = 'T-Shirt Info' + '<p id="shirtValid">Don\'t forget to pick a shirt</p>';
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
-  }
-  if (getTShirt.value !== 'Select Theme' && getTShirtLegend[0].childNodes[1].firstChild.nextSibling.hasAttribute('id')) {
+  } else if (getTShirt.value !== 'Select Theme' && counter === 1) {
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.display='none';
+    counter = 0;
   }
 }
 
