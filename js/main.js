@@ -46,20 +46,20 @@ function tShirtInfo() {
     hideColor.style.display = 'block';
     removeOpt.disabled = true;
     getColorSelect[0].selected = true;
-    for (var idx=3; idx<6; idx++) {
+    for (idx=3; idx<6; idx++) {
       getColorSelect[idx].style.display = 'none';
     }
-    for (var idx=0; idx<3; idx++) {
+    for (idx=0; idx<3; idx++) {
       getColorSelect[idx].style.display = 'block';
     }
   } else if (getDesignSelect.value === 'heart js') {
     hideColor.style.display = 'block';
     removeOpt.disabled = true;
     getColorSelect[3].selected = true;
-    for (var idx=0; idx<3; idx++) {
+    for (idx=0; idx<3; idx++) {
       getColorSelect[idx].style.display = 'none';
     }
-    for (var idx=3; idx<6; idx++) {
+    for (idx=3; idx<6; idx++) {
       getColorSelect[idx].style.display = 'block';
     }
   }
@@ -68,7 +68,10 @@ function tShirtInfo() {
 function registerForActivities() {
   // Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox.
   // Visually indicates that the workshop in the competing time slot isn't available.  When a user unchecks an activity, the competing activities (if there are any) are no longer disabled.
-  $('.activities').change(function() {
+  getActivitiesFieldset[0].setAttribute('id', 'registerAct');
+  var getAct = document.getElementById('registerAct');
+
+  getAct.addEventListener('click', function() {
     if (getActivitiesFieldset[0].childNodes[5].children[0].checked) {
       // If A checked, disable C:
       getActivitiesFieldset[0].childNodes[9].children[0].disabled = true;
@@ -130,6 +133,9 @@ function runningTotal() {
   var nodeCounter = 0;
   var buildToolsCounter = 0;
   var npmCounter = 0;
+  var num;
+  var dollar;
+  var count;
 
   // Each time an input is checked/unchecked the for loop calculates the total.
   $('input[type="checkbox"]').change(function() {
@@ -143,88 +149,88 @@ function runningTotal() {
 
       // Massive conditional checks each input checkbox & adds/subtracts that activities value to the total displayed.
       if (getName === 'all' && isChecked === true && allCounter === 0 ) {
-        var dollar = getLabelInput.innerText;
-        var num = dollar.match((/([0-9]{3})/g));
-        var count = num.pop();
+        dollar = getLabelInput.innerText;
+        num = dollar.match((/([0-9]{3})/g));
+        count = num.pop();
         total += parseInt(count);
         allCounter++;
       } else if (getName ==='all' && isChecked === false && allCounter === 1) {
-        var dollar = getLabelInput.innerText;
-        var num = dollar.match((/([0-9]{3})/g));
-        var count = num.pop();
+        dollar = getLabelInput.innerText;
+        num = dollar.match((/([0-9]{3})/g));
+        count = num.pop();
         total -= parseInt(count);
         allCounter--;
       }
       if (getName === 'js-frameworks' && isChecked === true && jsframeworksCounter === 0 ) {
-        var dollar = getLabelInput.innerText;
-        var num = dollar.match((/([0-9]{3})/g));
-        var count = num.pop();
+        dollar = getLabelInput.innerText;
+        num = dollar.match((/([0-9]{3})/g));
+        count = num.pop();
         total += parseInt(count);
         jsframeworksCounter++;
       } else if (getName ==='js-frameworks' && isChecked === false && jsframeworksCounter === 1) {
-        var dollar = getLabelInput.innerText;
-        var num = dollar.match((/([0-9]{3})/g));
-        var count = num.pop();
+        dollar = getLabelInput.innerText;
+        num = dollar.match((/([0-9]{3})/g));
+        count = num.pop();
         total -= parseInt(count);
         jsframeworksCounter--;
       }if (getName === 'js-libs' && isChecked === true && jslibsCounter === 0 ) {
-        var dollar = getLabelInput.innerText;
-        var num = dollar.match((/([0-9]{3})/g));
-        var count = num.pop();
+        dollar = getLabelInput.innerText;
+        num = dollar.match((/([0-9]{3})/g));
+        count = num.pop();
         total += parseInt(count);
         jslibsCounter++;
       } else if (getName ==='js-libs' && isChecked === false && jslibsCounter === 1) {
-        var dollar = getLabelInput.innerText;
-        var num = dollar.match((/([0-9]{3})/g));
-        var count = num.pop();
+        dollar = getLabelInput.innerText;
+        num = dollar.match((/([0-9]{3})/g));
+        count = num.pop();
         total -= parseInt(count);
         jslibsCounter--;
       }if (getName === 'express' && isChecked === true && expressCounter === 0 ) {
-        var dollar = getLabelInput.innerText;
-        var num = dollar.match((/([0-9]{3})/g));
-        var count = num.pop();
+        dollar = getLabelInput.innerText;
+        num = dollar.match((/([0-9]{3})/g));
+        count = num.pop();
         total += parseInt(count);
         expressCounter++;
       } else if (getName ==='express' && isChecked === false && expressCounter === 1) {
-        var dollar = getLabelInput.innerText;
-        var num = dollar.match((/([0-9]{3})/g));
-        var count = num.pop();
+        dollar = getLabelInput.innerText;
+        num = dollar.match((/([0-9]{3})/g));
+        count = num.pop();
         total -= parseInt(count);
         expressCounter--;
       }if (getName === 'node' && isChecked === true && nodeCounter === 0 ) {
-        var dollar = getLabelInput.innerText;
-        var num = dollar.match((/([0-9]{3})/g));
-        var count = num.pop();
+        dollar = getLabelInput.innerText;
+        num = dollar.match((/([0-9]{3})/g));
+        count = num.pop();
         total += parseInt(count);
         nodeCounter++;
       } else if (getName ==='node' && isChecked === false && nodeCounter === 1) {
-        var dollar = getLabelInput.innerText;
-        var num = dollar.match((/([0-9]{3})/g));
-        var count = num.pop();
+        dollar = getLabelInput.innerText;
+        num = dollar.match((/([0-9]{3})/g));
+        count = num.pop();
         total -= parseInt(count);
         nodeCounter--;
       }if (getName === 'build-tools' && isChecked === true && buildToolsCounter === 0 ) {
-        var dollar = getLabelInput.innerText;
-        var num = dollar.match((/([0-9]{3})/g));
-        var count = num.pop();
+        dollar = getLabelInput.innerText;
+        num = dollar.match((/([0-9]{3})/g));
+        count = num.pop();
         total += parseInt(count);
         buildToolsCounter++;
       } else if (getName ==='build-tools' && isChecked === false && buildToolsCounter === 1) {
-        var dollar = getLabelInput.innerText;
-        var num = dollar.match((/([0-9]{3})/g));
-        var count = num.pop();
+        dollar = getLabelInput.innerText;
+        num = dollar.match((/([0-9]{3})/g));
+        count = num.pop();
         total -= parseInt(count);
         buildToolsCounter--;
       }if (getName === 'npm' && isChecked === true && npmCounter === 0 ) {
-        var dollar = getLabelInput.innerText;
-        var num = dollar.match((/([0-9]{3})/g));
-        var count = num.pop();
+        dollar = getLabelInput.innerText;
+        num = dollar.match((/([0-9]{3})/g));
+        count = num.pop();
         total += parseInt(count);
         npmCounter++;
       } else if (getName ==='npm' && isChecked === false && npmCounter === 1) {
-        var dollar = getLabelInput.innerText;
-        var num = dollar.match((/([0-9]{3})/g));
-        var count = num.pop();
+        dollar = getLabelInput.innerText;
+        num = dollar.match((/([0-9]{3})/g));
+        count = num.pop();
         total -= parseInt(count);
         npmCounter--;
       }
@@ -232,7 +238,7 @@ function runningTotal() {
       label.className = 'cost';
       label.innerText = 'Total: $' + total;
       getActivitiesFieldset[0].append(label);
-    };
+    }
   });
 }
 
@@ -313,7 +319,7 @@ function validEmail(event) {
   event.preventDefault();
   var getMail = document.getElementById('mail');
   var userEmail = getMail.value;
-  var checkEmail = userEmail.match((/([a-z]{4,})\@[a-z]{3,}\.[a-z]{3}/g));
+  var checkEmail = userEmail.match((/([a-z]{4,})\@[a-z]{3,}\.[a-z]{2}/g));
 
   if (checkEmail !== null) {
     getMail.previousElementSibling.style.color = '#000';
@@ -352,7 +358,7 @@ function validActivities(event) {
 
     if (isChecked) {
       getActivitiesFieldset[0].childNodes[1].style.color = '#184f68';
-      getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.display='none';
+      getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.display = 'none';
       return;
     } else if (!isChecked) {
       getActivitiesFieldset[0].childNodes[1].innerHTML = 'Register for Activities' + '<p>Please select an Activity</p>';
@@ -365,7 +371,6 @@ function validCreditCard(event) {
   // Credit card field only accepts a 16 digit number.
   event.preventDefault();
   ccNum.setAttribute('maxlength', 16);
-  ccNum.setAttribute('minlength', 13);
   errorMessage(ccNum);
 }
 
@@ -408,7 +413,7 @@ function validCVV(event) {
   }
 }
 
-// Exceeds Goals -----------------------------------------------------
+// Exceeds Functions -----------------------------------------------------
 function errorMessage(input) {
 // Form provides at least one error message that changes depending on the error.
   var regex = (/\d{16}$/g);
@@ -418,7 +423,7 @@ function errorMessage(input) {
     input.previousElementSibling.innerText = 'Card Number: You must enter a valid card number';
   } else if (input.value.length < 16 && (!regexAlpha.test(input.value))) {
     input.previousElementSibling.style.color = '#c92233';
-    input.previousElementSibling.innerText = 'Enter card number at least 16 digits long';
+    input.previousElementSibling.innerText = 'Enter credit card number 16 digits long';
   } else if (regexAlpha.test(input.value)) {
     input.previousElementSibling.style.color = '#c92233';
     input.previousElementSibling.innerText = 'Card may not contain alphabetic characters';
@@ -447,16 +452,13 @@ function realTimeValidationError() {
   cvv.addEventListener('keyup', validCVV);
   getName.addEventListener('keyup', validName);
   getColorSelect.addEventListener('click', validTShirt);
-  // TODO: Get the please select an activity error message to be removed when an activity is checked.
-  }
+}
 
-$(document).ready(function() {
-  setInitialFocus();
-  createOtherJobTextarea();
-  tShirtInfo();
-  registerForActivities();
-  runningTotal();
-  paymentInfoSection();
-  formValidation();
-  realTimeValidationError();
-});
+setInitialFocus();
+createOtherJobTextarea();
+tShirtInfo();
+registerForActivities();
+runningTotal();
+paymentInfoSection();
+formValidation();
+realTimeValidationError();
