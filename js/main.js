@@ -295,8 +295,8 @@ function formValidation() {
   button[0].setAttribute('id', 'register-button');
   var register = document.getElementById('register-button');
 
-  register.addEventListener('submit', function() {
-
+  register.addEventListener('click', function(event) {
+    event.preventDefault();
     validName();
     validEmail();
     validTShirt();
@@ -312,9 +312,11 @@ function validName() {
   if (getName.value.length >= 4) {
     getName.previousElementSibling.style.color = '#000';
     getName.previousElementSibling.innerText = 'Name:';
+    return true;
   } else {
     getName.previousElementSibling.style.color = '#c92233';
     getName.previousElementSibling.innerText = 'Name:  (please provide your name)';
+    return false;
   }
 }
 
@@ -327,9 +329,11 @@ function validEmail() {
   if (checkEmail !== null) {
     getMail.previousElementSibling.style.color = '#000';
     getMail.previousElementSibling.innerText = 'Email:';
+    return true;
   } else if (!checkEmail) {
     getMail.previousElementSibling.style.color = '#c92233';
     getMail.previousElementSibling.innerText = 'Email:  (please provide your email)';
+    return false;
   }
 }
 
@@ -341,9 +345,12 @@ function validTShirt() {
     counter = 1;
     getTShirtLegend[0].childNodes[1].innerHTML = 'T-Shirt Info' + '<p id="shirtValid">Don\'t forget to pick a shirt</p>';
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
+    return false;
   } else if (getTShirt.value !== 'Select Theme' && counter === 1) {
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.display='none';
     counter = 0;
+  } else {
+    return true;
   }
 }
 
@@ -360,10 +367,11 @@ function validActivities() {
     if (isChecked) {
       getActivitiesFieldset[0].childNodes[1].style.color = '#184f68';
       getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.display = 'none';
-      return;
+      return true;
     } else if (!isChecked) {
       getActivitiesFieldset[0].childNodes[1].innerHTML = 'Register for Activities' + '<p>Please select an Activity</p>';
       getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
+      return false;
     }
   }
 }
@@ -384,15 +392,19 @@ function validZipCode() {
   if (zipCode.value === '') {
     zipCode.previousElementSibling.style.color = '#c92233';
     zipCode.previousElementSibling.innerText = 'Zip Code: cannot be left blank';
+    return false;
   }  else if (regexAlpha.test(zipCode.value)) {
     zipCode.previousElementSibling.style.color = '#c92233';
     zipCode.previousElementSibling.innerText = 'Zip Code may not contain alphabetic characters';
+    return false;
   } else if (!regex.test(zipCode.value)) {
     zipCode.previousElementSibling.style.color = '#c92233';
     zipCode.previousElementSibling.innerText = 'Zip Code: Enter a valid zip code';
+    return false;
   } else {
     zipCode.previousElementSibling.style.color = '#000';
     zipCode.previousElementSibling.innerText = 'Zip Code:';
+    return true;
   }
 }
 
@@ -405,9 +417,11 @@ function validCVV() {
   if (!regex.test(cvv.value)) {
     cvv.previousElementSibling.style.color = '#c92233';
     cvv.previousElementSibling.innerText = 'CVV: Enter a valid CVV';
+    return false;
   } else {
     cvv.previousElementSibling.style.color = '#000';
     cvv.previousElementSibling.innerText = 'CVV';
+    return true;
   }
 }
 
