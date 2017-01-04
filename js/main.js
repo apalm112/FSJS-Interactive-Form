@@ -1,7 +1,5 @@
 /* Treehouse Project-03: Build an Interactive Form */
 
-// DONE: When JavaScript is switched off or unavailable, all the form fields that need to be filled out should be visible. For example, the “Your Job Role” text field should be visible on the page when JavaScript is switched off.
-
 /* Global Variables --------------------------------------------- */
 var getName = document.getElementById('name');
 var getColorSelect = document.getElementById('color');
@@ -10,34 +8,22 @@ var getMail = document.getElementById('mail');
 var ccNum = document.getElementById('cc-num');
 var zipCode = document.getElementById('zip');
 var cvv = document.getElementById('cvv');
+var counter = 0;
 
-
-// DONE: Set focus on first text field on page load w/ jQuery.
 function setInitialFocus() {
-  var $setPageLoadFocus = $('#name');
-  $setPageLoadFocus.focus();
+  // Sets focus in the name input field on page load.
+  var setPageLoadFocus = document.getElementById('name');
+  setPageLoadFocus.focus();
   // Hides the Other Job Role input text field that loads for no JS rubric.
-  var otherText = document.getElementById('other_title');
+  var otherText = document.getElementById('other-title');
   otherText.style.display = 'none';
 }
 
 function createOtherJobTextarea() {
-  // DONE: A text field that will be revealed when the "Other" option is selected from the "Job Role" drop down menu.  Give the field an id of “other-title,” and add the placeholder text of "Your Job Role" to the field.
-  // DONE: Fix error thrown to console when else clause conditional runs while there is No input text to remove.
-  // DONE: Fix margins on newTextArea to fit better onto the form.
+  // A text field will be revealed when the "Other" option is selected from the "Job Role" drop down menu.
   var getSelectJobRole = document.getElementById('title');
-  var getOther = document.getElementById('other_title');
-  // var newTextArea = document.createElement('input');
-  // newTextArea.setAttribute('type', 'text');
-  // newTextArea.setAttribute('id', 'other_title');
-  // newTextArea.setAttribute('name', 'job_role');
-  // newTextArea.setAttribute('placeholder', 'Your Job Role');
-
-  // Make form inputs available for browsers w/ JS disabled.
-  // getSelectJobRole.after(newTextArea);
-  // getSelectJobRole.nextElementSibling.style.display = 'none';
-
-  $('#title').change(function() {
+  var getOther = document.getElementById('other-title');
+  getSelectJobRole.addEventListener('click', function() {
     if (getSelectJobRole.value === 'other') {
       getSelectJobRole.nextElementSibling.style.display = 'inline-block';
       getOther.focus();
@@ -48,49 +34,40 @@ function createOtherJobTextarea() {
 }
 
 function tShirtInfo() {
-  // DONE: For the T-Shirt color menu:  only display the color options that match the design selected in the "Design" menu.
+  // Changes color select option value when attribute is disabled to corresponding color restrictions, i.e.--if tomato is selected & then theme is switched to js puns.
   var getDesignSelect = document.getElementById('design');
   var hideColor = document.getElementById('colors-js-puns');
   var removeOpt = document.getElementById('remove');
 
   hideColor.style.display = 'none';
-
-  // $('#design').change(function() {});
-    // DONE: Change color select option value when attribute is disabled to corresponding color restrictions, i.e.--if tomato is selected & then theme is switched to js puns, automagically make the color select option change.
-    //  then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
-    // then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
-
-    getDesignSelect.addEventListener('change', tShirtInfo);
-
-    if (getDesignSelect.value === 'js puns') {
-      hideColor.style.display = 'block';
-      removeOpt.disabled = true;
-      getColorSelect[0].selected = true;
-      for (var idx=3; idx<6; idx++) {
-        getColorSelect[idx].style.display = 'none';
-      }
-      for (var idx=0; idx<3; idx++) {
-        getColorSelect[idx].style.display = 'block';
-      }
-    } else if (getDesignSelect.value === 'heart js') {
-      hideColor.style.display = 'block';
-      removeOpt.disabled = true;
-      getColorSelect[3].selected = true;
-      for (var idx=0; idx<3; idx++) {
-        getColorSelect[idx].style.display = 'none';
-      }
-      for (var idx=3; idx<6; idx++) {
-        getColorSelect[idx].style.display = 'block';
-      }
+  getDesignSelect.addEventListener('change', tShirtInfo);
+  // Hide or show the corresponding color options based on which design option is currently selected.
+  if (getDesignSelect.value === 'js puns') {
+    hideColor.style.display = 'block';
+    removeOpt.disabled = true;
+    getColorSelect[0].selected = true;
+    for (var idx=3; idx<6; idx++) {
+      getColorSelect[idx].style.display = 'none';
     }
+    for (var idx=0; idx<3; idx++) {
+      getColorSelect[idx].style.display = 'block';
+    }
+  } else if (getDesignSelect.value === 'heart js') {
+    hideColor.style.display = 'block';
+    removeOpt.disabled = true;
+    getColorSelect[3].selected = true;
+    for (var idx=0; idx<3; idx++) {
+      getColorSelect[idx].style.display = 'none';
+    }
+    for (var idx=3; idx<6; idx++) {
+      getColorSelect[idx].style.display = 'block';
+    }
+  }
 }
 
 function registerForActivities() {
-  // TODO: Refactor function w/ jQuery to seperate CSS from JS.
-  // DONE: Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox.
-  // DONE: And visually indicate that the workshop in the competing time slot isn't available.  When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
-  // var getActivitiesFieldset = document.getElementsByClassName('activities');
-
+  // Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox.
+  // Visually indicates that the workshop in the competing time slot isn't available.  When a user unchecks an activity, the competing activities (if there are any) are no longer disabled.
   $('.activities').change(function() {
     if (getActivitiesFieldset[0].childNodes[5].children[0].checked) {
       // If A checked, disable C:
@@ -116,7 +93,7 @@ function registerForActivities() {
       getActivitiesFieldset[0].childNodes[7].style.color = '#706D73';
       addStrikeThrough(7);
     }
-    // Reverse disabled = true;
+    // Reverse the disabled input.
     if (!getActivitiesFieldset[0].childNodes[5].children[0].checked) {
       // If A unchecked, enable C:
       getActivitiesFieldset[0].childNodes[9].children[0].disabled = false;
@@ -141,22 +118,21 @@ function registerForActivities() {
 }
 
 function runningTotal() {
-  // DONE: As a user selects activities, a running total should display below the list of checkboxes.
-  // For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
-  // Append a label to this fieldtest & update its innerText w/ total.
+  // As a user selects activities, a running total displays below the list of checkboxes.
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
   var label = document.createElement('label');
   var total = 0;
-  var all_counter = 0;
-  var jsframeworks_counter = 0;
-  var jslibs_counter = 0;
-  var express_counter = 0;
-  var node_counter = 0;
-  var build_tools_counter = 0;
-  var npm_counter = 0;
+  // Initialize counters to help add/subtract for each activity.
+  var allCounter = 0;
+  var jsframeworksCounter = 0;
+  var jslibsCounter = 0;
+  var expressCounter = 0;
+  var nodeCounter = 0;
+  var buildToolsCounter = 0;
+  var npmCounter = 0;
 
+  // Each time an input is checked/unchecked the for loop calculates the total.
   $('input[type="checkbox"]').change(function() {
-    // DONE: Problem: current running total does not Subtract amount when input is unchecked.
     for (var idx=3; idx < inputLength; idx += 2) {
       // var getLabelInput = <label><input name='all'>Main Conf $200</label>
       var getLabelInput = getActivitiesFieldset[0].childNodes[idx];
@@ -165,93 +141,94 @@ function runningTotal() {
       // var isChecked = true or false val for input checkbox
       var isChecked = getLabelInput.childNodes[0].checked;
 
-      if (getName === 'all' && isChecked === true && all_counter === 0 ) {
+      // Massive conditional checks each input checkbox & adds/subtracts that activities value to the total displayed.
+      if (getName === 'all' && isChecked === true && allCounter === 0 ) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total += parseInt(count);
-        all_counter++;
-      } else if (getName ==='all' && isChecked === false && all_counter === 1) {
+        allCounter++;
+      } else if (getName ==='all' && isChecked === false && allCounter === 1) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total -= parseInt(count);
-        all_counter--;
+        allCounter--;
       }
-      if (getName === 'js-frameworks' && isChecked === true && jsframeworks_counter === 0 ) {
+      if (getName === 'js-frameworks' && isChecked === true && jsframeworksCounter === 0 ) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total += parseInt(count);
-        jsframeworks_counter++;
-      } else if (getName ==='js-frameworks' && isChecked === false && jsframeworks_counter === 1) {
+        jsframeworksCounter++;
+      } else if (getName ==='js-frameworks' && isChecked === false && jsframeworksCounter === 1) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total -= parseInt(count);
-        jsframeworks_counter--;
-      }if (getName === 'js-libs' && isChecked === true && jslibs_counter === 0 ) {
+        jsframeworksCounter--;
+      }if (getName === 'js-libs' && isChecked === true && jslibsCounter === 0 ) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total += parseInt(count);
-        jslibs_counter++;
-      } else if (getName ==='js-libs' && isChecked === false && jslibs_counter === 1) {
+        jslibsCounter++;
+      } else if (getName ==='js-libs' && isChecked === false && jslibsCounter === 1) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total -= parseInt(count);
-        jslibs_counter--;
-      }if (getName === 'express' && isChecked === true && express_counter === 0 ) {
+        jslibsCounter--;
+      }if (getName === 'express' && isChecked === true && expressCounter === 0 ) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total += parseInt(count);
-        express_counter++;
-      } else if (getName ==='express' && isChecked === false && express_counter === 1) {
+        expressCounter++;
+      } else if (getName ==='express' && isChecked === false && expressCounter === 1) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total -= parseInt(count);
-        express_counter--;
-      }if (getName === 'node' && isChecked === true && node_counter === 0 ) {
+        expressCounter--;
+      }if (getName === 'node' && isChecked === true && nodeCounter === 0 ) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total += parseInt(count);
-        node_counter++;
-      } else if (getName ==='node' && isChecked === false && node_counter === 1) {
+        nodeCounter++;
+      } else if (getName ==='node' && isChecked === false && nodeCounter === 1) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total -= parseInt(count);
-        node_counter--;
-      }if (getName === 'build-tools' && isChecked === true && build_tools_counter === 0 ) {
+        nodeCounter--;
+      }if (getName === 'build-tools' && isChecked === true && buildToolsCounter === 0 ) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total += parseInt(count);
-        build_tools_counter++;
-      } else if (getName ==='build-tools' && isChecked === false && build_tools_counter === 1) {
+        buildToolsCounter++;
+      } else if (getName ==='build-tools' && isChecked === false && buildToolsCounter === 1) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total -= parseInt(count);
-        build_tools_counter--;
-      }if (getName === 'npm' && isChecked === true && npm_counter === 0 ) {
+        buildToolsCounter--;
+      }if (getName === 'npm' && isChecked === true && npmCounter === 0 ) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total += parseInt(count);
-        npm_counter++;
-      } else if (getName ==='npm' && isChecked === false && npm_counter === 1) {
+        npmCounter++;
+      } else if (getName ==='npm' && isChecked === false && npmCounter === 1) {
         var dollar = getLabelInput.innerText;
         var num = dollar.match((/([0-9]{3})/g));
         var count = num.pop();
         total -= parseInt(count);
-        npm_counter--;
+        npmCounter--;
       }
-
+      // Append a label to this fieldtest & update its innerText w/ total.
       label.className = 'cost';
       label.innerText = 'Total: $' + total;
       getActivitiesFieldset[0].append(label);
@@ -277,7 +254,7 @@ function addStrikeThrough(num) {
 }
 
 function paymentInfoSection() {
-  // DONE: Display payment sections based on the payment option chosen in the select menu
+  // Display payment sections based on the payment option chosen in the select menu.
   var getThatDiv = document.getElementsByTagName('fieldset');
   var paymentSelect = document.getElementById('payment');
   paymentSelect.addEventListener('click', paymentInfoSection );
@@ -285,16 +262,16 @@ function paymentInfoSection() {
   var credit = getThatDiv[3].childNodes[7];
   var paypal = getThatDiv[3].childNodes[9];
   var bitcoin = getThatDiv[3].childNodes[11];
-  // DONE: The "Credit Card" payment option should be selected by default, display the #credit-card div, and hide the "Paypal" and "Bitcoin information.
+  // The "Credit Card" payment option is selected by default, display the #credit-card div, and hide the "Paypal" and "Bitcoin information.
   paypal.style.display = 'none';
   bitcoin.style.display = 'none';
-  // DONE: When a user selects the "PayPal" payment option, the Paypal information should display, and the credit card and “Bitcoin” information should be hidden.
+  // When a user selects the "PayPal" payment option, the Paypal information displays, and the credit card and “Bitcoin” information are hidden.
   if (paymentSelect.value === 'paypal') {
     paypal.style.display = 'block';
     credit.style.display = 'none';
     bitcoin.style.display = 'none';
   } else if (paymentSelect.value === 'bitcoin') {
-    // DONE: When a user selects the "Bitcoin" payment option, the Bitcoin information should display, and the credit card and “PayPal” information should be hidden.
+    // When a user selects the "Bitcoin" payment option, the Bitcoin information displays, and the credit card and “PayPal” information are hidden.
     bitcoin.style.display = 'block';
     paypal.style.display = 'none';
     credit.style.display = 'none';
@@ -306,7 +283,7 @@ function paymentInfoSection() {
 }
 
 function formValidation() {
-  // DONE:  If any of the following validation errors exist, prevent the user from submitting the form:
+  // If any of the following validation errors exist, prevent the user from submitting the form:
   var button = document.getElementsByTagName('button');
   button[0].setAttribute('id', 'register-button');
   var register = document.getElementById('register-button');
@@ -320,7 +297,7 @@ function formValidation() {
 }
 
 function validName(event) {
-  // DONE: Name field can't be blank
+  // If name field is left blank, an error message displays.
   event.preventDefault();
   if (getName.value.length >= 4) {
     getName.previousElementSibling.style.color = '#000';
@@ -332,11 +309,11 @@ function validName(event) {
 }
 
 function validEmail(event) {
-  // DONE Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
+  // Email field must be a validly formatted e-mail address.
   event.preventDefault();
   var getMail = document.getElementById('mail');
   var userEmail = getMail.value;
-  var checkEmail = userEmail.match((/([a-z]{2,})\@[a-z]{3,}\.[a-z]{3}/g));
+  var checkEmail = userEmail.match((/([a-z]{4,})\@[a-z]{3,}\.[a-z]{3}/g));
 
   if (checkEmail !== null) {
     getMail.previousElementSibling.style.color = '#000';
@@ -348,21 +325,22 @@ function validEmail(event) {
 }
 
 function validTShirt(event) {
-  // DONE
+  // If a Tshirt Theme & color aren't selected, an error message displays.
   event.preventDefault();
   var getTShirt = document.getElementById('design');
   var getTShirtLegend = document.getElementsByClassName('shirt');
   if (getTShirt.value === 'Select Theme') {
+    counter = 1;
     getTShirtLegend[0].childNodes[1].innerHTML = 'T-Shirt Info' + '<p id="shirtValid">Don\'t forget to pick a shirt</p>';
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
-  }
-  if (getTShirt.value !== 'Select Theme' && getTShirtLegend[0].childNodes[1].firstChild.nextSibling.hasAttribute('id')) {
+  } else if (getTShirt.value !== 'Select Theme' && counter === 1) {
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.display='none';
+    counter = 0;
   }
 }
 
 function validActivities(event) {
-  // DONE Must select at least one checkbox under the "Register for Activities" section of the form. This function is NOT working.
+  // Must select at least one checkbox under the "Register for Activities" section of the form, if not then on submit an error message displays.
   event.preventDefault();
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
 
@@ -383,13 +361,8 @@ function validActivities(event) {
   }
 }
 
-
-  // DONE If the selected payment option is "Credit Card," make sure the user has supplied a credit card number, a zip code, and a 3 number CVV value before the form can be submitted.
-  // DONE: Provide some kind of indication when there’s a validation error. The field’s borders could turn red, for example, or a message could appear near the field or at the top of the form
-  // There should be an error indication for the name field, email field, “Register for Activities” checkboxes, credit card number, zip code, and CVV
-
 function validCreditCard(event) {
-  // DONE Credit card field should only accept a number between 13 and 16 digits
+  // Credit card field only accepts a 16 digit number.
   event.preventDefault();
   ccNum.setAttribute('maxlength', 16);
   ccNum.setAttribute('minlength', 13);
@@ -397,7 +370,7 @@ function validCreditCard(event) {
 }
 
 function validZipCode(event) {
-  // DONE The zipcode field should accept a 5-digit number
+  // The zipcode field accepts only a 5-digit number.
   event.preventDefault();
   var zipCode = document.getElementById('zip');
   zipCode.setAttribute('maxlength', 5);
@@ -420,7 +393,7 @@ function validZipCode(event) {
 }
 
 function validCVV(event) {
-  // DONE The CVV should only accept a number that is exactly 3 digits long
+  // The CVV only accepts a 3 digit number.
   event.preventDefault();
   var cvv = document.getElementById('cvv');
   cvv.setAttribute('maxlength', 3);
@@ -435,9 +408,9 @@ function validCVV(event) {
   }
 }
 
-// STRETCH GOALS:
+// Exceeds Goals -----------------------------------------------------
 function errorMessage(input) {
-// DONE: Form provides at least one error message that changes depending on the error.  For example, if the user hasn’t entered a credit card number and the field is completely blank, the error message reads “Please enter a credit card number.” If the field isn’t empty but contains only 10 numbers, the error message reads “Please enter a number that is at least 16 digits long.”
+// Form provides at least one error message that changes depending on the error.
   var regex = (/\d{16}$/g);
   var regexAlpha = (/([a-z])/g);   // regerex to check for alpha chars
   if (input.value === '') {
@@ -459,7 +432,8 @@ function errorMessage(input) {
 }
 
 function realTimeValidationError() {
-  // DONE:Program your form so that it provides a real-time validation error message for at least one text input field. Rather than providing an error message on submit, your form should check for errors and display messages as the user begins typing inside a text field. For example, if the user enters an invalid email address, the error appears as the user begins to type, and disappears as soon as the user has entered a complete and correctly formatted email address.
+  // Displays real-time error message when input field gets focus.
+  // Adds real-time validation in the scenario where a blank form is submitted all error messages are shown & as each input field is correctly filled then remove the corresponding error message for that input field, except Activities.
   getMail.addEventListener('focus', validEmail);
   getMail.addEventListener('keyup', validEmail);
 
@@ -471,7 +445,6 @@ function realTimeValidationError() {
 
   cvv.addEventListener('focus', validCVV);
   cvv.addEventListener('keyup', validCVV);
-  // DONE: add real-time validation in the scenario where a blank form is submitted all error messages are shown & as each input field is correctly filled then remove the corresponding error message for that input field.
   getName.addEventListener('keyup', validName);
   getColorSelect.addEventListener('click', validTShirt);
   // TODO: Get the please select an activity error message to be removed when an activity is checked.
