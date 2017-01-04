@@ -296,8 +296,8 @@ function formValidation() {
   button[0].setAttribute('id', 'register-button');
   var register = document.getElementById('register-button');
 
-  // TODO:
   register.addEventListener('click', function(event) {
+    // event.preventDefault();
     validName();
     validEmail();
     validTShirt();
@@ -306,11 +306,11 @@ function formValidation() {
     validZipCode();
     validCVV();
 
-  /*  if (validName() && validEmail() && validTShirt() && validActivities() && validCreditCard() && validZipCode() && validCVV()) {
+    if (validName() && validEmail() && validTShirt() && validActivities() && validCreditCard() && validZipCode() && validCVV()) {
       $('#register-button').prop('disabled', false);
     } else {
       $('#register-button').prop('disabled', true);
-    }*/
+    }
   });
 }
 
@@ -359,6 +359,7 @@ function validTShirt() {
   } else if (getTShirt.value !== 'Select Theme' && counter === 1) {
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.display='none';
     counter = 0;
+  } else {
     return true;
   }
 }
@@ -409,7 +410,7 @@ function validZipCode() {
   if (zipCode.value === '') {
     zipCode.previousElementSibling.style.color = '#c92233';
     zipCode.previousElementSibling.innerText = 'Zip Code: cannot be left blank';
-  }  else if (regexAlpha.test(zipCode.value)) {
+  } else if (regexAlpha.test(zipCode.value)) {
     zipCode.previousElementSibling.style.color = '#c92233';
     zipCode.previousElementSibling.innerText = 'Zip Code may not contain alphabetic characters';
     return false;
