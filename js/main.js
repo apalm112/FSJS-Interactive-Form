@@ -9,6 +9,7 @@ var ccNum = document.getElementById('cc-num');
 var zipCode = document.getElementById('zip');
 var cvv = document.getElementById('cvv');
 var counter = 0;
+var noError = 0;
 
 /* On Page Load ------------------------------------------------------- */
 function setInitialFocus() {
@@ -316,40 +317,45 @@ function validName() {
   if (getName.value.length >= 4) {
     getName.previousElementSibling.style.color = '#000';
     getName.previousElementSibling.innerText = 'Name:';
+    return true;
   } else {
     getName.previousElementSibling.style.color = '#c92233';
     getName.previousElementSibling.innerText = 'Name:  (please provide your name)';
+    return false;
   }
 }
 
 function validEmail() {
   // Email field must be a validly formatted e-mail address.
-
   var getMail = document.getElementById('mail');
   var userEmail = getMail.value;
   var checkEmail = userEmail.match((/([a-z]{4,})\@[a-z]{3,}\.[a-z]{2}/g));
-
   if (checkEmail !== null) {
     getMail.previousElementSibling.style.color = '#000';
     getMail.previousElementSibling.innerText = 'Email:';
+    return true;
   } else if (!checkEmail) {
     getMail.previousElementSibling.style.color = '#c92233';
     getMail.previousElementSibling.innerText = 'Email:  (please provide your email)';
+    return false;
   }
 }
 
 function validTShirt() {
   // If a Tshirt Theme & color aren't selected, an error message displays.
-
+  // var counter = 0;
   var getTShirt = document.getElementById('design');
   var getTShirtLegend = document.getElementsByClassName('shirt');
-  if (getTShirt.value === 'Select Theme') {
-    counter = 1;
-    getTShirtLegend[0].childNodes[1].innerHTML = 'T-Shirt Info' + '<p id="shirtValid">Don\'t forget to pick a shirt</p>';
-    getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
-  } else if (getTShirt.value !== 'Select Theme' && counter === 1) {
+  if (getTShirt.value !== 'Select Theme' && counter == 1) {
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.display='none';
     counter = 0;
+  } else if (getTShirt.value === 'Select Theme' && counter === 0) {
+    getTShirtLegend[0].childNodes[1].innerHTML = 'T-Shirt Info' + '<p id="shirtValid">Don\'t forget to pick a shirt</p>';
+    getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
+    counter = 1;
+    return false;
+  } else if (counter === 0) {
+    return true;
   }
 }
 
@@ -479,9 +485,25 @@ function realTimeValidationError() {
 
 function preventDef(event) {
   // Add preventDefault to stop form submission IF input fields are incorrect.
-  event.preventDefault();
+  if (areAllTrue()) {
+    removePreventDef();
+    console.log('WORKS FUCK YEAH BITCHES TAKE THAT YOU LAZY HOT DOG');
+  } else {
+    console.log('EVENT HAS BEEN FUCKING PREVENTED HELL YEAH');
+    event.preventDefault();
+  }
 }
-
+function removePreventDef() {
+  document.getElementById('register-button').removeEventListener('click', preventDef);
+}
+function areAllTrue() {
+  var paymentMethod = document.getElementById('payment').value;
+  if (paymentMethod === 'select_method' || paymentMethod === 'credit card') {
+    return validName() && validEmail() && validTShirt();
+  } else {
+    return validName()  && validEmail() && validTShirt();
+  }
+}
 
 /* Functions Executed On Page Load -------------------------------- */
 setInitialFocus();
