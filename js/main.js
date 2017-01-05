@@ -9,7 +9,9 @@ var ccNum = document.getElementById('cc-num');
 var zipCode = document.getElementById('zip');
 var cvv = document.getElementById('cvv');
 var counter = 0;
+var noError = 0;
 
+/* On Page Load ------------------------------------------------------- */
 function setInitialFocus() {
   // Sets focus in the name input field on page load.
   var setPageLoadFocus = document.getElementById('name');
@@ -33,6 +35,7 @@ function createOtherJobTextarea() {
   });
 }
 
+/* Functionality Functions -------------------------------------------- */
 function tShirtInfo() {
   // Changes color select option value when attribute is disabled to corresponding color restrictions, i.e.--if tomato is selected & then theme is switched to js puns.
   var getDesignSelect = document.getElementById('design');
@@ -289,66 +292,80 @@ function paymentInfoSection() {
   }
 }
 
+/* Form Inputs Validation Functions ---------------------------------- */
 function formValidation() {
-  // If any of the following validation errors exist, prevent the user from submitting the form:
+  //  Adds eventListeners to input fields that will show applicable error messages when register button is clicked.
   var button = document.getElementsByTagName('button');
   button[0].setAttribute('id', 'register-button');
   var register = document.getElementById('register-button');
+
+  register.addEventListener('click', preventDef);
+
   register.addEventListener('click', validName);
   register.addEventListener('click', validEmail);
   register.addEventListener('click', validTShirt);
-  register.addEventListener('click', validActivities);
+  register.addEventListener('click', function(event) {
+    if (!validActivities()) {
+      event.preventDefault();
+    }
+  });
   register.addEventListener('click', validCreditCard);
   register.addEventListener('click', validZipCode);
   register.addEventListener('click', validCVV);
 }
 
-function validName(event) {
+/* Error Message Display/Remove Functions --------------------------- */
+function validName() {
   // If name field is left blank, an error message displays.
-  event.preventDefault();
+
   if (getName.value.length >= 4) {
     getName.previousElementSibling.style.color = '#000';
     getName.previousElementSibling.innerText = 'Name:';
+    return true;
   } else {
     getName.previousElementSibling.style.color = '#c92233';
     getName.previousElementSibling.innerText = 'Name:  (please provide your name)';
+    return false;
   }
 }
 
-function validEmail(event) {
+function validEmail() {
   // Email field must be a validly formatted e-mail address.
-  event.preventDefault();
   var getMail = document.getElementById('mail');
   var userEmail = getMail.value;
   var checkEmail = userEmail.match((/([a-z]{4,})\@[a-z]{3,}\.[a-z]{2}/g));
-
   if (checkEmail !== null) {
     getMail.previousElementSibling.style.color = '#000';
     getMail.previousElementSibling.innerText = 'Email:';
+    return true;
   } else if (!checkEmail) {
     getMail.previousElementSibling.style.color = '#c92233';
     getMail.previousElementSibling.innerText = 'Email:  (please provide your email)';
+    return false;
   }
 }
 
-function validTShirt(event) {
-  // If a Tshirt Theme & color aren't selected, an error message displays.
-  event.preventDefault();
+function validTShirt() {
+  // If a T-Shirt Theme & color aren't selected, an error message displays.
   var getTShirt = document.getElementById('design');
   var getTShirtLegend = document.getElementsByClassName('shirt');
-  if (getTShirt.value === 'Select Theme') {
-    counter = 1;
-    getTShirtLegend[0].childNodes[1].innerHTML = 'T-Shirt Info' + '<p id="shirtValid">Don\'t forget to pick a shirt</p>';
-    getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
-  } else if (getTShirt.value !== 'Select Theme' && counter === 1) {
+  if (getTShirt.value !== 'Select Theme' && counter == 1) {
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.display='none';
     counter = 0;
+  } else if (getTShirt.value === 'Select Theme' && counter === 0) {
+    getTShirtLegend[0].childNodes[1].innerHTML = 'T-Shirt Info' + '<p id="shirtValid">Don\'t forget to pick a shirt</p>';
+    getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
+    counter = 1;
+    return false;
+  } else if (counter === 0) {
+    // Return true here because the function returns undefined otherwise, this allows the validation to work properly.
+    return true;
   }
 }
 
-function validActivities(event) {
+function validActivities() {
   // Must select at least one checkbox under the "Register for Activities" section of the form, if not then on submit an error message displays.
-  event.preventDefault();
+
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
 
   for (var idx=3; idx < inputLength; idx += 2) {
@@ -360,7 +377,7 @@ function validActivities(event) {
     if (isChecked) {
       getActivitiesFieldset[0].childNodes[1].style.color = '#184f68';
       getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.display = 'none';
-      return;
+      return true;
     } else if (!isChecked) {
       getActivitiesFieldset[0].childNodes[1].innerHTML = 'Register for Activities' + '<p>Please select an Activity</p>';
       getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
@@ -368,16 +385,16 @@ function validActivities(event) {
   }
 }
 
-function validCreditCard(event) {
+function validCreditCard() {
   // Credit card field only accepts a 16 digit number.
-  event.preventDefault();
+
   ccNum.setAttribute('maxlength', 16);
-  errorMessage(ccNum);
+  return ccErrorMessage(ccNum);
 }
 
-function validZipCode(event) {
+function validZipCode() {
   // The zipcode field accepts only a 5-digit number.
-  event.preventDefault();
+
   var zipCode = document.getElementById('zip');
   zipCode.setAttribute('maxlength', 5);
   var regex = (/\d{5}$/);
@@ -395,12 +412,13 @@ function validZipCode(event) {
   } else {
     zipCode.previousElementSibling.style.color = '#000';
     zipCode.previousElementSibling.innerText = 'Zip Code:';
+    return true;
   }
 }
 
-function validCVV(event) {
+function validCVV() {
   // The CVV only accepts a 3 digit number.
-  event.preventDefault();
+
   var cvv = document.getElementById('cvv');
   cvv.setAttribute('maxlength', 3);
   cvv.setAttribute('minlength', 3);
@@ -411,11 +429,12 @@ function validCVV(event) {
   } else {
     cvv.previousElementSibling.style.color = '#000';
     cvv.previousElementSibling.innerText = 'CVV';
+    return true;
   }
 }
 
 // Exceeds Functions -----------------------------------------------------
-function errorMessage(input) {
+function ccErrorMessage(input) {
 // Form provides at least one error message that changes depending on the error.
   var regex = (/\d{16}$/g);
   var regexAlpha = (/([a-z])/g);   // regerex to check for alpha chars
@@ -434,27 +453,66 @@ function errorMessage(input) {
   } else {
     input.previousElementSibling.style.color = '#000';
     input.previousElementSibling.innerText = 'Card Number';
+    return true;
   }
 }
 
 function realTimeValidationError() {
   // Displays real-time error message when input field gets focus.
   // Adds real-time validation in the scenario where a blank form is submitted all error messages are shown & as each input field is correctly filled then remove the corresponding error message for that input field, except Activities.
+  getName.addEventListener('keyup', validName);
+
+  getColorSelect.addEventListener('click', validTShirt);
+
   getMail.addEventListener('focus', validEmail);
   getMail.addEventListener('keyup', validEmail);
 
-  ccNum.addEventListener('focus', validCreditCard);
-  ccNum.addEventListener('keyup', validCreditCard);
+  document.getElementById('registerAct').addEventListener('change', validActivities);
 
-  zipCode.addEventListener('focus', validZipCode);
-  zipCode.addEventListener('keyup', validZipCode);
+  if (document.getElementById('payment').value == 'select_method' || document.getElementById('payment').value === 'credit-card') {
+    ccNum.addEventListener('focus', validCreditCard);
+    ccNum.addEventListener('keyup', validCreditCard);
 
-  cvv.addEventListener('focus', validCVV);
-  cvv.addEventListener('keyup', validCVV);
-  getName.addEventListener('keyup', validName);
-  getColorSelect.addEventListener('click', validTShirt);
+    zipCode.addEventListener('focus', validZipCode);
+    zipCode.addEventListener('keyup', validZipCode);
+
+    cvv.addEventListener('focus', validCVV);
+    cvv.addEventListener('keyup', validCVV);
+  } else {
+    ccNum.removeEventListener('focus', validCreditCard);
+    ccNum.removeEventListener('keyup', validCreditCard);
+
+    zipCode.removeEventListener('focus', validZipCode);
+    zipCode.removeEventListener('keyup', validZipCode);
+
+    cvv.removeEventListener('focus', validCVV);
+    cvv.removeEventListener('keyup', validCVV);
+  }
 }
 
+function preventDef(event) {
+  // Add preventDefault to stop form submission IF input fields are incorrect.
+  if (areAllTrue()) {
+    removePreventDef();
+    console.log('WORKS');
+  } else {
+    console.log('EVENT HAS BEEN PREVENTED HELL YEAH');
+    event.preventDefault();
+  }
+}
+function removePreventDef() {
+  document.getElementById('register-button').removeEventListener('click', preventDef);
+}
+function areAllTrue() {
+  var paymentMethod = document.getElementById('payment').value;
+  if (paymentMethod === 'select_method' || paymentMethod === 'credit card') {
+    return validName() && validEmail() && validTShirt() && validActivities() && validCreditCard() && validZipCode() && validCVV();
+  } else {
+    return validName() && validEmail() && validTShirt() && validActivities();
+  }
+}
+
+/* Functions Executed On Page Load -------------------------------- */
 setInitialFocus();
 createOtherJobTextarea();
 tShirtInfo();
