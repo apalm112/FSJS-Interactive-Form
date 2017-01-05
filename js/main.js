@@ -293,7 +293,7 @@ function paymentInfoSection() {
 
 /* Form Inputs Validation Functions ---------------------------------- */
 function formValidation() {
-  // If any of the following validation errors exist, prevent the user from submitting the form:
+  //  Adds eventListeners to input fields that will show applicable error messages when register button is clicked.
   var button = document.getElementsByTagName('button');
   button[0].setAttribute('id', 'register-button');
   var register = document.getElementById('register-button');
@@ -309,7 +309,7 @@ function formValidation() {
 /* Error Message Display/Remove Functions --------------------------- */
 function validName(event) {
   // If name field is left blank, an error message displays.
-  event.preventDefault();
+
   if (getName.value.length >= 4) {
     getName.previousElementSibling.style.color = '#000';
     getName.previousElementSibling.innerText = 'Name:';
@@ -321,7 +321,7 @@ function validName(event) {
 
 function validEmail(event) {
   // Email field must be a validly formatted e-mail address.
-  event.preventDefault();
+
   var getMail = document.getElementById('mail');
   var userEmail = getMail.value;
   var checkEmail = userEmail.match((/([a-z]{4,})\@[a-z]{3,}\.[a-z]{2}/g));
@@ -337,7 +337,7 @@ function validEmail(event) {
 
 function validTShirt(event) {
   // If a Tshirt Theme & color aren't selected, an error message displays.
-  event.preventDefault();
+
   var getTShirt = document.getElementById('design');
   var getTShirtLegend = document.getElementsByClassName('shirt');
   if (getTShirt.value === 'Select Theme') {
@@ -352,7 +352,7 @@ function validTShirt(event) {
 
 function validActivities(event) {
   // Must select at least one checkbox under the "Register for Activities" section of the form, if not then on submit an error message displays.
-  event.preventDefault();
+
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
 
   for (var idx=3; idx < inputLength; idx += 2) {
@@ -374,14 +374,14 @@ function validActivities(event) {
 
 function validCreditCard(event) {
   // Credit card field only accepts a 16 digit number.
-  event.preventDefault();
+
   ccNum.setAttribute('maxlength', 16);
   ccErrorMessage(ccNum);
 }
 
 function validZipCode(event) {
   // The zipcode field accepts only a 5-digit number.
-  event.preventDefault();
+
   var zipCode = document.getElementById('zip');
   zipCode.setAttribute('maxlength', 5);
   var regex = (/\d{5}$/);
@@ -404,7 +404,7 @@ function validZipCode(event) {
 
 function validCVV(event) {
   // The CVV only accepts a 3 digit number.
-  event.preventDefault();
+
   var cvv = document.getElementById('cvv');
   cvv.setAttribute('maxlength', 3);
   cvv.setAttribute('minlength', 3);
@@ -446,7 +446,7 @@ function realTimeValidationError() {
   // Adds real-time validation in the scenario where a blank form is submitted all error messages are shown & as each input field is correctly filled then remove the corresponding error message for that input field, except Activities.
   getName.addEventListener('keyup', validName);
 
-  getColorSelect.addEventListener('change', validTShirt);
+  getColorSelect.addEventListener('click', validTShirt);
 
   getMail.addEventListener('focus', validEmail);
   getMail.addEventListener('keyup', validEmail);
