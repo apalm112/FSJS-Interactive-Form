@@ -301,11 +301,12 @@ function formValidation() {
   register.addEventListener('click', validCreditCard);
   register.addEventListener('click', validZipCode);
   register.addEventListener('click', validCVV);
+
+  // TODO: Yes, so what I did to help this exact issue, was create a conditional statement saying that if there is an error, only then use prevent default.  Could you add some conditional statement in the function that only runs prevent default if there is an error found?  Like if your validCVV for example, you just start it off with preventing default, maybe you could move that to the if statement? that way, if it runs the 'else' condition instead, there is no preventDefault ran
 }
 
-function validName(event) {
+function validName() {
   // If name field is left blank, an error message displays.
-  event.preventDefault();
   if (getName.value.length >= 4) {
     getName.previousElementSibling.style.color = '#000';
     getName.previousElementSibling.innerText = 'Name:';
@@ -315,9 +316,8 @@ function validName(event) {
   }
 }
 
-function validEmail(event) {
+function validEmail() {
   // Email field must be a validly formatted e-mail address.
-  event.preventDefault();
   var getMail = document.getElementById('mail');
   var userEmail = getMail.value;
   var checkEmail = userEmail.match((/([a-z]{4,})\@[a-z]{3,}\.[a-z]{2}/g));
@@ -331,9 +331,8 @@ function validEmail(event) {
   }
 }
 
-function validTShirt(event) {
+function validTShirt() {
   // If a Tshirt Theme & color aren't selected, an error message displays.
-  event.preventDefault();
   var getTShirt = document.getElementById('design');
   var getTShirtLegend = document.getElementsByClassName('shirt');
   if (getTShirt.value === 'Select Theme') {
@@ -346,9 +345,8 @@ function validTShirt(event) {
   }
 }
 
-function validActivities(event) {
+function validActivities() {
   // Must select at least one checkbox under the "Register for Activities" section of the form, if not then on submit an error message displays.
-  event.preventDefault();
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
 
   for (var idx=3; idx < inputLength; idx += 2) {
@@ -368,16 +366,14 @@ function validActivities(event) {
   }
 }
 
-function validCreditCard(event) {
+function validCreditCard() {
   // Credit card field only accepts a 16 digit number.
-  event.preventDefault();
   ccNum.setAttribute('maxlength', 16);
   errorMessage(ccNum);
 }
 
-function validZipCode(event) {
+function validZipCode() {
   // The zipcode field accepts only a 5-digit number.
-  event.preventDefault();
   var zipCode = document.getElementById('zip');
   zipCode.setAttribute('maxlength', 5);
   var regex = (/\d{5}$/);
