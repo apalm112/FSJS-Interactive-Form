@@ -297,6 +297,9 @@ function formValidation() {
   var button = document.getElementsByTagName('button');
   button[0].setAttribute('id', 'register-button');
   var register = document.getElementById('register-button');
+
+  register.addEventListener('click', preventDef);
+
   register.addEventListener('click', validName);
   register.addEventListener('click', validEmail);
   register.addEventListener('click', validTShirt);
@@ -307,7 +310,7 @@ function formValidation() {
 }
 
 /* Error Message Display/Remove Functions --------------------------- */
-function validName(event) {
+function validName() {
   // If name field is left blank, an error message displays.
 
   if (getName.value.length >= 4) {
@@ -319,7 +322,7 @@ function validName(event) {
   }
 }
 
-function validEmail(event) {
+function validEmail() {
   // Email field must be a validly formatted e-mail address.
 
   var getMail = document.getElementById('mail');
@@ -335,7 +338,7 @@ function validEmail(event) {
   }
 }
 
-function validTShirt(event) {
+function validTShirt() {
   // If a Tshirt Theme & color aren't selected, an error message displays.
 
   var getTShirt = document.getElementById('design');
@@ -350,7 +353,7 @@ function validTShirt(event) {
   }
 }
 
-function validActivities(event) {
+function validActivities() {
   // Must select at least one checkbox under the "Register for Activities" section of the form, if not then on submit an error message displays.
 
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
@@ -372,14 +375,14 @@ function validActivities(event) {
   }
 }
 
-function validCreditCard(event) {
+function validCreditCard() {
   // Credit card field only accepts a 16 digit number.
 
   ccNum.setAttribute('maxlength', 16);
   ccErrorMessage(ccNum);
 }
 
-function validZipCode(event) {
+function validZipCode() {
   // The zipcode field accepts only a 5-digit number.
 
   var zipCode = document.getElementById('zip');
@@ -402,7 +405,7 @@ function validZipCode(event) {
   }
 }
 
-function validCVV(event) {
+function validCVV() {
   // The CVV only accepts a 3 digit number.
 
   var cvv = document.getElementById('cvv');
@@ -473,6 +476,12 @@ function realTimeValidationError() {
     cvv.removeEventListener('keyup', validCVV);
   }
 }
+
+function preventDef(event) {
+  // Add preventDefault to stop form submission IF input fields are incorrect.
+  event.preventDefault();
+}
+
 
 /* Functions Executed On Page Load -------------------------------- */
 setInitialFocus();
