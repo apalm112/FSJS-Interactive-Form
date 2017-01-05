@@ -4,6 +4,10 @@
 var getName = document.getElementById('name');
 var getColorSelect = document.getElementById('color');
 var getActivitiesFieldset = document.getElementsByClassName('activities');
+
+getActivitiesFieldset[0].setAttribute('id', 'registerAct');
+var getAct = document.getElementById('registerAct');
+
 var getMail = document.getElementById('mail');
 var paymentSelect = document.getElementById('payment');
 
@@ -70,8 +74,6 @@ function tShirtInfo() {
 function registerForActivities() {
   // Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox.
   // Visually indicates that the workshop in the competing time slot isn't available.  When a user unchecks an activity, the competing activities (if there are any) are no longer disabled.
-  getActivitiesFieldset[0].setAttribute('id', 'registerAct');
-  var getAct = document.getElementById('registerAct');
 
   getAct.addEventListener('click', function() {
     if (getActivitiesFieldset[0].childNodes[5].children[0].checked) {
@@ -297,15 +299,16 @@ function formValidation() {
   var register = document.getElementById('register-button');
 
   register.addEventListener('click', function(event) {
-    event.preventDefault();
-    validName();
-    validEmail();
-    validTShirt();
-    validActivities();
-    validCreditCard();
-    validZipCode();
-    validCVV();
-
+    if (false || !undefined) {
+      event.preventDefault();
+      validName();
+      validEmail();
+      validTShirt();
+      validActivities();
+      validCreditCard();
+      validZipCode();
+      validCVV();
+    }
   });
 
 }
@@ -315,9 +318,11 @@ function validName() {
   if (getName.value.length >= 4) {
     getName.previousElementSibling.style.color = '#000';
     getName.previousElementSibling.innerText = 'Name:';
+    return true;
   } else {
     getName.previousElementSibling.style.color = '#c92233';
     getName.previousElementSibling.innerText = 'Name:  (please provide your name)';
+    return false;
   }
 }
 
@@ -330,9 +335,11 @@ function validEmail() {
   if (checkEmail !== null) {
     getMail.previousElementSibling.style.color = '#000';
     getMail.previousElementSibling.innerText = 'Email:';
+    return true;
   } else if (!checkEmail) {
     getMail.previousElementSibling.style.color = '#c92233';
     getMail.previousElementSibling.innerText = 'Email:  (please provide your email)';
+    return false;
   }
 }
 
@@ -344,9 +351,12 @@ function validTShirt() {
     counter = 1;
     getTShirtLegend[0].childNodes[1].innerHTML = 'T-Shirt Info' + '<p id="shirtValid">Don\'t forget to pick a shirt</p>';
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
+    return false;
   } else if (getTShirt.value !== 'Select Theme' && counter === 1) {
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.display='none';
     counter = 0;
+  } else {
+    return true;
   }
 }
 
@@ -363,10 +373,11 @@ function validActivities() {
     if (isChecked) {
       getActivitiesFieldset[0].childNodes[1].style.color = '#184f68';
       getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.display = 'none';
-      return;
+      return true;
     } else if (!isChecked) {
       getActivitiesFieldset[0].childNodes[1].innerHTML = 'Register for Activities' + '<p>Please select an Activity</p>';
       getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
+      return false;
     }
   }
 }
@@ -374,7 +385,7 @@ function validActivities() {
 function validCreditCard() {
   // Credit card field only accepts a 16 digit number.
   ccNum.setAttribute('maxlength', 16);
-  errorMessage(ccNum);
+   return errorMessage(ccNum);
 }
 
 function validZipCode() {
@@ -390,12 +401,14 @@ function validZipCode() {
   }  else if (regexAlpha.test(zipCode.value)) {
     zipCode.previousElementSibling.style.color = '#c92233';
     zipCode.previousElementSibling.innerText = 'Zip Code may not contain alphabetic characters';
+    return false;
   } else if (!regex.test(zipCode.value)) {
     zipCode.previousElementSibling.style.color = '#c92233';
     zipCode.previousElementSibling.innerText = 'Zip Code: Enter a valid zip code';
   } else {
     zipCode.previousElementSibling.style.color = '#000';
     zipCode.previousElementSibling.innerText = 'Zip Code:';
+    return true;
   }
 }
 
@@ -408,9 +421,11 @@ function validCVV() {
   if (!regex.test(cvv.value)) {
     cvv.previousElementSibling.style.color = '#c92233';
     cvv.previousElementSibling.innerText = 'CVV: Enter a valid CVV';
+    return false;
   } else {
     cvv.previousElementSibling.style.color = '#000';
     cvv.previousElementSibling.innerText = 'CVV';
+    return true;
   }
 }
 
@@ -422,18 +437,23 @@ function errorMessage(input) {
   if (input.value === '') {
     input.previousElementSibling.style.color = '#c92233';
     input.previousElementSibling.innerText = 'Card Number: You must enter a valid card number';
+    return false;
   } else if (input.value.length < 16 && (!regexAlpha.test(input.value))) {
     input.previousElementSibling.style.color = '#c92233';
     input.previousElementSibling.innerText = 'Enter credit card number 16 digits long';
+    return false;
   } else if (regexAlpha.test(input.value)) {
     input.previousElementSibling.style.color = '#c92233';
     input.previousElementSibling.innerText = 'Card may not contain alphabetic characters';
+    return false;
   } else if (!regex.test(input.value)) {
     input.previousElementSibling.style.color = '#c92233';
     input.previousElementSibling.innerText = 'Card Number: Enter a valid card number';
+    return false;
   } else {
     input.previousElementSibling.style.color = '#000';
     input.previousElementSibling.innerText = 'Card Number';
+    return true;
   }
 }
 
@@ -446,6 +466,9 @@ function realTimeValidationError() {
   getMail.addEventListener('keyup', validEmail);
 
   getColorSelect.addEventListener('click', validTShirt);
+
+  var actClick = document.querySelector('input[type="checkbox"]');
+  actClick.addEventListener('click', validActivities);
 
   ccNum.addEventListener('focus', validCreditCard);
   ccNum.addEventListener('keyup', validCreditCard);
