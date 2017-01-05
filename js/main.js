@@ -342,8 +342,7 @@ function validEmail() {
 }
 
 function validTShirt() {
-  // If a Tshirt Theme & color aren't selected, an error message displays.
-  // var counter = 0;
+  // If a T-Shirt Theme & color aren't selected, an error message displays.
   var getTShirt = document.getElementById('design');
   var getTShirtLegend = document.getElementsByClassName('shirt');
   if (getTShirt.value !== 'Select Theme' && counter == 1) {
@@ -487,9 +486,9 @@ function preventDef(event) {
   // Add preventDefault to stop form submission IF input fields are incorrect.
   if (areAllTrue()) {
     removePreventDef();
-    console.log('WORKS FUCK YEAH BITCHES TAKE THAT YOU LAZY HOT DOG');
+    console.log('WORKS');
   } else {
-    console.log('EVENT HAS BEEN FUCKING PREVENTED HELL YEAH');
+    console.log('EVENT HAS BEEN PREVENTED HELL YEAH');
     event.preventDefault();
   }
 }
