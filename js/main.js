@@ -9,7 +9,7 @@ var ccNum = document.getElementById('cc-num');
 var zipCode = document.getElementById('zip');
 var cvv = document.getElementById('cvv');
 var counter = 0;
-var error = 0;
+var error = true;
 
 function setInitialFocus() {
   // Sets focus in the name input field on page load.
@@ -311,9 +311,11 @@ function validName() {
   if (getName.value.length >= 4) {
     getName.previousElementSibling.style.color = '#000';
     getName.previousElementSibling.innerText = 'Name:';
+    error = false;
   } else {
     getName.previousElementSibling.style.color = '#c92233';
     getName.previousElementSibling.innerText = 'Name:  (please provide your name)';
+    error = true;
   }
 }
 
@@ -326,9 +328,11 @@ function validEmail() {
   if (checkEmail !== null) {
     getMail.previousElementSibling.style.color = '#000';
     getMail.previousElementSibling.innerText = 'Email:';
+    error = false;
   } else if (!checkEmail) {
     getMail.previousElementSibling.style.color = '#c92233';
     getMail.previousElementSibling.innerText = 'Email:  (please provide your email)';
+    error = true;
   }
 }
 
@@ -340,9 +344,11 @@ function validTShirt() {
     counter = 1;
     getTShirtLegend[0].childNodes[1].innerHTML = 'T-Shirt Info' + '<p id="shirtValid">Don\'t forget to pick a shirt</p>';
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
+    error = true;
   } else if (getTShirt.value !== 'Select Theme' && counter === 1) {
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.display='none';
     counter = 0;
+    error = false;
   }
 }
 
@@ -359,10 +365,12 @@ function validActivities() {
     if (isChecked) {
       getActivitiesFieldset[0].childNodes[1].style.color = '#184f68';
       getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.display = 'none';
+      error = false;
       return;
     } else if (!isChecked) {
       getActivitiesFieldset[0].childNodes[1].innerHTML = 'Register for Activities' + '<p>Please select an Activity</p>';
       getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
+      error = true;
     }
   }
 }
@@ -383,15 +391,19 @@ function validZipCode() {
   if (zipCode.value === '') {
     zipCode.previousElementSibling.style.color = '#c92233';
     zipCode.previousElementSibling.innerText = 'Zip Code: cannot be left blank';
+    error = true;
   }  else if (regexAlpha.test(zipCode.value)) {
     zipCode.previousElementSibling.style.color = '#c92233';
     zipCode.previousElementSibling.innerText = 'Zip Code may not contain alphabetic characters';
+    error = true;
   } else if (!regex.test(zipCode.value)) {
     zipCode.previousElementSibling.style.color = '#c92233';
     zipCode.previousElementSibling.innerText = 'Zip Code: Enter a valid zip code';
+    error = true;
   } else {
     zipCode.previousElementSibling.style.color = '#000';
     zipCode.previousElementSibling.innerText = 'Zip Code:';
+    error = false;
   }
 }
 
@@ -404,9 +416,11 @@ function validCVV(event) {
   if (!regex.test(cvv.value)) {
     cvv.previousElementSibling.style.color = '#c92233';
     cvv.previousElementSibling.innerText = 'CVV: Enter a valid CVV';
+    error = true;
   } else {
     cvv.previousElementSibling.style.color = '#000';
     cvv.previousElementSibling.innerText = 'CVV';
+    error = false;
   }
   // TODO: Put error validation catch-all conditional here.
   if (error > 0) {
