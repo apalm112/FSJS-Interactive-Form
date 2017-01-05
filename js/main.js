@@ -389,7 +389,7 @@ function validCreditCard() {
   // Credit card field only accepts a 16 digit number.
 
   ccNum.setAttribute('maxlength', 16);
-  ccErrorMessage(ccNum);
+  return ccErrorMessage(ccNum);
 }
 
 function validZipCode() {
@@ -412,6 +412,7 @@ function validZipCode() {
   } else {
     zipCode.previousElementSibling.style.color = '#000';
     zipCode.previousElementSibling.innerText = 'Zip Code:';
+    return true;
   }
 }
 
@@ -428,6 +429,7 @@ function validCVV() {
   } else {
     cvv.previousElementSibling.style.color = '#000';
     cvv.previousElementSibling.innerText = 'CVV';
+    return true;
   }
 }
 
@@ -451,6 +453,7 @@ function ccErrorMessage(input) {
   } else {
     input.previousElementSibling.style.color = '#000';
     input.previousElementSibling.innerText = 'Card Number';
+    return true;
   }
 }
 
@@ -503,7 +506,7 @@ function removePreventDef() {
 function areAllTrue() {
   var paymentMethod = document.getElementById('payment').value;
   if (paymentMethod === 'select_method' || paymentMethod === 'credit card') {
-    return validName() && validEmail() && validTShirt() && validActivities();
+    return validName() && validEmail() && validTShirt() && validActivities() && validCreditCard() && validZipCode() && validCVV();
   } else {
     return validName() && validEmail() && validTShirt() && validActivities();
   }
