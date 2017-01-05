@@ -1,5 +1,8 @@
 Project-03: Build an Interactive Form
 
+*** Master branch is the only one that mostly works. ****
+
+
 Take an existing form and add functionality to it with JavaScript.  It provides error messages based on the user input, and other interactivity with selects & checkboxes.
 
 Source for help with implementing the strike-through feature:
