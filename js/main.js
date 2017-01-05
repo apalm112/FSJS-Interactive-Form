@@ -10,6 +10,7 @@ var zipCode = document.getElementById('zip');
 var cvv = document.getElementById('cvv');
 var counter = 0;
 
+/* On Page Load ------------------------------------------------------- */
 function setInitialFocus() {
   // Sets focus in the name input field on page load.
   var setPageLoadFocus = document.getElementById('name');
@@ -33,6 +34,7 @@ function createOtherJobTextarea() {
   });
 }
 
+/* Functionality Functions -------------------------------------------- */
 function tShirtInfo() {
   // Changes color select option value when attribute is disabled to corresponding color restrictions, i.e.--if tomato is selected & then theme is switched to js puns.
   var getDesignSelect = document.getElementById('design');
@@ -289,6 +291,7 @@ function paymentInfoSection() {
   }
 }
 
+/* Form Inputs Validation Functions ---------------------------------- */
 function formValidation() {
   // If any of the following validation errors exist, prevent the user from submitting the form:
   var button = document.getElementsByTagName('button');
@@ -303,6 +306,7 @@ function formValidation() {
   register.addEventListener('click', validCVV);
 }
 
+/* Error Message Display/Remove Functions --------------------------- */
 function validName(event) {
   // If name field is left blank, an error message displays.
   event.preventDefault();
@@ -372,7 +376,7 @@ function validCreditCard(event) {
   // Credit card field only accepts a 16 digit number.
   event.preventDefault();
   ccNum.setAttribute('maxlength', 16);
-  errorMessage(ccNum);
+  ccErrorMessage(ccNum);
 }
 
 function validZipCode(event) {
@@ -415,7 +419,7 @@ function validCVV(event) {
 }
 
 // Exceeds Functions -----------------------------------------------------
-function errorMessage(input) {
+function ccErrorMessage(input) {
 // Form provides at least one error message that changes depending on the error.
   var regex = (/\d{16}$/g);
   var regexAlpha = (/([a-z])/g);   // regerex to check for alpha chars
@@ -440,8 +444,15 @@ function errorMessage(input) {
 function realTimeValidationError() {
   // Displays real-time error message when input field gets focus.
   // Adds real-time validation in the scenario where a blank form is submitted all error messages are shown & as each input field is correctly filled then remove the corresponding error message for that input field, except Activities.
+  getName.addEventListener('keyup', validName);
+
+  getColorSelect.addEventListener('click', validTShirt);
+
   getMail.addEventListener('focus', validEmail);
   getMail.addEventListener('keyup', validEmail);
+
+  var getAct = document.getElementById('registerAct');
+  getAct.addEventListener('change', validActivities);
 
   ccNum.addEventListener('focus', validCreditCard);
   ccNum.addEventListener('keyup', validCreditCard);
@@ -451,10 +462,9 @@ function realTimeValidationError() {
 
   cvv.addEventListener('focus', validCVV);
   cvv.addEventListener('keyup', validCVV);
-  getName.addEventListener('keyup', validName);
-  getColorSelect.addEventListener('click', validTShirt);
 }
 
+/* Functions Executed On Page Load -------------------------------- */
 setInitialFocus();
 createOtherJobTextarea();
 tShirtInfo();
