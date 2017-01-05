@@ -304,7 +304,11 @@ function formValidation() {
   register.addEventListener('click', validName);
   register.addEventListener('click', validEmail);
   register.addEventListener('click', validTShirt);
-  register.addEventListener('click', validActivities);
+  register.addEventListener('click', function(event) {
+    if (!validActivities()) {
+      event.preventDefault();
+    }
+  });
   register.addEventListener('click', validCreditCard);
   register.addEventListener('click', validZipCode);
   register.addEventListener('click', validCVV);
@@ -354,6 +358,7 @@ function validTShirt() {
     counter = 1;
     return false;
   } else if (counter === 0) {
+    // Return true here because the function returns undefined otherwise, this allows the validation to work properly.
     return true;
   }
 }
@@ -372,7 +377,7 @@ function validActivities() {
     if (isChecked) {
       getActivitiesFieldset[0].childNodes[1].style.color = '#184f68';
       getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.display = 'none';
-      return;
+      return true;
     } else if (!isChecked) {
       getActivitiesFieldset[0].childNodes[1].innerHTML = 'Register for Activities' + '<p>Please select an Activity</p>';
       getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
@@ -498,9 +503,9 @@ function removePreventDef() {
 function areAllTrue() {
   var paymentMethod = document.getElementById('payment').value;
   if (paymentMethod === 'select_method' || paymentMethod === 'credit card') {
-    return validName() && validEmail() && validTShirt();
+    return validName() && validEmail() && validTShirt() && validActivities();
   } else {
-    return validName()  && validEmail() && validTShirt();
+    return validName() && validEmail() && validTShirt() && validActivities();
   }
 }
 
