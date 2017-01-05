@@ -446,22 +446,32 @@ function realTimeValidationError() {
   // Adds real-time validation in the scenario where a blank form is submitted all error messages are shown & as each input field is correctly filled then remove the corresponding error message for that input field, except Activities.
   getName.addEventListener('keyup', validName);
 
-  getColorSelect.addEventListener('click', validTShirt);
+  getColorSelect.addEventListener('change', validTShirt);
 
   getMail.addEventListener('focus', validEmail);
   getMail.addEventListener('keyup', validEmail);
 
-  var getAct = document.getElementById('registerAct');
-  getAct.addEventListener('change', validActivities);
+  document.getElementById('registerAct').addEventListener('change', validActivities);
 
-  ccNum.addEventListener('focus', validCreditCard);
-  ccNum.addEventListener('keyup', validCreditCard);
+  if (document.getElementById('payment').value == 'select_method' || document.getElementById('payment').value === 'credit-card') {
+    ccNum.addEventListener('focus', validCreditCard);
+    ccNum.addEventListener('keyup', validCreditCard);
 
-  zipCode.addEventListener('focus', validZipCode);
-  zipCode.addEventListener('keyup', validZipCode);
+    zipCode.addEventListener('focus', validZipCode);
+    zipCode.addEventListener('keyup', validZipCode);
 
-  cvv.addEventListener('focus', validCVV);
-  cvv.addEventListener('keyup', validCVV);
+    cvv.addEventListener('focus', validCVV);
+    cvv.addEventListener('keyup', validCVV);
+  } else {
+    ccNum.removeEventListener('focus', validCreditCard);
+    ccNum.removeEventListener('keyup', validCreditCard);
+
+    zipCode.removeEventListener('focus', validZipCode);
+    zipCode.removeEventListener('keyup', validZipCode);
+
+    cvv.removeEventListener('focus', validCVV);
+    cvv.removeEventListener('keyup', validCVV);
+  }
 }
 
 /* Functions Executed On Page Load -------------------------------- */
