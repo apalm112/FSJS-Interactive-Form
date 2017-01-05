@@ -22,7 +22,7 @@ function setInitialFocus() {
 }
 
 function createOtherJobTextarea() {
-  // A text field will be revealed when the "Other" option is selected from the "Job Role" drop down menu.
+  // A text field will be revealed when the "Other" option is selected from the "Job Role" drop down menu or hidden when unselected.
   var getSelectJobRole = document.getElementById('title');
   var getOther = document.getElementById('other-title');
   getSelectJobRole.addEventListener('click', function() {
@@ -69,7 +69,7 @@ function tShirtInfo() {
 }
 
 function registerForActivities() {
-  // Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox.
+  // Some events are at the same time as others. If the user selects a workshop, then selection of a workshop at the same date and time is not allowed.
   // Visually indicates that the workshop in the competing time slot isn't available.  When a user unchecks an activity, the competing activities (if there are any) are no longer disabled.
   getActivitiesFieldset[0].setAttribute('id', 'registerAct');
   var getAct = document.getElementById('registerAct');
@@ -124,7 +124,7 @@ function registerForActivities() {
 }
 
 function runningTotal() {
-  // As a user selects activities, a running total displays below the list of checkboxes.
+  // As a user selects activities, a running total cost displays below the list of checkboxes.
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
   var label = document.createElement('label');
   var total = 0;
@@ -140,7 +140,7 @@ function runningTotal() {
   var dollar;
   var count;
 
-  // Each time an input is checked/unchecked the for loop calculates the total.
+  // Each time an input is checked/unchecked the for loop calculates the total by getting the price from the DOM.
   $('input[type="checkbox"]').change(function() {
     for (var idx=3; idx < inputLength; idx += 2) {
       // var getLabelInput = <label><input name='all'>Main Conf $200</label>
@@ -237,7 +237,7 @@ function runningTotal() {
         total -= parseInt(count);
         npmCounter--;
       }
-      // Append a label to this fieldtest & update its innerText w/ total.
+      // Append a label to this fieldset & update its innerText w/ total.
       label.className = 'cost';
       label.innerText = 'Total: $' + total;
       getActivitiesFieldset[0].append(label);
@@ -246,7 +246,7 @@ function runningTotal() {
 }
 
 function addStrikeThrough(num) {
-  // Function adds class='strike-through' to inputs to implement CSS rule change.
+  // Function adds class='strike-through' to inputs to implement CSS rule change, helps visually show time conflicts for selected activities.
   // Create new span to hold innerText to implent a CSS rule.
   var newSpan = document.createElement('span');
   newSpan.innerText = getActivitiesFieldset[0].childNodes[num].innerText;
@@ -317,7 +317,6 @@ function formValidation() {
 /* Error Message Display/Remove Functions --------------------------- */
 function validName() {
   // If name field is left blank, an error message displays.
-
   if (getName.value.length >= 4) {
     getName.previousElementSibling.style.color = '#000';
     getName.previousElementSibling.innerText = 'Name:';
@@ -365,7 +364,6 @@ function validTShirt() {
 
 function validActivities() {
   // Must select at least one checkbox under the "Register for Activities" section of the form, if not then on submit an error message displays.
-
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
 
   for (var idx=3; idx < inputLength; idx += 2) {
@@ -387,14 +385,12 @@ function validActivities() {
 
 function validCreditCard() {
   // Credit card field only accepts a 16 digit number.
-
   ccNum.setAttribute('maxlength', 16);
   return ccErrorMessage(ccNum);
 }
 
 function validZipCode() {
   // The zipcode field accepts only a 5-digit number.
-
   var zipCode = document.getElementById('zip');
   zipCode.setAttribute('maxlength', 5);
   var regex = (/\d{5}$/);
@@ -418,7 +414,6 @@ function validZipCode() {
 
 function validCVV() {
   // The CVV only accepts a 3 digit number.
-
   var cvv = document.getElementById('cvv');
   cvv.setAttribute('maxlength', 3);
   cvv.setAttribute('minlength', 3);
@@ -435,7 +430,7 @@ function validCVV() {
 
 // Exceeds Functions -----------------------------------------------------
 function ccErrorMessage(input) {
-// Form provides at least one error message that changes depending on the error.
+// Form provides error message that changes depending on the error.
   var regex = (/\d{16}$/g);
   var regexAlpha = (/([a-z])/g);   // regerex to check for alpha chars
   if (input.value === '') {
@@ -491,19 +486,19 @@ function realTimeValidationError() {
 }
 
 function preventDef(event) {
-  // Add preventDefault to stop form submission IF input fields are incorrect.
+  // Add preventDefault to stop form submission if input fields are incorrect, otherwise allow the button to submit the form.
   if (areAllTrue()) {
     removePreventDef();
-    console.log('WORKS');
   } else {
-    console.log('EVENT HAS BEEN PREVENTED HELL YEAH');
     event.preventDefault();
   }
 }
 function removePreventDef() {
+  // Allows the form to be submitted.
   document.getElementById('register-button').removeEventListener('click', preventDef);
 }
 function areAllTrue() {
+  // Checks that all input fields hold correct values for form submission.
   var paymentMethod = document.getElementById('payment').value;
   if (paymentMethod === 'select_method' || paymentMethod === 'credit card') {
     return validName() && validEmail() && validTShirt() && validActivities() && validCreditCard() && validZipCode() && validCVV();
