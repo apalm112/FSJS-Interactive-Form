@@ -9,7 +9,7 @@ var ccNum = document.getElementById('cc-num');
 var zipCode = document.getElementById('zip');
 var cvv = document.getElementById('cvv');
 var counter = 0;
-var error = true;
+var error;
 
 function setInitialFocus() {
   // Sets focus in the name input field on page load.
@@ -307,26 +307,42 @@ function formValidation() {
 }
 function ccPaymentSelected() {
   // TODO: Build a new function that would check the value of #payment
-  var getPaymentMethod = document.getElementById('payment');
-  getPaymentMethod.addEventListener('change', ccPaymentSelected);
   var register = document.getElementById('register-button');
 
-  if (getPaymentMethod.value === 'credit-card') {
+  var getPaymentMethod = document.getElementById('payment');
+  getPaymentMethod.addEventListener('change', ccPaymentSelected);
+  console.log('select payment method changed!');
+  if (getPaymentMethod.value === 'credit-card' || getPaymentMethod.value === 'select_method') {
     register.addEventListener('click', validCreditCard);
     register.addEventListener('click', validZipCode);
     register.addEventListener('click', validCVV);
-  } else if (getPaymentMethod.value === 'select_method') {
-    register.addEventListener('click', validCreditCard);
-    register.addEventListener('click', validZipCode);
-    register.addEventListener('click', validCVV);
+  } else if (!getPaymentMethod.value === 'credit-card') {
+    register.removeEventListener('click', validCreditCard);
+    register.removeEventListener('click', validZipCode);
+    register.removeEventListener('click', validCVV);
   }
 }
-function errorCheck() {
+function errorCheck(event) {
   // Error validation catch-all conditional here, if all input fields are correctly filled out the form will be submitted.
-  // var registerButton = document.getElementById('register-button');
-  if (error) {
+  var getPaymentMethod = document.getElementById('payment');
+
+  var register= document.getElementById('register-button');
+  var errorCount = 0;
+
+  errorCount += validName();
+  errorCount += validEmail();
+  errorCount += validTShirt();
+  errorCount += validActivities();
+  if (getPaymentMethod.value === 'credit-card' || getPaymentMethod.value === 'select_method') {
+    errorCount += validCreditCard();
+    errorCount += validZipCode();
+    errorCount += validCVV();
+  }
+  if (errorCount > 0) {
+    console.log('error > 0:  SO preventDefault');
     event.preventDefault();
-  } else if (!error) {
+  } else {
+    console.log('error = 0: SO no error');
     register.setAttribute('enabled', 'enabled');
   }
 }
@@ -334,19 +350,20 @@ function errorCheck() {
 
 function validName() {
   // If name field is left blank, an error message displays.
+  var error = 0;
   if (getName.value.length >= 4) {
     getName.previousElementSibling.style.color = '#000';
     getName.previousElementSibling.innerText = 'Name:';
-    error = false;
   } else {
     getName.previousElementSibling.style.color = '#c92233';
     getName.previousElementSibling.innerText = 'Name:  (please provide your name)';
-    error = true;
+    error = 1;
   }
 }
 
 function validEmail() {
   // Email field must be a validly formatted e-mail address.
+  var error = 0;
   var getMail = document.getElementById('mail');
   var userEmail = getMail.value;
   var checkEmail = userEmail.match((/([a-z]{4,})\@[a-z]{3,}\.[a-z]{2}/g));
@@ -354,34 +371,33 @@ function validEmail() {
   if (checkEmail !== null) {
     getMail.previousElementSibling.style.color = '#000';
     getMail.previousElementSibling.innerText = 'Email:';
-    error = false;
   } else if (!checkEmail) {
     getMail.previousElementSibling.style.color = '#c92233';
     getMail.previousElementSibling.innerText = 'Email:  (please provide your email)';
-    error = true;
+    var error = 1;
   }
 }
 
 function validTShirt() {
   // If a Tshirt Theme & color aren't selected, an error message displays.
+  var error = 0;
   var getTShirt = document.getElementById('design');
   var getTShirtLegend = document.getElementsByClassName('shirt');
   if (getTShirt.value === 'Select Theme') {
     counter = 1;
     getTShirtLegend[0].childNodes[1].innerHTML = 'T-Shirt Info' + '<p id="shirtValid">Don\'t forget to pick a shirt</p>';
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
-    error = true;
+    var error = 1;
   } else if (getTShirt.value !== 'Select Theme' && counter === 1) {
     getTShirtLegend[0].childNodes[1].firstChild.nextSibling.style.display='none';
     counter = 0;
-    error = false;
   }
 }
 
 function validActivities() {
   // Must select at least one checkbox under the "Register for Activities" section of the form, if not then on submit an error message displays.
   var inputLength = getActivitiesFieldset[0].childNodes.length; // 18
-
+  var error = 0;
   for (var idx=3; idx < inputLength; idx += 2) {
     // var getLabelInput = <label><input name='all'>Main Conf $200</label>
     var getLabelInput = getActivitiesFieldset[0].childNodes[idx];
@@ -391,12 +407,11 @@ function validActivities() {
     if (isChecked) {
       getActivitiesFieldset[0].childNodes[1].style.color = '#184f68';
       getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.display = 'none';
-      error = false;
       return;
     } else if (!isChecked) {
       getActivitiesFieldset[0].childNodes[1].innerHTML = 'Register for Activities' + '<p>Please select an Activity</p>';
       getActivitiesFieldset[0].childNodes[1].firstChild.nextSibling.style.color = '#c92233';
-      error = true;
+      var error = 1;
     }
   }
 }
@@ -413,23 +428,23 @@ function validZipCode() {
   zipCode.setAttribute('maxlength', 5);
   var regex = (/\d{5}$/);
   var regexAlpha = (/([a-z])/);
+  var error = 0;
 
   if (zipCode.value === '') {
     zipCode.previousElementSibling.style.color = '#c92233';
     zipCode.previousElementSibling.innerText = 'Zip Code: cannot be left blank';
-    error = true;
-  }  else if (regexAlpha.test(zipCode.value)) {
+    var error = 1;
+  } else if (regexAlpha.test(zipCode.value)) {
     zipCode.previousElementSibling.style.color = '#c92233';
     zipCode.previousElementSibling.innerText = 'Zip Code may not contain alphabetic characters';
-    error = true;
+    var error = 1;
   } else if (!regex.test(zipCode.value)) {
     zipCode.previousElementSibling.style.color = '#c92233';
     zipCode.previousElementSibling.innerText = 'Zip Code: Enter a valid zip code';
-    error = true;
+    var error = 1;
   } else {
     zipCode.previousElementSibling.style.color = '#000';
     zipCode.previousElementSibling.innerText = 'Zip Code:';
-    error = false;
   }
 }
 
@@ -439,14 +454,14 @@ function validCVV(event) {
   cvv.setAttribute('maxlength', 3);
   cvv.setAttribute('minlength', 3);
   var regex = (/\d{3}$/g);
+  var error = 0;
   if (!regex.test(cvv.value)) {
     cvv.previousElementSibling.style.color = '#c92233';
     cvv.previousElementSibling.innerText = 'CVV: Enter a valid CVV';
-    error = true;
+    var error = 1;
   } else {
     cvv.previousElementSibling.style.color = '#000';
     cvv.previousElementSibling.innerText = 'CVV';
-    error = false;
   }
 }
 
@@ -458,15 +473,19 @@ function errorMessage(input) {
   if (input.value === '') {
     input.previousElementSibling.style.color = '#c92233';
     input.previousElementSibling.innerText = 'Card Number: You must enter a valid card number';
+    var error = 1;
   } else if (input.value.length < 16 && (!regexAlpha.test(input.value))) {
     input.previousElementSibling.style.color = '#c92233';
     input.previousElementSibling.innerText = 'Enter credit card number 16 digits long';
+    var error = 1;
   } else if (regexAlpha.test(input.value)) {
     input.previousElementSibling.style.color = '#c92233';
     input.previousElementSibling.innerText = 'Card may not contain alphabetic characters';
+    var error = 1;
   } else if (!regex.test(input.value)) {
     input.previousElementSibling.style.color = '#c92233';
     input.previousElementSibling.innerText = 'Card Number: Enter a valid card number';
+    var error = 1;
   } else {
     input.previousElementSibling.style.color = '#000';
     input.previousElementSibling.innerText = 'Card Number';
