@@ -298,20 +298,39 @@ function formValidation() {
   register.addEventListener('click', validName);
   register.addEventListener('click', validEmail);
   register.addEventListener('click', validTShirt);
-  // register.addEventListener('click', validActivities);
-  // register.addEventListener('click', validCreditCard);
-  // register.addEventListener('click', validZipCode);
-  // register.addEventListener('click', validCVV);
-
+  register.addEventListener('click', validActivities);
+  register.addEventListener('click', errorCheck);
+  /*register.addEventListener('click', validCreditCard);
+  register.addEventListener('click', validZipCode);
+  register.addEventListener('click', validCVV);*/
+  ccPaymentSelected();
+}
+function ccPaymentSelected() {
   // TODO: Build a new function that would check the value of #payment
-  var getPay = document.getElementById('payment');
-  if (getPay.value === 'credit-card') {
+  var getPaymentMethod = document.getElementById('payment');
+  getPaymentMethod.addEventListener('change', ccPaymentSelected);
+  var register = document.getElementById('register-button');
+
+  if (getPaymentMethod.value === 'credit-card') {
+    register.addEventListener('click', validCreditCard);
+    register.addEventListener('click', validZipCode);
+    register.addEventListener('click', validCVV);
+  } else if (getPaymentMethod.value === 'select_method') {
     register.addEventListener('click', validCreditCard);
     register.addEventListener('click', validZipCode);
     register.addEventListener('click', validCVV);
   }
-
 }
+function errorCheck() {
+  // Error validation catch-all conditional here, if all input fields are correctly filled out the form will be submitted.
+  // var registerButton = document.getElementById('register-button');
+  if (error) {
+    event.preventDefault();
+  } else if (!error) {
+    register.setAttribute('enabled', 'enabled');
+  }
+}
+
 
 function validName() {
   // If name field is left blank, an error message displays.
@@ -428,13 +447,6 @@ function validCVV(event) {
     cvv.previousElementSibling.style.color = '#000';
     cvv.previousElementSibling.innerText = 'CVV';
     error = false;
-  }
-  // Error validation catch-all conditional here, if all input fields are correctly filled out the form will be submitted.
-  var registerButton = document.getElementById('register-button');
-  if (error > 0) {
-    event.preventDefault();
-  } else if (error !== 0) {
-    registerButton.setAttribute('enabled', 'enabled');
   }
 }
 
