@@ -9,6 +9,7 @@ var ccNum = document.getElementById('cc-num');
 var zipCode = document.getElementById('zip');
 var cvv = document.getElementById('cvv');
 var counter = 0;
+var error = 0;
 
 function setInitialFocus() {
   // Sets focus in the name input field on page load.
@@ -396,7 +397,6 @@ function validZipCode() {
 
 function validCVV(event) {
   // The CVV only accepts a 3 digit number.
-  event.preventDefault();
   var cvv = document.getElementById('cvv');
   cvv.setAttribute('maxlength', 3);
   cvv.setAttribute('minlength', 3);
@@ -407,6 +407,12 @@ function validCVV(event) {
   } else {
     cvv.previousElementSibling.style.color = '#000';
     cvv.previousElementSibling.innerText = 'CVV';
+  }
+  // TODO: Put error validation catch-all conditional here.
+  if (error > 0) {
+    event.preventDefault();
+  } else if (error !== 0) {
+    $('#register-button').prop('disabled', false);
   }
 }
 
