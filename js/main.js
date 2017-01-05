@@ -291,19 +291,26 @@ function paymentInfoSection() {
 }
 
 function formValidation() {
-  // If any of the following validation errors exist, prevent the user from submitting the form:
+  // Add eventListeners to all of the form inputs when the submit button is clicked, to check for validation.
   var button = document.getElementsByTagName('button');
   button[0].setAttribute('id', 'register-button');
   var register = document.getElementById('register-button');
   register.addEventListener('click', validName);
   register.addEventListener('click', validEmail);
   register.addEventListener('click', validTShirt);
-  register.addEventListener('click', validActivities);
-  register.addEventListener('click', validCreditCard);
-  register.addEventListener('click', validZipCode);
-  register.addEventListener('click', validCVV);
+  // register.addEventListener('click', validActivities);
+  // register.addEventListener('click', validCreditCard);
+  // register.addEventListener('click', validZipCode);
+  // register.addEventListener('click', validCVV);
 
-  // TODO: Yes, so what I did to help this exact issue, was create a conditional statement saying that if there is an error, only then use prevent default.  Could you add some conditional statement in the function that only runs prevent default if there is an error found?  Like if your validCVV for example, you just start it off with preventing default, maybe you could move that to the if statement? that way, if it runs the 'else' condition instead, there is no preventDefault ran
+  // TODO: Build a new function that would check the value of #payment
+  var getPay = document.getElementById('payment');
+  if (getPay.value === 'credit-card') {
+    register.addEventListener('click', validCreditCard);
+    register.addEventListener('click', validZipCode);
+    register.addEventListener('click', validCVV);
+  }
+
 }
 
 function validName() {
@@ -422,11 +429,12 @@ function validCVV(event) {
     cvv.previousElementSibling.innerText = 'CVV';
     error = false;
   }
-  // TODO: Put error validation catch-all conditional here.
+  // Error validation catch-all conditional here, if all input fields are correctly filled out the form will be submitted.
+  var registerButton = document.getElementById('register-button');
   if (error > 0) {
     event.preventDefault();
   } else if (error !== 0) {
-    $('#register-button').prop('disabled', false);
+    registerButton.setAttribute('enabled', 'enabled');
   }
 }
 
