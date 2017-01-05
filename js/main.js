@@ -467,9 +467,11 @@ function realTimeValidationError() {
 
   getColorSelect.addEventListener('click', validTShirt);
 
-  var actClick = document.querySelector('input[type="checkbox"]');
-  actClick.addEventListener('click', validActivities);
-
+  var actClick = document.querySelectorAll('input[type="checkbox"]');
+  for (idx=0; idx<actClick.length; idx++) {
+    console.log('FUCKIT');
+    actClick[idx].addEventListener('click', validActivities);
+  }
   ccNum.addEventListener('focus', validCreditCard);
   ccNum.addEventListener('keyup', validCreditCard);
 
