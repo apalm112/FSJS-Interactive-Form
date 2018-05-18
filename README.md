@@ -1,6 +1,6 @@
-Full Stack JavaScript Program
+## Full Stack JavaScript Program
 
-Project #03: Build an Interactive Form
+### Project #03: Build an Interactive Form
 
 Take an existing form and add functionality to it with JavaScript.  It provides error messages based on the user input, and other interactivity with selects & checkboxes.
 
